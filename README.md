@@ -185,7 +185,7 @@ During my tenure at HCL Technologies, I contributed to various projects and gain
 
 ## 🧩 Repositories Counter
 
-I have a total of **26** repositories, showcasing my journey and projects in the fields of Web3, Machine Learning, Blockchain, and more.
+I have a total of **28** repositories, showcasing my journey and projects in the fields of Web3, Machine Learning, Blockchain, and more.
 
 ---
 

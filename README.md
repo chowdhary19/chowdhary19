@@ -191,7 +191,7 @@ I have a total of **28** repositories, showcasing my journey and projects in the
 
 ## 🌐 Connect with Me
 
-Feel free to reach out via [LinkedIn](https://linkedin.com/in/yuvraj-singh-chowdhary/), [GitHub](https://github.com/chowdhary19), or [Reddit](https://www.reddit.com/user/SuccessfulStrain9533/).
+Feel free to reach out via [LinkedIn](https://www.linkedin.com/in/connectyuvraj/), [GitHub](https://github.com/chowdhary19), or [Reddit](https://www.reddit.com/user/SuccessfulStrain9533/).
 
 ---
 

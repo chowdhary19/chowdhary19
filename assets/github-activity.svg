@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="350" viewBox="0 0 1400 350" role="img" aria-labelledby="title desc">
+<title id="title">Recent GitHub activity</title>
+<desc id="desc">Recent public GitHub activity populated by the included GitHub Action.</desc>
+
+<defs>
+  <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+    <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#42ff78" stroke-opacity=".025"/>
+  </pattern>
+  <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
+    <rect width="4" height="1" fill="#42ff78" opacity=".025"/>
+  </pattern>
+  <linearGradient id="rightGlow" x1="0" y1="0" x2="1" y2="0">
+    <stop stop-color="#42ff78" stop-opacity="0"/>
+    <stop offset="1" stop-color="#42ff78" stop-opacity=".11"/>
+  </linearGradient>
+  <linearGradient id="scanFadeY" x1="0" y1="0" x2="0" y2="1">
+    <stop stop-color="#42ff78" stop-opacity=".38"/>
+    <stop offset="1" stop-color="#42ff78" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="2.5" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <style>
+    .blink{animation:blink 1s steps(1,end) infinite}
+    .scan-y{animation:scanY 6.5s linear infinite}
+    .global-scan{animation:globalScan 11s linear infinite}
+    .dash{stroke-dasharray:8 10;animation:dash 9s linear infinite}
+    .pulse{animation:pulse 2.8s ease-in-out infinite}
+    .packet1{animation:packet1 7.5s linear infinite}
+    .packet2{animation:packet2 9.5s linear infinite}
+    @keyframes blink{50%{opacity:0}}
+    @keyframes scanY{from{transform:translateY(-90px)}to{transform:translateY(440px)}}
+    @keyframes globalScan{from{transform:translateY(-120px)}to{transform:translateY(470px)}}
+    @keyframes dash{to{stroke-dashoffset:-180}}
+    @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+    @keyframes packet1{0%{transform:translateX(0)}100%{transform:translateX(1030px)}}
+    @keyframes packet2{0%{transform:translateX(0)}100%{transform:translateX(-1030px)}}
+    @media(prefers-reduced-motion:reduce){.blink,.scan-y,.global-scan,.dash,.pulse,.packet1,.packet2{animation:none!important}}
+  </style>
+</defs>
+
+<rect width="1400" height="350" fill="#020603"/>
+<rect width="1400" height="350" fill="url(#grid)"/>
+<rect width="1400" height="350" fill="url(#scanlines)"/>
+<rect x="1" y="1" width="1398" height="348" fill="none" stroke="#12672d"/>
+<text x="28" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="13" font-weight="700" fill="#42ff78" text-anchor="start" opacity="1.0">github://events/public?tail=6</text>
+<line x1="28" y1="49" x2="1372" y2="49" stroke="#12672d"/>
+<text x="42" y="82" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="13" font-weight="800" fill="#42ff78" text-anchor="start" opacity="1.0">$ tail -f public-engineering.log</text>
+<text x="44" y="116" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="650" fill="#12672d" text-anchor="start" opacity="1.0">0000-00-00</text>
+<text x="160" y="116" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="400" fill="#12672d" text-anchor="start" opacity="1.0">|</text>
+<text x="186" y="116" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="12" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">waiting for the first workflow run</text>
+<text x="44" y="154" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="650" fill="#12672d" text-anchor="start" opacity="1.0">0000-00-00</text>
+<text x="160" y="154" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="400" fill="#12672d" text-anchor="start" opacity="1.0">|</text>
+<text x="186" y="154" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="12" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">pushes, pull requests, reviews and releases appear here</text>
+<text x="44" y="192" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="650" fill="#12672d" text-anchor="start" opacity="1.0">0000-00-00</text>
+<text x="160" y="192" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="400" fill="#12672d" text-anchor="start" opacity="1.0">|</text>
+<text x="186" y="192" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="12" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">recent repository movement is read from the public event stream</text>
+<text x="44" y="230" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="650" fill="#12672d" text-anchor="start" opacity="1.0">0000-00-00</text>
+<text x="160" y="230" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="400" fill="#12672d" text-anchor="start" opacity="1.0">|</text>
+<text x="186" y="230" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="12" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">SVG is generated and committed by this profile repository</text>
+<text x="44" y="268" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="650" fill="#12672d" text-anchor="start" opacity="1.0">0000-00-00</text>
+<text x="160" y="268" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="400" fill="#12672d" text-anchor="start" opacity="1.0">|</text>
+<text x="186" y="268" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="12" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">nothing is fetched by the README at view time</text>
+<text x="44" y="322" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="700" fill="#42ff78" text-anchor="start" opacity="1.0">yuvraj@runtime:~$</text>
+<rect x="206" y="309" width="9" height="16" fill="#42ff78" class="blink"/>
+</svg>

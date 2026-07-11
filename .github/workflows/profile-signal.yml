@@ -1,0 +1,48 @@
+name: Refresh profile signal
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/update_github_signal.py"
+      - ".github/workflows/profile-signal.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-signal
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out profile repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate contribution and activity panels
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: python scripts/update_github_signal.py
+
+      - name: Commit refreshed signal
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/github-contributions.svg assets/github-activity.svg
+          if git diff --cached --quiet; then
+            echo "No profile signal changes"
+            exit 0
+          fi
+          git commit -m "chore(profile): refresh public signal"
+          git push

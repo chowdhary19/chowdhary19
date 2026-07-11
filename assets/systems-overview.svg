@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="650" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc">
+<title id="title">Systems overview</title>
+<desc id="desc">A terminal map connecting product, blockchain, quantitative finance, Linux platform engineering and AI runtime work through shared systems principles.</desc>
+
+<defs>
+  <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+    <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#42ff78" stroke-opacity=".025"/>
+  </pattern>
+  <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
+    <rect width="4" height="1" fill="#42ff78" opacity=".025"/>
+  </pattern>
+  <linearGradient id="rightGlow" x1="0" y1="0" x2="1" y2="0">
+    <stop stop-color="#42ff78" stop-opacity="0"/>
+    <stop offset="1" stop-color="#42ff78" stop-opacity=".11"/>
+  </linearGradient>
+  <linearGradient id="scanFadeY" x1="0" y1="0" x2="0" y2="1">
+    <stop stop-color="#42ff78" stop-opacity=".38"/>
+    <stop offset="1" stop-color="#42ff78" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="2.5" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <style>
+    .blink{animation:blink 1s steps(1,end) infinite}
+    .scan-y{animation:scanY 6.5s linear infinite}
+    .global-scan{animation:globalScan 11s linear infinite}
+    .dash{stroke-dasharray:8 10;animation:dash 9s linear infinite}
+    .pulse{animation:pulse 2.8s ease-in-out infinite}
+    .packet1{animation:packet1 7.5s linear infinite}
+    .packet2{animation:packet2 9.5s linear infinite}
+    @keyframes blink{50%{opacity:0}}
+    @keyframes scanY{from{transform:translateY(-90px)}to{transform:translateY(740px)}}
+    @keyframes globalScan{from{transform:translateY(-120px)}to{transform:translateY(770px)}}
+    @keyframes dash{to{stroke-dashoffset:-180}}
+    @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+    @keyframes packet1{0%{transform:translateX(0)}100%{transform:translateX(1030px)}}
+    @keyframes packet2{0%{transform:translateX(0)}100%{transform:translateX(-1030px)}}
+    @media(prefers-reduced-motion:reduce){.blink,.scan-y,.global-scan,.dash,.pulse,.packet1,.packet2{animation:none!important}}
+  </style>
+</defs>
+
+<rect width="1400" height="650" fill="#020603"/>
+<rect width="1400" height="650" fill="url(#grid)"/>
+<rect width="1400" height="650" fill="url(#scanlines)"/>
+<rect x="1" y="1" width="1398" height="648" fill="none" stroke="#12672d"/>
+<text x="28" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="13" font-weight="700" fill="#42ff78" text-anchor="start" opacity="1.0">yuvraj@runtime:~$ ./map --career --eagle-view</text>
+<text x="1370" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="650" fill="#12672d" text-anchor="end" opacity="1.0">one builder / many layers</text>
+<line x1="28" y1="49" x2="1372" y2="49" stroke="#12672d"/>
+<text x="42" y="83" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="12" font-weight="650" fill="#12672d" text-anchor="start" opacity="1.0"># different domains; the same engineering instinct</text>
+<rect x="46" y="112" width="228" height="142" rx="4" fill="#061009" stroke="#12672d"/>
+<text x="64" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="13" font-weight="800" fill="#42ff78" text-anchor="start" opacity="1.0">PRODUCT / AUTOMATION</text>
+<line x1="64" y1="152" x2="256" y2="152" stroke="#0a3218"/>
+<text x="64" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">ship from zero</text>
+<text x="64" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">workflows + integrations</text>
+<text x="64" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">operator-facing products</text>
+<rect x="316" y="112" width="228" height="142" rx="4" fill="#061009" stroke="#12672d"/>
+<text x="334" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="13" font-weight="800" fill="#42ff78" text-anchor="start" opacity="1.0">BLOCKCHAIN / DEFI</text>
+<line x1="334" y1="152" x2="526" y2="152" stroke="#0a3218"/>
+<text x="334" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">signing + replay</text>
+<text x="334" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">irreversible state</text>
+<text x="334" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">on-chain correctness</text>
+<rect x="586" y="112" width="228" height="142" rx="4" fill="#061009" stroke="#12672d"/>
+<text x="604" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="13" font-weight="800" fill="#42ff78" text-anchor="start" opacity="1.0">QUANT / FINANCIAL</text>
+<line x1="604" y1="152" x2="796" y2="152" stroke="#0a3218"/>
+<text x="604" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">orders + fills</text>
+<text x="604" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">ledger + reconciliation</text>
+<text x="604" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">risk + control rooms</text>
+<rect x="856" y="112" width="228" height="142" rx="4" fill="#061009" stroke="#12672d"/>
+<text x="874" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="13" font-weight="800" fill="#42ff78" text-anchor="start" opacity="1.0">LINUX / PLATFORM</text>
+<line x1="874" y1="152" x2="1066" y2="152" stroke="#0a3218"/>
+<text x="874" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">CI + release safety</text>
+<text x="874" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">diagnostics + images</text>
+<text x="874" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">reproducible systems</text>
+<rect x="1126" y="112" width="228" height="142" rx="4" fill="#061009" stroke="#12672d"/>
+<text x="1144" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="13" font-weight="800" fill="#42ff78" text-anchor="start" opacity="1.0">AI RUNTIME</text>
+<line x1="1144" y1="152" x2="1336" y2="152" stroke="#0a3218"/>
+<text x="1144" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">gateway + streaming</text>
+<text x="1144" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">policy + economics</text>
+<text x="1144" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="600" fill="#c8ffd4" text-anchor="start" opacity="1.0">routing + evidence</text>
+<path d="M160 254 V324" fill="none" stroke="#12672d" stroke-width="2" class="dash"/>
+<path d="M430 254 V324" fill="none" stroke="#12672d" stroke-width="2" class="dash"/>
+<path d="M700 254 V324" fill="none" stroke="#12672d" stroke-width="2" class="dash"/>
+<path d="M970 254 V324" fill="none" stroke="#12672d" stroke-width="2" class="dash"/>
+<path d="M1240 254 V324" fill="none" stroke="#12672d" stroke-width="2" class="dash"/>
+<rect x="120" y="324" width="1160" height="124" rx="4" fill="#08150c" stroke="#27c957"/>
+<text x="700" y="360" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="13" font-weight="800" fill="#42ff78" text-anchor="middle" opacity="1.0">THE COMMON LAYER</text>
+<text x="700" y="400" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="20" font-weight="850" fill="#c8ffd4" text-anchor="middle" opacity="1.0">CONTROL  ·  STATE  ·  MONEY  ·  LATENCY  ·  RECOVERY  ·  OPERATOR</text>
+<text x="700" y="430" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="12" font-weight="650" fill="#27c957" text-anchor="middle" opacity="1.0">the system is only finished when the consequence is owned</text>
+<path id="flow1" d="M170 386 H1230" fill="none" stroke="#12672d" stroke-width="1"/>
+<circle cx="170" cy="386" r="5" fill="#42ff78" filter="url(#glow)" class="packet1"/>
+<circle cx="1230" cy="386" r="4" fill="#27c957" class="packet2"/>
+<path d="M700 448 V505" fill="none" stroke="#12672d" stroke-width="2" class="dash"/>
+<rect x="255" y="505" width="890" height="92" rx="4" fill="#061009" stroke="#12672d"/>
+<text x="282" y="540" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="13" font-weight="800" fill="#42ff78" text-anchor="start" opacity="1.0">$ builder_mode</text>
+<text x="282" y="575" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="14" font-weight="650" fill="#c8ffd4" text-anchor="start" opacity="1.0">understand the business -&gt; find the invariant -&gt; build -&gt; operate -&gt; rewrite what reality disproves</text>
+<text x="42" y="625" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" font-size="11" font-weight="650" fill="#12672d" text-anchor="start" opacity="1.0">breadth is not the point; end-to-end ownership is</text>
+<g class="global-scan"><rect x="0" y="0" width="1400" height="1" fill="#42ff78" opacity=".16"/><rect x="0" y="1" width="1400" height="42" fill="url(#scanFadeY)" opacity=".11"/></g>
+</svg>

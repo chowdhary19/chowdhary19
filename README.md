@@ -1,197 +1,253 @@
 <div align="center">
-
-<table border="0">
-<tr>
-<td width="130" align="center">
-<img src="https://github.com/chowdhary19/pub_pri/blob/main/linkedIN%20avatar.png" width="112" height="112" style="border-radius:50%;border:2px solid #39d353;" alt="Yuvraj Singh Chowdhary"/>
-</td>
-<td>
-
-### YUVRAJ SINGH CHOWDHARY
-**Founding Systems Engineer** — Runtime AI Infrastructure · Financial Operating Systems · Distributed Control Planes
-
-</td>
-</tr>
-</table>
-
-<img src="./assets/banner-header.svg" width="100%" alt="terminal banner: founding systems engineer, runtime AI infrastructure, financial operating systems, distributed control planes"/>
-
-[![Email](https://img.shields.io/badge/Email-chowdharyyuvrajsingh%40gmail.com-0d1117?style=for-the-badge&logo=gmail&logoColor=39d353)](mailto:chowdharyyuvrajsingh@gmail.com)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-connectyuvraj-0d1117?style=for-the-badge&logo=linkedin&logoColor=58a6ff)](https://www.linkedin.com/in/connectyuvraj/)
-[![GitHub](https://img.shields.io/badge/GitHub-chowdhary19-0d1117?style=for-the-badge&logo=github&logoColor=c9d1d9)](https://github.com/chowdhary19)
-[![Synvolv](https://img.shields.io/badge/Synvolv-synvolv.com-0d1117?style=for-the-badge&logoColor=a78bfa)](https://synvolv.com/)
-[![Remote](https://img.shields.io/badge/Remote-US%2FUK%20overlap%20·%20based%20in%20India-0d1117?style=for-the-badge&logoColor=f2cc60)](#)
-[![Profile Views](https://komarev.com/ghpvc/?username=chowdhary19&style=for-the-badge&color=39d353&label=PROFILE+VIEWS)](https://github.com/chowdhary19)
-
+  <img src="./assets/hero-terminal.svg" width="100%" alt="Yuvraj Singh Chowdhary — founder and infrastructure engineer — in an animated terminal scanner">
 </div>
 
-<img src="./assets/section-divider.svg" width="100%" alt=""/>
+<p align="center">
+  <a href="https://synvolv.com/"><code>synvolv</code></a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="https://cal.com/heyyuvraj/chat"><code>schedule a call</code></a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="mailto:chowdharyyuvrajsingh@gmail.com"><code>email</code></a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/connectyuvraj/"><code>linkedin</code></a>
+</p>
 
-## `$ whoami`
+<br>
 
-<img src="./assets/terminal-boot.svg" width="100%" alt="terminal session: whoami, north_star.md, status.sh, echo PHILOSOPHY"/>
+## `$ cat /home/yuvraj/about`
 
-I don't really do the personal-website-with-a-headshot-and-a-mission-statement thing. I do this instead — a terminal, because that's genuinely where I live most of the day.
+Most people try to place me in one box.
 
-Short version: I design and build the infrastructure that sits underneath AI products and trading operations — the layer between "the product works in a demo" and "the product survives contact with production." Request-path gateways. Policy evaluators. Provider orchestration. Usage ledgers. Reconciliation engines. Risk monitors. Audit trails. The stuff nobody screenshots for a launch post and everybody suddenly cares about the day it's missing.
+Backend. Infrastructure. AI. Quant. Blockchain. Founder.
 
-Right now I'm the founding engineer building **[Synvolv](https://synvolv.com/)** — a runtime control plane that sits between AI products and the model providers they call, so that routing, budgets, policy, and provider spend are decided *before* they happen instead of reconciled after the invoice lands. In parallel, I built the operating backbone underneath **Blockhouse Capital's** trading desk — the unglamorous plumbing that keeps exchange connectivity, reconciliation, and risk visibility honest while real capital is actually moving. Before founder-mode, I spent a stretch at **Canonical** making sure other people's Linux infrastructure boots correctly on day one, because someone has to.
+The honest answer is that I keep following a system until I reach the layer that can actually fail the business.
 
-I don't ship demos. I ship the thing the demo was pretending to be.
+I have built web products and automations, DeFi and signing flows, exchange and broker integrations, order and fill state machines, portfolio and cash reconciliation, risk monitors, Linux release tooling, distributed backends, AI gateways, policy engines, usage ledgers, internal terminals and operator control planes.
 
-<img src="./assets/section-divider.svg" width="100%" alt=""/>
+Not because I collect stacks. I do not.
 
-## `$ git log --oneline --graph --decorate --all`
+Each problem simply pulled me one layer deeper.
 
-```text
-* 4c9a2f1 (HEAD -> main, origin/synvolv) feat(gateway): ship OpenAI-compatible control plane to live traffic
-* 8e1d0a3 feat(policy): enforce tenant budgets before provider spend commits
-* 1f77b2c feat(routing): normalize every major model provider behind one contract
-* 6b0d5e2 feat(ledger): make cost attribution a first-class citizen, not an afterthought
-|
-* d3b6e90 (origin/blockhouse) feat(quant-os): stand up trading desk operating layer from zero
-* a02c88f feat(reconciliation): make exchange state and ledger state agree, always
-* 77fe410 fix(risk): catch what fragmented CEX/DEX/broker data was quietly hiding
-* 9c14f88 feat(reporting): give investors a control room instead of a spreadsheet
-|
-* 60021ab (tag: canonical-oss) feat(linux): ship Ubuntu cloud image validation upstream
-* 2a417cd chore(ci): reduce release-day surprises for people I've never met
-|
-* 0000001 Initial commit — I just code.
-```
+A feature became a service. The service became a queue. The queue became a state machine. The state machine touched money. Money required a ledger. The ledger disagreed with an exchange. The exchange required reconciliation. Reconciliation required an operator. The operator needed a control plane. The control plane sat in the hot path. The hot path had to become fast enough to disappear.
 
-<img src="./assets/section-divider.svg" width="100%" alt=""/>
-
-## `$ cat architecture/gateway.md`
-
-The pitch is simple: an AI product should not be able to spend money it doesn't have permission to spend, call a provider it isn't allowed to call, or run a request that violates policy — and it shouldn't need a rewrite to get that. Point an existing OpenAI-compatible client at the gateway, and every request now passes through a control plane before a single token leaves the building.
-
-<img src="./assets/gateway-flow.svg" width="100%" alt="architecture diagram: client apps route through a runtime control plane (authn, policy evaluator, routing and fallback mesh, budget ledger, audit trail) before reaching OpenAI, Anthropic, Gemini, or a custom endpoint"/>
-
-<div align="center"><sub><i>policy evaluated, budget checked, route decided — before a single token leaves the building.</i></sub></div>
-<br/>
-
-Under the hood, that box in the middle is doing the same job a payments processor does for money — except the currency is model tokens, and the fraud it's catching is a runaway agent loop instead of a stolen card. Auth and tenant identity resolve first. Policy gets evaluated against live budget state. The router picks a provider and model, with fallback baked in for when an upstream has a bad day. Every decision — allowed, throttled, rerouted, blocked — gets written to an audit trail that can answer "what happened and why" without anyone needing to SSH into anything at 2am.
-
-<img src="./assets/section-divider.svg" width="100%" alt=""/>
-
-## `$ ls -la ~/systems --sort=impact`
+From the outside that looks like breadth. From inside my head it is one obsession:
 
 ```text
-drwxr-x---  founder  founder   synvolv-gateway/       # runtime control plane for live LLM traffic
-drwxr-x---  founder  founder   blockhouse-quant-os/   # operating backbone for a live trading desk
-drwxr-x---  founder  founder   canonical-oss/         # upstream Linux infra validation, Canonical
--rw-r--r--  founder  founder   .still-coding          # never modified, always open
+make the important state explicit
+keep the system honest under pressure
+own the path after the endpoint returns 200 OK
 ```
 
-<details>
-<summary><b>$ cat synvolv-gateway/README.md</b></summary>
-<br/>
+I like starting from zero. Empty repository, ugly first diagram, incomplete requirements, a customer describing the problem with the wrong nouns — that is usually where my best work begins.
 
-The problem: teams wire an LLM provider into a product, and from that moment every prompt is an unmonitored operational and financial liability. No budget ceiling. No policy layer. No idea which feature, tenant, or workflow is actually driving spend until the bill shows up.
+I am not the engineer who needs the problem to arrive pre-cut into tickets. I would rather understand the business, find the real invariant, build the first working system, operate it, watch where reality disagrees with the design and then rebuild the part that was pretending.
 
-**Synvolv** is the fix — an OpenAI-compatible gateway an existing app can adopt with a config change, not a rewrite. Underneath it: policy evaluation, tenant budgets, provider routing and fallback, model normalization across every major provider, and a cost ledger that knows what a request is worth before the response even comes back. It's built to sit in the hot path of production traffic without anyone noticing it's there — until the day it stops a runaway workflow from doing real damage.
+That is also why I became a founder. Sometimes the missing layer is too important to remain a side project.
 
-I own this end to end — architecture, backend, the control-plane UX operators actually use, and the design-partner conversations that keep it honest against how AI infra actually breaks once it leaves a notebook.
-
-</details>
-
-<details>
-<summary><b>$ cat blockhouse-quant-os/README.md</b></summary>
-<br/>
-
-Blockhouse runs real capital across CEX, DEX, and broker venues, which means the "boring" stuff — reconciliation, margin visibility, execution monitoring, knowing exactly what you hold and what you owe, right now — is the whole game.
-
-I built the operating layer underneath the desk: normalized account and position state across fragmented venues, real-time investor reporting, and exception handling for the stuff that silently goes wrong — failed fills, funding anomalies, delisting risk, ADL exposure. Plus the daily control room the team actually watches instead of a stack of dashboards nobody trusts.
-
-```text
-$ grep -r "financial-infra" ~/systems/blockhouse-quant-os/
-CEX/DEX APIs · Broker APIs · IBKR · Order & Fill Pipelines · Account/Subaccount State
-Execution Monitoring · Portfolio & PnL Systems · Margin/Liquidation Checks
-ADL & Delisting Surveillance · DEX Signing · Replay Protection · Investor Reporting
-```
-
-This isn't a trading strategy. It's the infrastructure that makes running one, with other people's money, something you can actually defend.
-
-</details>
-
-<details>
-<summary><b>$ cat canonical-oss/README.md</b></summary>
-<br/>
-
-Before founder-mode, I spent time making sure other people's infrastructure boots correctly in the first place — validating Ubuntu cloud and server images across provisioning, boot diagnostics, networking behavior, and package health at Canonical. Open-source, async-first, globally distributed team, code review as a way of life.
-
-It's where I actually learned what "infrastructure" means: invisible when it works, extremely loud when it doesn't.
-
-</details>
-
-<img src="./assets/section-divider.svg" width="100%" alt=""/>
-
-## `$ ls stack/`
-
-**`ai-runtime/ + languages/`**
-<br/>
-<img src="https://skillicons.dev/icons?i=py,go,rust,ts,js&theme=dark&perline=5" alt="Python, Go, Rust, TypeScript, JavaScript"/>
-
-**`backend + data/`**
-<br/>
-<img src="https://skillicons.dev/icons?i=nodejs,express,django,fastapi,graphql,postgres,mysql,mongodb,redis&theme=dark&perline=9" alt="Node.js, Express, Django, FastAPI, GraphQL, PostgreSQL, MySQL, MongoDB, Redis"/>
-
-**`cloud + reliability/`**
-<br/>
-<img src="https://skillicons.dev/icons?i=docker,kubernetes,aws,githubactions,nginx,terraform,grafana,prometheus&theme=dark&perline=8" alt="Docker, Kubernetes, AWS, GitHub Actions, Nginx, Terraform, Grafana, Prometheus"/>
-
-**`operator-surfaces + growth/`**
-<br/>
-<img src="https://skillicons.dev/icons?i=react,nextjs,tailwind,figma,vercel,cloudflare,supabase&theme=dark&perline=7" alt="React, Next.js, Tailwind CSS, Figma, Vercel, Cloudflare, Supabase"/>
-
-<br/>
-
-<img src="./assets/skills-ticker.svg" width="100%" alt="scrolling ticker: gateway, policy engine, routing mesh, budget ledger, audit trail, control plane, reconciliation, risk monitor, go, python, rust, kafka, clickhouse, kubernetes, postgresql, ownership"/>
-
-<img src="./assets/section-divider.svg" width="100%" alt=""/>
-
-## `$ cat manifesto.txt`
-
-- I don't ship demos. I ship the thing the demo was pretending to be.
-- Uptime isn't a KPI I report on. It's a personality trait.
-- I have read more provider API docs than I'd like to admit in a public document.
-- If you're debugging a weird request at 2am, there's a decent chance one of my systems already logged exactly why.
-- "0→1" isn't a resume word for me — it's just what happens when nobody else has built the thing yet, so I do.
-- I don't do meetings about infrastructure. I do infrastructure.
-- I just code. That's it. That's the whole bio.
-
-<img src="./assets/section-divider.svg" width="100%" alt=""/>
-
-## `$ ./github-stats.sh --live`
+<br>
 
 <div align="center">
-
-<img height="168" src="https://github-readme-stats.vercel.app/api?username=chowdhary19&show_icons=true&hide_border=true&bg_color=0d1117&title_color=a78bfa&text_color=c9d1d9&icon_color=39d353&border_color=21262d&count_private=true" alt="Yuvraj's GitHub stats"/>
-<img height="168" src="https://github-readme-stats.vercel.app/api/top-langs/?username=chowdhary19&layout=compact&hide_border=true&bg_color=0d1117&title_color=a78bfa&text_color=c9d1d9&border_color=21262d" alt="Top languages"/>
-
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=chowdhary19&hide_border=true&background=0D1117&stroke=21262D&ring=39D353&fire=F2CC60&currStreakLabel=A78BFA&sideLabels=C9D1D9&dates=8B949E&currStreakNum=C9D1D9&sideNums=C9D1D9" alt="GitHub streak stats"/>
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=chowdhary19&bg_color=0d1117&color=39d353&line=a78bfa&point=ffffff&area=true&area_color=39d353&hide_border=true" width="100%" alt="Contribution activity graph"/>
-
-<img src="https://github-profile-trophy.vercel.app/?username=chowdhary19&theme=onedark&no-frame=true&column=4&margin-w=8&margin-h=8&row=2" alt="GitHub trophies"/>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/chowdhary19/chowdhary19/output/snake-dark.svg"/>
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/chowdhary19/chowdhary19/output/snake.svg"/>
-  <img alt="a snake eating my own contribution graph, which is somehow the most honest metaphor on this page" src="https://raw.githubusercontent.com/chowdhary19/chowdhary19/output/snake-dark.svg" width="100%"/>
-</picture>
-
+  <img src="./assets/systems-overview.svg" width="100%" alt="An animated terminal systems map showing Yuvraj's work across product, blockchain, quantitative finance, infrastructure and AI runtime systems">
 </div>
 
-<img src="./assets/footer-signoff.svg" width="100%" alt="still building. always building. made in a terminal, not a design tool."/>
+<br>
+
+## `$ less /var/log/the-long-way-here.log`
+
+I started by building whatever I could get my hands on.
+
+Small products taught me speed. You learn quickly when there is nobody else to blame for the database, the deployment, the broken onboarding and the page that looked perfect on your machine. Automation taught me the first serious lesson: a boring five-minute task becomes infrastructure the moment a team quietly depends on it.
+
+Blockchain and DeFi changed the cost of being careless.
+
+A bad retry is not merely noisy. A signing boundary is not an implementation detail. A stale nonce, loose replay protection or confused chain state can turn a small software mistake into irreversible truth. That work made me respect state transitions, ownership and the difference between an action being accepted and an action being correct.
+
+Then I moved closer to markets and financial operations.
+
+Exchanges do not agree with one another. Broker APIs lag. Orders are accepted before they are settled. Fills arrive out of order. Balances drift. Rate limits become architecture. Funding, collateral, margin and liquidation risk continue moving while your worker is restarting.
+
+So I built the layer around the APIs: normalized account state, order and fill pipelines, exchange-specific recovery, cash checks, reconciliation, portfolio views, execution monitoring, market-event surveillance, risk alerts, investor reporting and the internal control room people could actually use when the data stopped being polite.
+
+That period made one thing permanent in the way I think:
+
+> If two systems can disagree about money, reconciliation is not an afterthought. It is part of the product.
+
+Linux and platform work taught me a different kind of discipline. A fix that lives in one engineer's shell history is not a fix. A test that passes only in the environment where it was written is not a test. Cloud images, boot failures, package behavior, CI, diagnostics, release validation and regression triage made me less impressed by clever code and much more impressed by systems that can reproduce and explain themselves.
+
+Then AI infrastructure brought almost every earlier lesson into the same request path.
+
+Provider differences. Streaming. Rate limits. Tenant isolation. Fallbacks. Variable cost. Usage attribution. Policy. Retry semantics. Tail latency. Audit. Operators. The bill arriving long after the engineering decision that created it.
+
+It felt familiar.
+
+So I built the control layer I wanted to exist.
+
+<br>
+
+## `$ ./inspect --builder --all-layers`
+
+I am an infrastructure engineer in the broad, old-fashioned meaning of the word.
+
+I care about the things underneath a product, between its components and immediately after it fails.
+
+I can work at the request edge where every allocation matters, then move into the ledger where every mutation needs a reason, then into the operator surface where the system must explain what happened without asking somebody to grep six services at 3 AM.
+
+I have designed and shipped:
+
+```text
+request paths        gateways, middleware, streaming, routing, rate control
+financial state      ledgers, reconciliation, cash, PnL, margin, exposure
+market connectivity  CEX / DEX / broker adapters, orders, fills, account state
+control systems      policy engines, budgets, permissions, audit, operator actions
+data systems         transactional models, event pipelines, analytical read paths
+reliability          retries, idempotency, backpressure, recovery, observability
+platform work        Linux tooling, CI, release validation, containers, deployment
+product surfaces     terminals, control rooms, dashboards, onboarding, internal tools
+```
+
+The languages change. The shape of the work does not.
+
+I use Go when the service needs to stay simple and fast. Python when the problem is data-heavy, operational or moving quickly. TypeScript when the operator surface and the backend need to evolve together. Rust when the boundary genuinely earns the extra strictness. PostgreSQL, Redis, ClickHouse, Kafka, RabbitMQ, containers, Linux, cloud services, traces and metrics are tools I know well, but none of them are my identity.
+
+My actual skill is keeping the whole path in view.
+
+```text
+user intent
+  -> identity and authorization
+  -> current state
+  -> policy
+  -> money / risk
+  -> execution
+  -> side effects
+  -> evidence
+  -> recovery
+  -> operator decision
+```
+
+A lot of software is locally correct and globally wrong. Every service returns success. Every dashboard is green. The customer still lost money, the balance still drifted, the retry still duplicated the action or the provider bill still destroyed the margin.
+
+I build against that class of failure.
+
+<br>
+
+## `$ cat /srv/synvolv/WHY`
+
+[**Synvolv**](https://synvolv.com/) is what happened when that systems instinct met production AI.
+
+I founded it because AI teams had model SDKs, gateways, logs and monthly spend reports, but very little authority during the only moment that matters: while the request is still alive and the outcome can still be changed.
+
+I architected the gateway and control plane from an empty repository.
+
+The path handles OpenAI-compatible ingress, provider normalization, streaming, tenant identity, budgets, policy snapshots, model access, routing, health-aware fallback, metering, cost attribution, audit evidence and the operator controls around all of it.
+
+I built one of the fastest AI gateway control paths I know of in production: about **456 microseconds of average measured gateway overhead** on our path while still making real policy and routing decisions.
+
+That speed matters because infrastructure should not become the tax for using infrastructure. The control layer has to be fast enough to disappear, explicit enough to dispute and complete enough to operate.
+
+Synvolv is one thing I am building. It is not the only thing I know how to build. It is the clearest current expression of how I work:
+
+```text
+understand the whole system
+put authority before the irreversible action
+leave evidence after it
+make the operator stronger
+remove latency until the layer feels inevitable
+```
+
+<details>
+<summary><strong>production receipts</strong></summary>
+<br>
+
+```text
+17M+        LLM requests / month across scaled design partners
+~456 us     average measured gateway overhead
+200+        models across major providers and custom endpoints
+< 5 min     OpenAI-compatible integration path
+
+$65M        AUM supported by quant operating infrastructure I built with the team
+12          investor clients supported during the operating build-out
+20+         exchanges covered by market-event and delisting surveillance
+```
+
+The numbers are useful because real systems should leave evidence. They are not the biography.
+
+</details>
+
+<br>
+
+## `$ cat ~/.notes-from-systems-that-fought-back`
+
+```text
+01  The happy path proves the demo. The recovery path proves the product.
+
+02  A retry is a new state transition, not a second chance to forget the first one.
+
+03  "Real-time" is a promise about freshness, ordering and recovery — not a WebSocket.
+
+04  A ledger is the answer you can still defend after two systems disagree.
+
+05  Tail latency is where a clean architecture stops being polite.
+
+06  If a control cannot change the outcome, it is a report.
+
+07  An automatic decision without evidence is tomorrow's argument.
+
+08  The operator is part of the system. Design for the person carrying the pager.
+
+09  Fast code with slow recovery is not a fast system.
+
+10  A provider saying accepted does not mean the business state is correct.
+
+11  Hidden state becomes visible during the worst possible incident.
+
+12  The best infrastructure is boring only because somebody did the hard thinking early.
+```
+
+I care about performance, but not benchmark theatre. I care about speed when it changes capacity, tail behavior, unit economics or the way a product feels.
+
+I care about correctness, but not the kind that ends when the tests turn green. Correct means the retry is safe, the ledger reconciles, the failure is visible, the decision can be explained and the next operator has a clean move.
+
+I care about architecture, but I am suspicious of diagrams that do not include deployment, backfill, migration, alerting and recovery.
+
+And I care about taste. Sharp names. Fewer knobs. Explicit ownership. Small hot paths. Useful logs. Honest metrics. No magic state. No ritual that only one engineer remembers.
+
+The best compliment somebody can give my work is not that it looks clever.
+
+It is that the system is real, understandable and hard to accidentally betray.
+
+<br>
+
+## `$ git log --all --author=yuvraj --stat`
+
+These panels are generated inside this repository from the profile owner's real public GitHub history.
+
+No visitor-counter theatre. No trophy wall. No third-party statistics service waiting to disappear. A scheduled GitHub Action queries the account, builds the contribution and activity SVGs, then commits them back into the repository.
 
 <div align="center">
-
-> "Strive not to be a success, but rather to be of value." — Albert Einstein
-
-[![Email](https://img.shields.io/badge/-Email-39d353?style=flat-square&logo=gmail&logoColor=0d1117)](mailto:chowdharyyuvrajsingh@gmail.com)
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-58a6ff?style=flat-square&logo=linkedin&logoColor=0d1117)](https://www.linkedin.com/in/connectyuvraj/)
-[![Synvolv](https://img.shields.io/badge/-Synvolv-a78bfa?style=flat-square)](https://synvolv.com/)
-
+  <img src="./assets/github-contributions.svg" width="100%" alt="Live terminal-styled GitHub contribution history generated by this repository">
 </div>
+
+<div align="center">
+  <img src="./assets/github-activity.svg" width="100%" alt="Recent public GitHub activity generated by this repository">
+</div>
+
+<br>
+
+## `$ ./connect --problem-has-teeth`
+
+I am most useful when the prototype worked and reality has started asking better questions.
+
+Bring me the gateway that must disappear under load. The financial workflow that technically works but nobody trusts. The exchange integration with six definitions of account state. The AI product whose usage is growing faster than its unit economics. The queue that is fine until the same message arrives twice. The internal operation held together by a spreadsheet, a Slack channel and one person's memory.
+
+I will trace the whole path, find the real invariant and build the missing layer.
+
+```text
+call      https://cal.com/heyyuvraj/chat
+email     chowdharyyuvrajsingh@gmail.com
+linkedin  https://www.linkedin.com/in/connectyuvraj/
+company   https://synvolv.com/
+```
+
+```text
+yuvraj@production:~$ █
+```

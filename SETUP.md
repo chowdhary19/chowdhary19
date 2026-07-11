@@ -39,6 +39,15 @@ After the repository is online:
 
 The workflow detects the repository owner automatically and uses GitHub's built-in `GITHUB_TOKEN`. You do not need to add your username or create a personal token.
 
+### Optional: unlock the full commits / PRs / reviews breakdown
+
+The built-in token can read your public contribution calendar, streaks and repo stats, but not the per-type breakdown, so that line falls back to activity-based stats (`active_days`, `busiest_day`, `avg/week`). To show real `commits / pull_requests / reviews / issues` counts instead:
+
+1. Create a **classic** personal access token with the `read:user` scope (Settings → Developer settings → Personal access tokens → Tokens (classic)).
+2. In this repo: **Settings → Secrets and variables → Actions → New repository secret**.
+3. Name it `PROFILE_TOKEN`, paste the token, save.
+4. Re-run **Refresh profile signal**.
+
 ## 4. Add the social preview
 
 Open **Settings → General → Social preview → Edit** and upload:

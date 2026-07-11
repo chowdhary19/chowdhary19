@@ -162,9 +162,25 @@ def build_contributions(user: dict) -> None:
                 f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="2" fill="{color(count, maximum)}">'
                 f'<title>{count} contributions on {esc(item["date"])}</title></rect>'
             )
+    commits = int(collection["totalCommitContributions"])
+    prs = int(collection["totalPullRequestContributions"])
+    reviews = int(collection["totalPullRequestReviewContributions"])
+    issues = int(collection["totalIssueContributions"])
+    if commits + prs + reviews + issues > 0:
+        # Full breakdown is available (a user-scoped token is in play).
+        summary_line = f"commits={commits}  pull_requests={prs}  reviews={reviews}  issues={issues}"
+    else:
+        # The default Actions GITHUB_TOKEN can read the public calendar but not the
+        # per-type breakdown, which returns zeros. Fall back to always-true stats
+        # derived straight from the calendar so the panel never contradicts itself.
+        active_days = sum(1 for d in days if int(d["contributionCount"]) > 0)
+        busiest = max((int(d["contributionCount"]) for d in days), default=0)
+        per_week = round(int(calendar["totalContributions"]) / 52)
+        summary_line = f"active_days={active_days}  busiest_day={busiest}  avg={per_week}/week"
+
     body += [
         f'<g class="sweep"><rect x="0" y="112" width="3" height="158" fill="{GREEN}" opacity=".28"/></g>',
-        text(44, 306, f"commits={collection['totalCommitContributions']}  pull_requests={collection['totalPullRequestContributions']}  reviews={collection['totalPullRequestReviewContributions']}  issues={collection['totalIssueContributions']}", 12, GREEN_SOFT, 650),
+        text(44, 306, summary_line, 12, GREEN_SOFT, 650),
         text(44, 332, f"streak={current}d  longest={longest}d  public_repos={user['repositories']['totalCount']}  stars={stars}  followers={user['followers']['totalCount']}", 12, GREEN_SOFT, 650),
         text(44, 358, f"languages={language_line}", 11, GREEN_DIM, 600),
         text(1356, 358, "generated in-repo", 10, GREEN_DIM, 600, "end"),
@@ -236,7 +252,10 @@ def build_activity(user: dict, events: list[dict]) -> None:
 
 
 def main() -> None:
-    token = os.environ.get("GITHUB_TOKEN", "").strip()
+    # PROFILE_TOKEN (an optional classic PAT with read:user) unlocks the full
+    # commits/PRs/reviews/issues breakdown. Without it the built-in GITHUB_TOKEN
+    # still produces the calendar, streaks and repo stats.
+    token = (os.environ.get("PROFILE_TOKEN") or os.environ.get("GITHUB_TOKEN") or "").strip()
     owner = os.environ.get("GITHUB_REPOSITORY_OWNER", "").strip()
     if not token or not owner:
         raise SystemExit("GITHUB_TOKEN and GITHUB_REPOSITORY_OWNER are required")

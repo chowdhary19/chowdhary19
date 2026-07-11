@@ -5,7 +5,6 @@ from PIL import Image, ImageEnhance, ImageFilter, ImageOps
 import base64
 import html
 import io
-import cairosvg
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "assets"
@@ -37,8 +36,11 @@ def txt(x: float, y: float, value: object, size: float = 16, fill: str = GREEN_S
     )
 
 
-def data_uri(img: Image.Image) -> str:
+def data_uri(img: Image.Image, fmt: str = "PNG", quality: int = 85) -> str:
     out = io.BytesIO()
+    if fmt == "JPEG":
+        img.convert("RGB").save(out, format="JPEG", quality=quality, optimize=True, progressive=True)
+        return "data:image/jpeg;base64," + base64.b64encode(out.getvalue()).decode("ascii")
     img.save(out, format="PNG", optimize=True)
     return "data:image/png;base64," + base64.b64encode(out.getvalue()).decode("ascii")
 
@@ -80,22 +82,12 @@ def prepare_portrait() -> tuple[str, list[tuple[int, int, str, float]]]:
     wash = Image.new("RGBA", crop.size, (20, 150, 65, 14))
     rgba = Image.alpha_composite(rgba, wash)
 
-    # Character field sampled from the original image.
-    cols, rows = 90, 82
-    sample = gray.resize((cols, rows), Image.Resampling.BILINEAR)
-    chars = "@%#*+=-:. "
+    # Encode the treated portrait as a compact progressive JPEG. The old build
+    # embedded a ~520 KB PNG plus a 7k-node glyph overlay, which made the hero
+    # SVG ~1.9 MB and janked scrolling on the profile page. The photo already
+    # carries identity, so we keep it sharp and drop the glyph field entirely.
     glyphs: list[tuple[int, int, str, float]] = []
-    for yy in range(rows):
-        for xx in range(cols):
-            lum = sample.getpixel((xx, yy))
-            idx = min(len(chars) - 1, int(lum / 256 * len(chars)))
-            ch = chars[idx]
-            if ch == " ":
-                continue
-            darkness = 1 - lum / 255
-            glyphs.append((xx, yy, ch, 0.045 + darkness * 0.18))
-
-    return data_uri(rgba.convert("RGB")), glyphs
+    return data_uri(rgba.convert("RGB"), fmt="JPEG", quality=82), glyphs
 
 
 def shell(width: int, height: int, title: str, desc: str, body: list[str]) -> str:
@@ -164,18 +156,12 @@ def write_hero(portrait_uri: str, glyphs: list[tuple[int, int, str, float]]) -> 
         f'<g clip-path="url(#portrait)">',
         f'<image x="{x0}" y="{y0}" width="{pw}" height="{ph}" preserveAspectRatio="xMidYMid slice" href="{portrait_uri}"/>',
     ]
-    cw, ch = pw / 90, ph / 82
-    for gx, gy, chv, opacity in glyphs:
-        body.append(
-            f'<text x="{x0 + gx*cw:.2f}" y="{y0 + (gy+1)*ch:.2f}" font-family="{MONO}" '
-            f'font-size="6.35" fill="{GREEN_SOFT}" opacity="{opacity:.3f}">{esc(chv)}</text>'
-        )
     body += [
         f'<g class="scan-y"><rect x="{x0}" y="{y0}" width="{pw}" height="2" fill="{GREEN}" filter="url(#glow)"/><rect x="{x0}" y="{y0+2}" width="{pw}" height="72" fill="url(#scanFadeY)"/></g>',
         '</g>',
         f'<rect x="{x0}" y="{y0}" width="{pw}" height="{ph}" fill="none" stroke="{GREEN_MID}"/>',
         f'<path d="M{x0} {y0+24}V{y0}H{x0+24} M{x0+pw-24} {y0}H{x0+pw}V{y0+24} M{x0} {y0+ph-24}V{y0+ph}H{x0+24} M{x0+pw-24} {y0+ph}H{x0+pw}V{y0+ph-24}" fill="none" stroke="{GREEN}" stroke-width="2"/>',
-        txt(38, 735, "source=uploaded_portrait  color=preserved  glyph_overlay=active", 10, GREEN_DIM, 600),
+        txt(38, 735, "source=uploaded_portrait  color=preserved  scanner=active", 10, GREEN_DIM, 600),
 
         txt(600, 102, "$ identity", 15, GREEN, 800),
         txt(600, 166, "YUVRAJ SINGH", 48, GREEN_SOFT, 850),
@@ -335,6 +321,7 @@ def write_social_preview(portrait_uri: str) -> None:
 
 
 def render(svg_name: str, png_name: str, width: int | None = None) -> None:
+    import cairosvg  # imported lazily so the SVG pipeline works without it
     kwargs = {"url": str(ASSETS / svg_name), "write_to": str(ASSETS / png_name)}
     if width:
         kwargs["output_width"] = width

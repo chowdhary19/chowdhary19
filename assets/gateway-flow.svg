@@ -1,0 +1,112 @@
+<svg width="1200" height="480" viewBox="0 0 1200 480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="2.4" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#131a24"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="480" fill="#05070a"/>
+
+  <!-- left client nodes -->
+  <g font-family="SFMono-Regular,Consolas,Menlo,monospace">
+    <rect x="40" y="90" width="160" height="50" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1.5"/>
+    <text x="120" y="120" text-anchor="middle" font-size="13" fill="#c9d1d9">YOUR APP</text>
+
+    <rect x="40" y="190" width="160" height="50" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1.5"/>
+    <text x="120" y="220" text-anchor="middle" font-size="13" fill="#c9d1d9">AGENT WORKFLOW</text>
+
+    <rect x="40" y="290" width="160" height="50" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1.5"/>
+    <text x="120" y="320" text-anchor="middle" font-size="13" fill="#c9d1d9">EXISTING SDK</text>
+  </g>
+
+  <!-- center control plane -->
+  <rect x="430" y="60" width="340" height="360" rx="12" fill="url(#coreGrad)" stroke="#30363d" stroke-width="1.5"/>
+  <text x="600" y="90" text-anchor="middle" font-family="SFMono-Regular,Consolas,Menlo,monospace" font-size="17" font-weight="700" fill="#a78bfa">RUNTIME CONTROL PLANE</text>
+
+  <g font-family="SFMono-Regular,Consolas,Menlo,monospace" font-size="13" fill="#c9d1d9">
+    <rect x="450" y="112" width="4" height="46" fill="#39d353"/>
+    <rect x="450" y="112" width="300" height="46" rx="6" fill="#111826" stroke="#21262d"/>
+    <text x="470" y="140">AUTHN / AUTHZ</text>
+
+    <rect x="450" y="172" width="4" height="46" fill="#58a6ff"/>
+    <rect x="450" y="172" width="300" height="46" rx="6" fill="#111826" stroke="#21262d"/>
+    <text x="470" y="200">POLICY EVALUATOR</text>
+
+    <rect x="450" y="232" width="4" height="46" fill="#a78bfa"/>
+    <rect x="450" y="232" width="300" height="46" rx="6" fill="#111826" stroke="#21262d"/>
+    <text x="470" y="260">ROUTING + FALLBACK MESH</text>
+
+    <rect x="450" y="292" width="4" height="46" fill="#f2cc60"/>
+    <rect x="450" y="292" width="300" height="46" rx="6" fill="#111826" stroke="#21262d"/>
+    <text x="470" y="320">BUDGET LEDGER</text>
+
+    <rect x="450" y="352" width="4" height="46" fill="#ff7b72"/>
+    <rect x="450" y="352" width="300" height="46" rx="6" fill="#111826" stroke="#21262d"/>
+    <text x="470" y="380">AUDIT TRAIL</text>
+  </g>
+
+  <!-- right provider nodes -->
+  <g font-family="SFMono-Regular,Consolas,Menlo,monospace">
+    <rect x="1000" y="70" width="160" height="46" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1.5"/>
+    <text x="1080" y="98" text-anchor="middle" font-size="13" fill="#c9d1d9">OpenAI</text>
+
+    <rect x="1000" y="150" width="160" height="46" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1.5"/>
+    <text x="1080" y="178" text-anchor="middle" font-size="13" fill="#c9d1d9">Anthropic</text>
+
+    <rect x="1000" y="230" width="160" height="46" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1.5"/>
+    <text x="1080" y="258" text-anchor="middle" font-size="13" fill="#c9d1d9">Gemini</text>
+
+    <rect x="1000" y="310" width="160" height="46" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1.5"/>
+    <text x="1080" y="338" text-anchor="middle" font-size="13" fill="#c9d1d9">Custom Endpoint</text>
+  </g>
+
+  <!-- wires: left -> center -->
+  <path id="pL1" d="M200,115 C320,115 320,140 430,140" fill="none" stroke="#21262d" stroke-width="2"/>
+  <path id="pL2" d="M200,215 C320,215 320,240 430,240" fill="none" stroke="#21262d" stroke-width="2"/>
+  <path id="pL3" d="M200,315 C320,315 320,340 430,340" fill="none" stroke="#21262d" stroke-width="2"/>
+
+  <!-- wires: center -> right -->
+  <path id="pR1" d="M770,130 C880,130 880,93 1000,93" fill="none" stroke="#21262d" stroke-width="2"/>
+  <path id="pR2" d="M770,210 C880,210 880,173 1000,173" fill="none" stroke="#21262d" stroke-width="2"/>
+  <path id="pR3" d="M770,290 C880,290 880,253 1000,253" fill="none" stroke="#21262d" stroke-width="2"/>
+  <path id="pR4" d="M770,370 C880,370 880,333 1000,333" fill="none" stroke="#21262d" stroke-width="2"/>
+
+  <!-- audit wire -->
+  <path id="pA1" d="M600,420 L600,458" fill="none" stroke="#30363d" stroke-width="2" stroke-dasharray="4 4"/>
+  <text x="600" y="474" text-anchor="middle" font-family="SFMono-Regular,Consolas,Menlo,monospace" font-size="12" fill="#f2cc60">// every decision logged</text>
+
+  <!-- moving packets: inbound (green) -->
+  <g filter="url(#glow)">
+    <circle r="4" fill="#39d353"><animateMotion dur="2.4s" begin="0s" repeatCount="indefinite"><mpath xlink:href="#pL1"/></animateMotion></circle>
+    <circle r="4" fill="#39d353"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite"><mpath xlink:href="#pL1"/></animateMotion></circle>
+    <circle r="4" fill="#39d353"><animateMotion dur="2.4s" begin="0.4s" repeatCount="indefinite"><mpath xlink:href="#pL2"/></animateMotion></circle>
+    <circle r="4" fill="#39d353"><animateMotion dur="2.4s" begin="1.6s" repeatCount="indefinite"><mpath xlink:href="#pL2"/></animateMotion></circle>
+    <circle r="4" fill="#39d353"><animateMotion dur="2.4s" begin="0.8s" repeatCount="indefinite"><mpath xlink:href="#pL3"/></animateMotion></circle>
+    <circle r="4" fill="#39d353"><animateMotion dur="2.4s" begin="2.0s" repeatCount="indefinite"><mpath xlink:href="#pL3"/></animateMotion></circle>
+  </g>
+
+  <!-- moving packets: outbound (blue) -->
+  <g filter="url(#glow)">
+    <circle r="4" fill="#58a6ff"><animateMotion dur="2.1s" begin="0s" repeatCount="indefinite"><mpath xlink:href="#pR1"/></animateMotion></circle>
+    <circle r="4" fill="#58a6ff"><animateMotion dur="2.1s" begin="1.05s" repeatCount="indefinite"><mpath xlink:href="#pR1"/></animateMotion></circle>
+    <circle r="4" fill="#58a6ff"><animateMotion dur="2.1s" begin="0.3s" repeatCount="indefinite"><mpath xlink:href="#pR2"/></animateMotion></circle>
+    <circle r="4" fill="#58a6ff"><animateMotion dur="2.1s" begin="1.35s" repeatCount="indefinite"><mpath xlink:href="#pR2"/></animateMotion></circle>
+    <circle r="4" fill="#58a6ff"><animateMotion dur="2.1s" begin="0.6s" repeatCount="indefinite"><mpath xlink:href="#pR3"/></animateMotion></circle>
+    <circle r="4" fill="#58a6ff"><animateMotion dur="2.1s" begin="1.65s" repeatCount="indefinite"><mpath xlink:href="#pR3"/></animateMotion></circle>
+    <circle r="4" fill="#58a6ff"><animateMotion dur="2.1s" begin="0.9s" repeatCount="indefinite"><mpath xlink:href="#pR4"/></animateMotion></circle>
+    <circle r="4" fill="#58a6ff"><animateMotion dur="2.1s" begin="1.95s" repeatCount="indefinite"><mpath xlink:href="#pR4"/></animateMotion></circle>
+  </g>
+
+  <!-- moving packet: audit (amber, slower) -->
+  <g filter="url(#glow)">
+    <circle r="3.5" fill="#f2cc60"><animateMotion dur="1.6s" begin="0s" repeatCount="indefinite"><mpath xlink:href="#pA1"/></animateMotion></circle>
+  </g>
+</svg>

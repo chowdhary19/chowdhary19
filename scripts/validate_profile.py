@@ -34,6 +34,7 @@ for svg in ASSETS.glob("*.svg"):
 required = [
     ASSETS / "hero-terminal.svg",
     ASSETS / "systems-overview.svg",
+    ASSETS / "builder-mode.svg",
     ASSETS / "github-contributions.svg",
     ASSETS / "github-activity.svg",
     ASSETS / "social-preview.png",

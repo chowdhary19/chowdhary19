@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="650" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
 <title id="title">Systems overview</title>
-<desc id="desc">A terminal map connecting product, blockchain, quantitative finance, Linux platform engineering and AI runtime work through shared systems principles.</desc>
+<desc id="desc">An orbit diagram: product, blockchain, quantitative finance, Linux platform engineering and AI runtime work, converging on one shared control discipline.</desc>
 
 <defs>
   <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
@@ -44,8 +44,8 @@
     @keyframes typeIn{from{width:0}to{width:var(--tw)}}
     @keyframes blinkIn{0%{opacity:0}0.01%,50%{opacity:1}50.01%,100%{opacity:0}}
     @keyframes zoom{0%,100%{transform:scale(1) translate(0,0)}50%{transform:scale(1.045) translate(-0.6%,-0.4%)}}
-    @keyframes scanY{from{transform:translateY(-90px)}to{transform:translateY(740px)}}
-    @keyframes globalScan{from{transform:translateY(-120px)}to{transform:translateY(770px)}}
+    @keyframes scanY{from{transform:translateY(-90px)}to{transform:translateY(910px)}}
+    @keyframes globalScan{from{transform:translateY(-120px)}to{transform:translateY(940px)}}
     @keyframes dash{to{stroke-dashoffset:-180}}
     @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
     @keyframes pulseRing{0%{opacity:.6;transform:scale(1)}100%{opacity:0;transform:scale(2.4)}}
@@ -57,76 +57,112 @@
   </style>
 </defs>
 
-<rect width="1400" height="650" fill="#15130F"/>
-<rect width="1400" height="650" fill="url(#grid)"/>
-<rect x="1" y="1" width="1398" height="648" fill="none" stroke="#332E27"/>
-<text x="28" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="700" fill="#D97757" text-anchor="start" opacity="1.0">yuvraj@runtime:~$ ./map --career --eagle-view</text>
+<rect width="1400" height="820" fill="#15130F"/>
+<rect width="1400" height="820" fill="url(#grid)"/>
+<rect x="1" y="1" width="1398" height="818" fill="none" stroke="#332E27"/>
+<text x="28" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="700" fill="#D97757" text-anchor="start" opacity="1.0">yuvraj@runtime:~$ ./map --career --orbit-view</text>
 <text x="1370" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="650" fill="#8A8175" text-anchor="end" opacity="1.0">one builder / many layers</text>
 <line x1="28" y1="49" x2="1372" y2="49" stroke="#332E27"/>
-<text x="42" y="83" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="650" fill="#8A8175" text-anchor="start" opacity="1.0"># different domains; the same engineering instinct</text>
-<path d="M14 34V14H34 M1366 14H1386V34 M14 616V636H34 M1366 636H1386V616" fill="none" stroke="#5A3626" stroke-width="2"/>
+<path d="M14 34V14H34 M1366 14H1386V34 M14 786V806H34 M1366 806H1386V786" fill="none" stroke="#5A3626" stroke-width="2"/>
+<g style="transform-origin:700px 430px">
+<circle cx="700" cy="430" r="310" fill="none" stroke="#28241E" stroke-width="1" stroke-dasharray="2 10"><animateTransform attributeName="transform" type="rotate" from="0 700 430" to="360 700 430" dur="90s" repeatCount="indefinite"/></circle>
+</g>
+<g style="transform-origin:700px 430px">
+<circle cx="700" cy="430" r="165" fill="none" stroke="#28241E" stroke-width="1" stroke-dasharray="1 8"><animateTransform attributeName="transform" type="rotate" from="360 700 430" to="0 700 430" dur="70s" repeatCount="indefinite"/></circle>
+</g>
+<path id="orbitpath0" d="M700,120 L700,331" fill="none" stroke="#332E27" stroke-width="1.5"/>
+<g filter="url(#glow)">
+<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="0.0s" repeatCount="indefinite"><mpath xlink:href="#orbitpath0"/></animateMotion></circle>
+<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="1.3s" repeatCount="indefinite"><mpath xlink:href="#orbitpath0"/></animateMotion></circle>
+</g>
+<path id="orbitpath1" d="M995,334 L794,399" fill="none" stroke="#332E27" stroke-width="1.5"/>
+<g filter="url(#glow)">
+<circle r="3.5" fill="#D97757"><animateMotion dur="2.6s" begin="0.4s" repeatCount="indefinite"><mpath xlink:href="#orbitpath1"/></animateMotion></circle>
+<circle r="3.5" fill="#D97757"><animateMotion dur="2.6s" begin="1.7s" repeatCount="indefinite"><mpath xlink:href="#orbitpath1"/></animateMotion></circle>
+</g>
+<path id="orbitpath2" d="M882,681 L758,510" fill="none" stroke="#332E27" stroke-width="1.5"/>
+<g filter="url(#glow)">
+<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="0.8s" repeatCount="indefinite"><mpath xlink:href="#orbitpath2"/></animateMotion></circle>
+<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="2.1s" repeatCount="indefinite"><mpath xlink:href="#orbitpath2"/></animateMotion></circle>
+</g>
+<path id="orbitpath3" d="M518,681 L642,510" fill="none" stroke="#332E27" stroke-width="1.5"/>
+<g filter="url(#glow)">
+<circle r="3.5" fill="#D97757"><animateMotion dur="2.6s" begin="1.2s" repeatCount="indefinite"><mpath xlink:href="#orbitpath3"/></animateMotion></circle>
+<circle r="3.5" fill="#D97757"><animateMotion dur="2.6s" begin="2.5s" repeatCount="indefinite"><mpath xlink:href="#orbitpath3"/></animateMotion></circle>
+</g>
+<path id="orbitpath4" d="M405,334 L606,399" fill="none" stroke="#332E27" stroke-width="1.5"/>
+<g filter="url(#glow)">
+<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="1.6s" repeatCount="indefinite"><mpath xlink:href="#orbitpath4"/></animateMotion></circle>
+<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="2.9s" repeatCount="indefinite"><mpath xlink:href="#orbitpath4"/></animateMotion></circle>
+</g>
+<g class="pulse" style="animation-delay:0.00s">
+<rect x="656.4" y="252.0" width="87.19999999999999" height="26" rx="13.0" fill="#211D17" stroke="#D97757" stroke-width="1.2"/>
+<circle cx="672.4" cy="265.0" r="3.2" fill="#D97757"/>
+<text x="683.4" y="269.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">CONTROL</text>
+</g>
+<g class="pulse" style="animation-delay:0.35s">
+<rect x="806.8941916244323" y="334.5" width="72.0" height="26" rx="13.0" fill="#211D17" stroke="#8FA888" stroke-width="1.2"/>
+<circle cx="822.8941916244323" cy="347.5" r="3.2" fill="#8FA888"/>
+<text x="833.8941916244323" y="351.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">STATE</text>
+</g>
+<g class="pulse" style="animation-delay:0.70s">
+<rect x="806.8941916244323" y="499.5" width="72.0" height="26" rx="13.0" fill="#211D17" stroke="#D97757" stroke-width="1.2"/>
+<circle cx="822.8941916244323" cy="512.5" r="3.2" fill="#D97757"/>
+<text x="833.8941916244323" y="516.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">MONEY</text>
+</g>
+<g class="pulse" style="animation-delay:1.05s">
+<rect x="656.4" y="582.0" width="87.19999999999999" height="26" rx="13.0" fill="#211D17" stroke="#8FA888" stroke-width="1.2"/>
+<circle cx="672.4" cy="595.0" r="3.2" fill="#8FA888"/>
+<text x="683.4" y="599.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">LATENCY</text>
+</g>
+<g class="pulse" style="animation-delay:1.40s">
+<rect x="509.7058083755677" y="499.5" width="94.8" height="26" rx="13.0" fill="#211D17" stroke="#D97757" stroke-width="1.2"/>
+<circle cx="525.7058083755677" cy="512.5" r="3.2" fill="#D97757"/>
+<text x="536.7058083755677" y="516.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">RECOVERY</text>
+</g>
+<g class="pulse" style="animation-delay:1.75s">
+<rect x="509.7058083755677" y="334.5" width="94.8" height="26" rx="13.0" fill="#211D17" stroke="#8FA888" stroke-width="1.2"/>
+<circle cx="525.7058083755677" cy="347.5" r="3.2" fill="#8FA888"/>
+<text x="536.7058083755677" y="351.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">OPERATOR</text>
+</g>
+<circle cx="700" cy="430" r="111" fill="none" stroke="#E8977A" stroke-width="1.4" opacity=".5" class="pulse-ring"/>
+<circle cx="700" cy="430" r="95" fill="url(#panelGradWarm)" stroke="#D97757" stroke-width="2"/>
+<text x="700" y="416" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="800" fill="#D97757" text-anchor="middle" opacity="1.0">THE COMMON</text>
+<text x="700" y="440" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">LAYER</text>
+<text x="700" y="464" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="650" fill="#A8C29F" text-anchor="middle" opacity="1.0">5 domains, 1 discipline</text>
 <g class="rise" style="animation-delay:0.00s">
-<rect x="46" y="112" width="228" height="142" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
-<rect x="46" y="112" width="4" height="142" rx="2" fill="#8FA888"/>
-<text x="64" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">PRODUCT / AUTOMATION</text>
-<line x1="64" y1="152" x2="256" y2="152" stroke="#28241E"/>
-<text x="64" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">ship from zero</text>
-<text x="64" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">workflows + integrations</text>
-<text x="64" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">operator-facing products</text>
+<rect x="605.0" y="76.0" width="190" height="88" rx="16" fill="url(#panelGrad)" stroke="#332E27" stroke-width="1.4"/>
+<rect x="605.0" y="76.0" width="190" height="3" rx="1.5" fill="#8FA888"/>
+<text x="700.0" y="102.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">PRODUCT / AUTOMATION</text>
+<text x="700.0" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">ship from zero</text>
+<text x="700.0" y="144.0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">workflows + integrations</text>
 </g>
-<g class="rise" style="animation-delay:0.08s">
-<rect x="316" y="112" width="228" height="142" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
-<rect x="316" y="112" width="4" height="142" rx="2" fill="#D97757"/>
-<text x="334" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">BLOCKCHAIN / DEFI</text>
-<line x1="334" y1="152" x2="526" y2="152" stroke="#28241E"/>
-<text x="334" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">signing + replay</text>
-<text x="334" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">irreversible state</text>
-<text x="334" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">on-chain correctness</text>
+<g class="rise" style="animation-delay:0.10s">
+<rect x="899.8275200514976" y="290.2047317437663" width="190" height="88" rx="16" fill="url(#panelGrad)" stroke="#332E27" stroke-width="1.4"/>
+<rect x="899.8275200514976" y="290.2047317437663" width="190" height="3" rx="1.5" fill="#D97757"/>
+<text x="994.8275200514976" y="316.2047317437663" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">BLOCKCHAIN / DEFI</text>
+<text x="994.8275200514976" y="338.2047317437663" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">signing + replay</text>
+<text x="994.8275200514976" y="358.2047317437663" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">irreversible state</text>
 </g>
-<g class="rise" style="animation-delay:0.16s">
-<rect x="586" y="112" width="228" height="142" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
-<rect x="586" y="112" width="4" height="142" rx="2" fill="#8FA888"/>
-<text x="604" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">QUANT / FINANCIAL</text>
-<line x1="604" y1="152" x2="796" y2="152" stroke="#28241E"/>
-<text x="604" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">orders + fills</text>
-<text x="604" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">ledger + reconciliation</text>
-<text x="604" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">risk + control rooms</text>
+<g class="rise" style="animation-delay:0.20s">
+<rect x="787.2134282106667" y="636.7952682562337" width="190" height="88" rx="16" fill="url(#panelGrad)" stroke="#332E27" stroke-width="1.4"/>
+<rect x="787.2134282106667" y="636.7952682562337" width="190" height="3" rx="1.5" fill="#8FA888"/>
+<text x="882.2134282106667" y="662.7952682562337" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">QUANT / FINANCIAL</text>
+<text x="882.2134282106667" y="684.7952682562337" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">orders + fills</text>
+<text x="882.2134282106667" y="704.7952682562337" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">ledger + reconciliation</text>
 </g>
-<g class="rise" style="animation-delay:0.24s">
-<rect x="856" y="112" width="228" height="142" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
-<rect x="856" y="112" width="4" height="142" rx="2" fill="#D97757"/>
-<text x="874" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">LINUX / PLATFORM</text>
-<line x1="874" y1="152" x2="1066" y2="152" stroke="#28241E"/>
-<text x="874" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">CI + release safety</text>
-<text x="874" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">diagnostics + images</text>
-<text x="874" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">reproducible systems</text>
+<g class="rise" style="animation-delay:0.30s">
+<rect x="422.7865717893334" y="636.7952682562337" width="190" height="88" rx="16" fill="url(#panelGrad)" stroke="#332E27" stroke-width="1.4"/>
+<rect x="422.7865717893334" y="636.7952682562337" width="190" height="3" rx="1.5" fill="#D97757"/>
+<text x="517.7865717893334" y="662.7952682562337" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">LINUX / PLATFORM</text>
+<text x="517.7865717893334" y="684.7952682562337" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">CI + release safety</text>
+<text x="517.7865717893334" y="704.7952682562337" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">diagnostics + images</text>
 </g>
-<g class="rise" style="animation-delay:0.32s">
-<rect x="1126" y="112" width="228" height="142" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
-<rect x="1126" y="112" width="4" height="142" rx="2" fill="#8FA888"/>
-<text x="1144" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">AI RUNTIME</text>
-<line x1="1144" y1="152" x2="1336" y2="152" stroke="#28241E"/>
-<text x="1144" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">gateway + streaming</text>
-<text x="1144" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">policy + economics</text>
-<text x="1144" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">routing + evidence</text>
+<g class="rise" style="animation-delay:0.40s">
+<rect x="310.17247994850237" y="290.20473174376633" width="190" height="88" rx="16" fill="url(#panelGrad)" stroke="#332E27" stroke-width="1.4"/>
+<rect x="310.17247994850237" y="290.20473174376633" width="190" height="3" rx="1.5" fill="#8FA888"/>
+<text x="405.17247994850237" y="316.20473174376633" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">AI RUNTIME</text>
+<text x="405.17247994850237" y="338.20473174376633" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">gateway + streaming</text>
+<text x="405.17247994850237" y="358.20473174376633" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">policy + economics</text>
 </g>
-<path d="M160 254 V324" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
-<path d="M430 254 V324" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
-<path d="M700 254 V324" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
-<path d="M970 254 V324" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
-<path d="M1240 254 V324" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
-<rect x="120" y="324" width="1160" height="124" rx="6" fill="url(#panelGradWarm)" stroke="#D97757"/>
-<path d="M120 342V324H138 M1262 324H1280V342 M120 430V448H138 M1262 448H1280V430" fill="none" stroke="#E8977A" stroke-width="2"/>
-<text x="700" y="360" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="800" fill="#D97757" text-anchor="middle" opacity="1.0">THE COMMON LAYER</text>
-<text x="700" y="400" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">CONTROL  ·  STATE  ·  MONEY  ·  LATENCY  ·  RECOVERY  ·  OPERATOR</text>
-<text x="700" y="430" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="650" fill="#A8C29F" text-anchor="middle" opacity="1.0">the system is only finished when the consequence is owned</text>
-<path id="flow1" d="M170 386 H1230" fill="none" stroke="#332E27" stroke-width="1"/>
-<circle cx="170" cy="386" r="5" fill="#E8977A" filter="url(#glow)" class="packet1"/>
-<circle cx="1230" cy="386" r="4" fill="#A8C29F" class="packet2"/>
-<path d="M700 448 V505" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
-<rect x="255" y="505" width="890" height="92" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
-<text x="282" y="540" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="800" fill="#8FA888" text-anchor="start" opacity="1.0">$ builder_mode</text>
-<text x="282" y="575" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#F3EEE4" text-anchor="start" opacity="1.0">understand the business -&gt; find the invariant -&gt; build -&gt; operate -&gt; rewrite what reality disproves</text>
-<text x="42" y="625" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="650" fill="#8A8175" text-anchor="start" opacity="1.0">breadth is not the point; end-to-end ownership is</text>
-<g class="global-scan"><rect x="0" y="0" width="1400" height="1" fill="#E8977A" opacity=".14"/><rect x="0" y="1" width="1400" height="42" fill="url(#scanFadeY)" opacity=".09"/></g>
 </svg>

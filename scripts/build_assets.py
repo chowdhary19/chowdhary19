@@ -4,6 +4,7 @@ from pathlib import Path
 import base64
 import html
 import io
+import math
 
 from tech_icons import ICONS, BRAND_ICONS
 
@@ -97,8 +98,6 @@ def _silhouette_mask(nx: float, ny: float) -> float:
     portrait background goes fully black instead of showing faint static
     from a flat studio backdrop. Tuned to this specific photo's framing.
     """
-    import math
-
     hx, hy, rx, ry = 0.5, 0.36, 0.29, 0.35
     head_d = math.sqrt(((nx - hx) / rx) ** 2 + ((ny - hy) / ry) ** 2)
 
@@ -279,7 +278,7 @@ def shell(width: int, height: int, title: str, desc: str, body: list[str]) -> st
 </defs>
 """
     return "\n".join([
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
+        f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
         f'<title id="title">{esc(title)}</title>',
         f'<desc id="desc">{esc(desc)}</desc>',
         defs,
@@ -445,35 +444,67 @@ def write_buttons() -> None:
 
 
 def write_tech_stack() -> None:
-    order = ["go", "python", "rust", "typescript", "postgresql", "redis", "apachekafka",
-             "rabbitmq", "docker", "kubernetes", "amazonaws", "githubactions", "linux",
-             "react", "nextdotjs", "terraform", "grafana", "prometheus"]
-    cols, tile_w, tile_h = 9, 155, 138
-    rows = (len(order) + cols - 1) // cols
-    w, h = cols * tile_w, rows * tile_h + 60
+    """Not a flat icon grid -- an actual stack. Layers drawn foundation-first
+    (platform/cloud at the base) up to the product surface at top, with a
+    glowing marker climbing the spine from bottom to top: the same "a request
+    moves through layers, and I know what happens at each one" idea the rest
+    of the profile is built around, not just a wall of logos.
+    """
+    layers = [
+        ("PRODUCT SURFACE", "the interface", ["react", "nextdotjs"], CLAY),
+        ("OBSERVABILITY", "the visibility", ["grafana", "prometheus"], SAGE),
+        ("RUNTIME LANGUAGES", "the execution", ["go", "python", "rust", "typescript"], CLAY),
+        ("DATA + MESSAGING", "the state", ["postgresql", "redis", "apachekafka", "rabbitmq"], SAGE),
+        ("PLATFORM + CLOUD", "the foundation", ["docker", "kubernetes", "amazonaws", "terraform", "linux", "githubactions"], CLAY),
+    ]
+    w = 1400
+    band_h = 104
+    top = 64
+    h = top + band_h * len(layers) + 26
 
     body = [
-        txt(28, 34, "yuvraj@runtime:~$ ls stack/ --logos", 13, CLAY, 700),
+        txt(28, 34, "yuvraj@runtime:~$ ./stack --trace-request --bottom-up", 13, CLAY, 700),
         txt(w - 28, 34, "the tools; not the identity", 11, MUTED, 650, anchor="end"),
         f'<line x1="28" y1="49" x2="{w-28}" y2="49" stroke="{LINE}"/>',
-        frame_brackets(10, 60, w - 20, h - 76, CLAY_DIM, corner=16),
+        frame_brackets(14, 60, w - 28, band_h * len(layers) + 8, CLAY_DIM, corner=16),
     ]
-    for i, slug in enumerate(order):
-        label, d = ICONS[slug]
-        col, row = i % cols, i // cols
-        cx = col * tile_w + tile_w / 2
-        cy = 60 + row * tile_h + tile_h / 2
-        tint = CREAM if (i % 2 == 0) else PARCHMENT
-        delay = 0.05 * i
+
+    spine_x = 258
+    spine_top, spine_bottom = top + 10, top + band_h * len(layers) - 10
+    body += [
+        f'<line x1="{spine_x}" y1="{spine_top}" x2="{spine_x}" y2="{spine_bottom}" stroke="{LINE}" stroke-width="1.5"/>',
+        f'<path id="stackSpine" d="M{spine_x},{spine_bottom} L{spine_x},{spine_top}" fill="none" stroke="none"/>',
+        f'<g filter="url(#glow)"><circle r="5" fill="{CLAY_BRIGHT}"><animateMotion dur="5s" repeatCount="indefinite"><mpath xlink:href="#stackSpine"/></animateMotion></circle></g>',
+        txt(spine_x, spine_top - 18, "request", 9.5, MUTED, 650, "middle"),
+    ]
+
+    n_layers = len(layers)
+    for i, (title, subtitle, icons, accent) in enumerate(layers):
+        y0 = top + i * band_h
+        cy = y0 + band_h / 2
+        body.append(f'<g class="rise" style="animation-delay:{0.08*i:.2f}s">')
         body += [
-            f'<g class="rise" style="animation-delay:{delay:.2f}s">',
-            f'<rect x="{col*tile_w+10}" y="{60+row*tile_h+8}" width="{tile_w-20}" height="{tile_h-16}" rx="10" fill="url(#panelGrad)" stroke="{LINE_SOFT}"/>',
-            f'<g transform="translate({cx-19},{cy-30}) scale({38/24:.4f})"><path d="{d}" fill="{tint}"/></g>',
-            txt(cx, cy + 38, label, 11.5, MUTED, 600, anchor="middle", family=SANS),
-            '</g>',
+            f'<rect x="14" y="{y0+2}" width="{w-28}" height="{band_h-4}" fill="url(#panelGrad)"/>',
+            txt(46, y0 + 28, f"L{n_layers-i:02d}", 10, accent, 700),
+            txt(46, y0 + 52, title, 13.5, CREAM, 800, family=SANS),
+            txt(46, y0 + 72, subtitle, 10.5, MUTED, 600),
+            f'<circle cx="{spine_x}" cy="{cy}" r="4.5" fill="{accent}"/>',
         ]
+        for j, slug in enumerate(icons):
+            label, d = ICONS[slug]
+            cx = 340 + j * 150
+            scale = 30 / 24
+            body += [
+                f'<g transform="translate({cx-15},{cy-24}) scale({scale:.4f})"><path d="{d}" fill="{CREAM if (i+j) % 2 == 0 else PARCHMENT}"/></g>',
+                txt(cx, cy + 22, label, 10, MUTED, 600, "middle", family=SANS),
+            ]
+        body.append('</g>')
+        if i < n_layers - 1:
+            body.append(f'<line x1="14" y1="{y0+band_h}" x2="{w-14}" y2="{y0+band_h}" stroke="{LINE_SOFT}"/>')
+
     (ASSETS / "tech-stack.svg").write_text(
-        shell(w, h, "Tech stack", "Logos for the languages and infrastructure Yuvraj builds with.", body),
+        shell(w, h, "Tech stack",
+              "A layered stack diagram from platform and cloud at the foundation up to the product surface, with an animated request climbing through it.", body),
         encoding="utf-8",
     )
 
@@ -547,67 +578,114 @@ def write_hero(portrait_uri: str) -> None:
     )
 
 
-def node(x: int, y: int, title: str, lines: list[str], accent: str, width: int = 240) -> list[str]:
+def _orbit_xy(cx: float, cy: float, r: float, deg: float) -> tuple[float, float]:
+    rad = math.radians(deg)
+    return cx + r * math.cos(rad), cy + r * math.sin(rad)
+
+
+def bubble(x: float, y: float, w: float, h: float, title: str, lines: list[str], accent: str) -> list[str]:
     out = [
-        f'<rect x="{x}" y="{y}" width="{width}" height="142" rx="6" fill="url(#panelGrad)" stroke="{LINE}"/>',
-        f'<rect x="{x}" y="{y}" width="4" height="142" rx="2" fill="{accent}"/>',
-        txt(x + 18, y + 28, title, 13, CREAM, 800, family=SANS),
-        f'<line x1="{x+18}" y1="{y+40}" x2="{x+width-18}" y2="{y+40}" stroke="{LINE_SOFT}"/>',
+        f'<rect x="{x-w/2}" y="{y-h/2}" width="{w}" height="{h}" rx="16" fill="url(#panelGrad)" stroke="{LINE}" stroke-width="1.4"/>',
+        f'<rect x="{x-w/2}" y="{y-h/2}" width="{w}" height="3" rx="1.5" fill="{accent}"/>',
+        txt(x, y - h/2 + 26, title, 12.5, CREAM, 800, "middle", family=SANS),
     ]
-    yy = y + 67
+    yy = y - h/2 + 48
     for line in lines:
-        out.append(txt(x + 18, yy, line, 11, PARCHMENT, 600))
-        yy += 23
+        out.append(txt(x, yy, line, 10.5, PARCHMENT, 600, "middle"))
+        yy += 20
     return out
 
 
 def write_systems_overview() -> None:
-    w, h = 1400, 650
+    w, h = 1400, 820
+    hub_x, hub_y = 700, 430
+    hub_r, tag_r, bubble_r = 95, 165, 310
+
     body: list[str] = [
-        txt(28, 34, "yuvraj@runtime:~$ ./map --career --eagle-view", 13, CLAY, 700),
+        txt(28, 34, "yuvraj@runtime:~$ ./map --career --orbit-view", 13, CLAY, 700),
         txt(1370, 34, "one builder / many layers", 11, MUTED, 650, "end"),
         f'<line x1="28" y1="49" x2="1372" y2="49" stroke="{LINE}"/>',
-        txt(42, 83, "# different domains; the same engineering instinct", 12, MUTED, 650),
         frame_brackets(14, 14, w - 28, h - 28, CLAY_DIM, corner=20),
     ]
 
-    positions = [46, 316, 586, 856, 1126]
-    titles = ["PRODUCT / AUTOMATION", "BLOCKCHAIN / DEFI", "QUANT / FINANCIAL", "LINUX / PLATFORM", "AI RUNTIME"]
-    data = [
-        ["ship from zero", "workflows + integrations", "operator-facing products"],
-        ["signing + replay", "irreversible state", "on-chain correctness"],
-        ["orders + fills", "ledger + reconciliation", "risk + control rooms"],
-        ["CI + release safety", "diagnostics + images", "reproducible systems"],
-        ["gateway + streaming", "policy + economics", "routing + evidence"],
+    # slow-rotating guide rings -- imply the orbit even when nothing else moves
+    body += [
+        f'<g style="transform-origin:{hub_x}px {hub_y}px">',
+        f'<circle cx="{hub_x}" cy="{hub_y}" r="{bubble_r}" fill="none" stroke="{LINE_SOFT}" stroke-width="1" stroke-dasharray="2 10"><animateTransform attributeName="transform" type="rotate" from="0 {hub_x} {hub_y}" to="360 {hub_x} {hub_y}" dur="90s" repeatCount="indefinite"/></circle>',
+        '</g>',
+        f'<g style="transform-origin:{hub_x}px {hub_y}px">',
+        f'<circle cx="{hub_x}" cy="{hub_y}" r="{tag_r}" fill="none" stroke="{LINE_SOFT}" stroke-width="1" stroke-dasharray="1 8"><animateTransform attributeName="transform" type="rotate" from="360 {hub_x} {hub_y}" to="0 {hub_x} {hub_y}" dur="70s" repeatCount="indefinite"/></circle>',
+        '</g>',
     ]
-    accents = [SAGE, CLAY, SAGE, CLAY, SAGE]
-    for i, (x, title, lines, accent) in enumerate(zip(positions, titles, data, accents)):
-        body.append(f'<g class="rise" style="animation-delay:{0.08*i:.2f}s">')
-        body += node(x, 112, title, lines, accent, 228)
+
+    domains = [
+        ("PRODUCT / AUTOMATION", ["ship from zero", "workflows + integrations"], SAGE),
+        ("BLOCKCHAIN / DEFI", ["signing + replay", "irreversible state"], CLAY),
+        ("QUANT / FINANCIAL", ["orders + fills", "ledger + reconciliation"], SAGE),
+        ("LINUX / PLATFORM", ["CI + release safety", "diagnostics + images"], CLAY),
+        ("AI RUNTIME", ["gateway + streaming", "policy + economics"], SAGE),
+    ]
+    bw, bh = 190, 88
+
+    # connecting lines + traveling particles, drawn under the bubbles/hub
+    for i, (title, lines, accent) in enumerate(domains):
+        deg = -90 + i * (360 / len(domains))
+        bx, by = _orbit_xy(hub_x, hub_y, bubble_r, deg)
+        hx, hy = _orbit_xy(hub_x, hub_y, hub_r + 4, deg)
+        pid = f"orbitpath{i}"
+        body += [
+            f'<path id="{pid}" d="M{bx:.0f},{by:.0f} L{hx:.0f},{hy:.0f}" fill="none" stroke="{LINE}" stroke-width="1.5"/>',
+            f'<g filter="url(#glow)">',
+            f'<circle r="3.5" fill="{accent}"><animateMotion dur="2.6s" begin="{i*0.4:.1f}s" repeatCount="indefinite"><mpath xlink:href="#{pid}"/></animateMotion></circle>',
+            f'<circle r="3.5" fill="{accent}"><animateMotion dur="2.6s" begin="{i*0.4+1.3:.1f}s" repeatCount="indefinite"><mpath xlink:href="#{pid}"/></animateMotion></circle>',
+            '</g>',
+        ]
+
+    # inner ring: the shared concepts, orbiting as small satellite tags
+    concepts = ["CONTROL", "STATE", "MONEY", "LATENCY", "RECOVERY", "OPERATOR"]
+    for i, label in enumerate(concepts):
+        deg = -90 + i * (360 / len(concepts))
+        tx, ty = _orbit_xy(hub_x, hub_y, tag_r, deg)
+        accent = CLAY if i % 2 == 0 else SAGE
+        tw = 34 + len(label) * 7.6
+        body.append(f'<g class="pulse" style="animation-delay:{i*0.35:.2f}s">')
+        body += pill(tx - tw/2, ty - 13, tw, 26, label, accent)
         body.append('</g>')
 
-    for x in [160, 430, 700, 970, 1240]:
-        body.append(f'<path d="M{x} 254 V324" fill="none" stroke="{LINE}" stroke-width="2" class="dash"/>')
+    # hub, drawn last so it sits above the connecting lines
     body += [
-        f'<rect x="120" y="324" width="1160" height="124" rx="6" fill="url(#panelGradWarm)" stroke="{CLAY}"/>',
-        frame_brackets(120, 324, 1160, 124, CLAY_BRIGHT, corner=18),
-        txt(700, 360, "THE COMMON LAYER", 13, CLAY, 800, "middle"),
-        txt(700, 400, "CONTROL  ·  STATE  ·  MONEY  ·  LATENCY  ·  RECOVERY  ·  OPERATOR", 20, CREAM, 800, "middle", family=SANS),
-        txt(700, 430, "the system is only finished when the consequence is owned", 12, SAGE_BRIGHT, 650, "middle"),
-        f'<path id="flow1" d="M170 386 H1230" fill="none" stroke="{LINE}" stroke-width="1"/>',
-        f'<circle cx="170" cy="386" r="5" fill="{CLAY_BRIGHT}" filter="url(#glow)" class="packet1"/>',
-        f'<circle cx="1230" cy="386" r="4" fill="{SAGE_BRIGHT}" class="packet2"/>',
-
-        f'<path d="M700 448 V505" fill="none" stroke="{LINE}" stroke-width="2" class="dash"/>',
-        f'<rect x="255" y="505" width="890" height="92" rx="6" fill="url(#panelGrad)" stroke="{LINE}"/>',
-        txt(282, 540, "$ builder_mode", 13, SAGE, 800),
-        txt(282, 575, "understand the business -> find the invariant -> build -> operate -> rewrite what reality disproves", 14, CREAM, 600, family=SANS),
-        txt(42, 625, "breadth is not the point; end-to-end ownership is", 11, MUTED, 650),
-        f'<g class="global-scan"><rect x="0" y="0" width="{w}" height="1" fill="{CLAY_BRIGHT}" opacity=".14"/><rect x="0" y="1" width="{w}" height="42" fill="url(#scanFadeY)" opacity=".09"/></g>',
+        f'<circle cx="{hub_x}" cy="{hub_y}" r="{hub_r+16}" fill="none" stroke="{CLAY_BRIGHT}" stroke-width="1.4" opacity=".5" class="pulse-ring"/>',
+        f'<circle cx="{hub_x}" cy="{hub_y}" r="{hub_r}" fill="url(#panelGradWarm)" stroke="{CLAY}" stroke-width="2"/>',
+        txt(hub_x, hub_y - 14, "THE COMMON", 15, CLAY, 800, "middle", family=SANS),
+        txt(hub_x, hub_y + 10, "LAYER", 22, CREAM, 800, "middle", family=SANS),
+        txt(hub_x, hub_y + 34, "5 domains, 1 discipline", 10.5, SAGE_BRIGHT, 650, "middle"),
     ]
+
+    # domain bubbles, staggered reveal, drawn on top of everything
+    for i, (title, lines, accent) in enumerate(domains):
+        deg = -90 + i * (360 / len(domains))
+        bx, by = _orbit_xy(hub_x, hub_y, bubble_r, deg)
+        body.append(f'<g class="rise" style="animation-delay:{0.1*i:.2f}s">')
+        body += bubble(bx, by, bw, bh, title, lines, accent)
+        body.append('</g>')
+
     (ASSETS / "systems-overview.svg").write_text(
         shell(w, h, "Systems overview",
-              "A terminal map connecting product, blockchain, quantitative finance, Linux platform engineering and AI runtime work through shared systems principles.", body),
+              "An orbit diagram: product, blockchain, quantitative finance, Linux platform engineering and AI runtime work, converging on one shared control discipline.", body),
+        encoding="utf-8",
+    )
+
+
+def write_builder_mode() -> None:
+    w, h = 1400, 170
+    body = [
+        f'<rect x="40" y="24" width="6" height="122" rx="3" fill="{CLAY}"/>',
+        txt(70, 60, "$ builder_mode", 13, SAGE, 800),
+        txt(70, 98, "understand the business  ->  find the invariant  ->  build  ->  operate  ->  rewrite what reality disproves", 18, CREAM, 700, SANS),
+        txt(70, 130, "breadth is not the point; end-to-end ownership is", 12, MUTED, 650),
+    ]
+    (ASSETS / "builder-mode.svg").write_text(
+        shell(w, h, "Builder mode", "How the work actually gets done, end to end.", body),
         encoding="utf-8",
     )
 
@@ -699,12 +777,19 @@ def main() -> None:
     portrait_uri = prepare_portrait()
     write_hero(portrait_uri)
     write_systems_overview()
+    write_builder_mode()
     write_buttons()
     write_tech_stack()
-    write_placeholder_contributions()
-    write_placeholder_activity()
+    # Placeholders exist only to give a brand-new checkout something to show
+    # before the "Refresh profile signal" Action has ever run. Once real data
+    # is in place, running this script again for unrelated asset changes must
+    # never silently blow it away and replace it with "--" placeholders.
+    if not (ASSETS / "github-contributions.svg").exists():
+        write_placeholder_contributions()
+    if not (ASSETS / "github-activity.svg").exists():
+        write_placeholder_activity()
     write_social_preview(portrait_uri)
-    for name in ["hero-terminal", "systems-overview", "tech-stack", "github-contributions", "github-activity", "social-preview"]:
+    for name in ["hero-terminal", "systems-overview", "builder-mode", "tech-stack", "github-contributions", "github-activity", "social-preview"]:
         render(f"{name}.svg", f"{name}.png")
     for slug in ["synvolv", "call", "email", "linkedin"]:
         render(f"button-{slug}.svg", f"button-{slug}.png")

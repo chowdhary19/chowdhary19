@@ -49,7 +49,11 @@ That is exactly how I build. Understand the business. Find the real invariant. S
 <br>
 
 <div align="center">
-  <img src="./assets/systems-overview.svg" width="100%" alt="An animated terminal systems map showing Yuvraj's work across product, blockchain, quantitative finance, infrastructure and AI runtime systems">
+  <img src="./assets/systems-overview.svg" width="100%" alt="An orbit diagram: product, blockchain, quantitative finance, Linux platform engineering and AI runtime work, converging on one shared control discipline">
+</div>
+
+<div align="center">
+  <img src="./assets/builder-mode.svg" width="100%" alt="Builder mode: understand the business, find the invariant, build, operate, rewrite what reality disproves">
 </div>
 
 <br>

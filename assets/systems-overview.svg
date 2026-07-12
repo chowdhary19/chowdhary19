@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1400" height="960" viewBox="0 0 1400 960" role="img" aria-labelledby="title desc">
 <title id="title">Systems overview</title>
-<desc id="desc">An orbit diagram: product, blockchain, quantitative finance, Linux platform engineering and AI runtime work, converging on one shared control discipline.</desc>
+<desc id="desc">An orbit diagram with live per-node sparkline meters and bold circuit-routed data links: product, blockchain, quantitative finance, Linux platform engineering and AI runtime work, converging on one shared control discipline.</desc>
 
 <defs>
   <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
@@ -44,8 +44,8 @@
     @keyframes typeIn{from{width:0}to{width:var(--tw)}}
     @keyframes blinkIn{0%{opacity:0}0.01%,50%{opacity:1}50.01%,100%{opacity:0}}
     @keyframes zoom{0%,100%{transform:scale(1) translate(0,0)}50%{transform:scale(1.045) translate(-0.6%,-0.4%)}}
-    @keyframes scanY{from{transform:translateY(-90px)}to{transform:translateY(910px)}}
-    @keyframes globalScan{from{transform:translateY(-120px)}to{transform:translateY(940px)}}
+    @keyframes scanY{from{transform:translateY(-90px)}to{transform:translateY(1050px)}}
+    @keyframes globalScan{from{transform:translateY(-120px)}to{transform:translateY(1080px)}}
     @keyframes dash{to{stroke-dashoffset:-180}}
     @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
     @keyframes pulseRing{0%{opacity:.6;transform:scale(1)}100%{opacity:0;transform:scale(2.4)}}
@@ -57,112 +57,205 @@
   </style>
 </defs>
 
-<rect width="1400" height="820" fill="#15130F"/>
-<rect width="1400" height="820" fill="url(#grid)"/>
-<rect x="1" y="1" width="1398" height="818" fill="none" stroke="#332E27"/>
+<rect width="1400" height="960" fill="#15130F"/>
+<rect width="1400" height="960" fill="url(#grid)"/>
+<rect x="1" y="1" width="1398" height="958" fill="none" stroke="#332E27"/>
 <text x="28" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="700" fill="#D97757" text-anchor="start" opacity="1.0">yuvraj@runtime:~$ ./map --career --orbit-view</text>
 <text x="1370" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="650" fill="#8A8175" text-anchor="end" opacity="1.0">one builder / many layers</text>
 <line x1="28" y1="49" x2="1372" y2="49" stroke="#332E27"/>
-<path d="M14 34V14H34 M1366 14H1386V34 M14 786V806H34 M1366 806H1386V786" fill="none" stroke="#5A3626" stroke-width="2"/>
-<g style="transform-origin:700px 430px">
-<circle cx="700" cy="430" r="310" fill="none" stroke="#28241E" stroke-width="1" stroke-dasharray="2 10"><animateTransform attributeName="transform" type="rotate" from="0 700 430" to="360 700 430" dur="90s" repeatCount="indefinite"/></circle>
+<path d="M14 34V14H34 M1366 14H1386V34 M14 926V946H34 M1366 946H1386V926" fill="none" stroke="#5A3626" stroke-width="2"/>
+<g style="transform-origin:700px 490px">
+<circle cx="700" cy="490" r="355" fill="none" stroke="#28241E" stroke-width="1" stroke-dasharray="2 10"><animateTransform attributeName="transform" type="rotate" from="0 700 490" to="360 700 490" dur="90s" repeatCount="indefinite"/></circle>
 </g>
-<g style="transform-origin:700px 430px">
-<circle cx="700" cy="430" r="165" fill="none" stroke="#28241E" stroke-width="1" stroke-dasharray="1 8"><animateTransform attributeName="transform" type="rotate" from="360 700 430" to="0 700 430" dur="70s" repeatCount="indefinite"/></circle>
+<g style="transform-origin:700px 490px">
+<circle cx="700" cy="490" r="180" fill="none" stroke="#28241E" stroke-width="1" stroke-dasharray="1 8"><animateTransform attributeName="transform" type="rotate" from="360 700 490" to="0 700 490" dur="70s" repeatCount="indefinite"/></circle>
 </g>
-<path id="orbitpath0" d="M700,120 L700,331" fill="none" stroke="#332E27" stroke-width="1.5"/>
+<path id="satring0" d="M1055.0,490.0 A355,355 0 1,1 345.0,490.0 A355,355 0 1,1 1055.0,490.0" fill="none" stroke="none"/>
+<circle r="2.4" fill="#8A8175" opacity=".6"><animateMotion dur="44s" begin="0s" repeatCount="indefinite"><mpath xlink:href="#satring0"/></animateMotion></circle>
+<path id="satring1" d="M522.5,797.4 A355,355 0 1,1 877.5,182.6 A355,355 0 1,1 522.5,797.4" fill="none" stroke="none"/>
+<circle r="2.4" fill="#8A8175" opacity=".6"><animateMotion dur="49s" begin="0s" repeatCount="indefinite"><mpath xlink:href="#satring1"/></animateMotion></circle>
+<path id="satring2" d="M522.5,182.6 A355,355 0 1,1 877.5,797.4 A355,355 0 1,1 522.5,182.6" fill="none" stroke="none"/>
+<circle r="2.4" fill="#8A8175" opacity=".6"><animateMotion dur="54s" begin="0s" repeatCount="indefinite"><mpath xlink:href="#satring2"/></animateMotion></circle>
+<path d="M700.0,135.0 L700.0,391.0" fill="none" stroke="#8FA888" stroke-width="2.6" opacity=".4"/>
+<path id="orbitpath0" d="M700.0,135.0 L700.0,391.0" fill="none" stroke="none"/>
+<circle cx="700" cy="135" r="3.4" fill="#15130F" stroke="#8FA888" stroke-width="2"/>
 <g filter="url(#glow)">
-<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="0.0s" repeatCount="indefinite"><mpath xlink:href="#orbitpath0"/></animateMotion></circle>
-<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="1.3s" repeatCount="indefinite"><mpath xlink:href="#orbitpath0"/></animateMotion></circle>
+<circle r="4" fill="#8FA888"><animateMotion dur="2.6s" begin="0.0s" repeatCount="indefinite"><mpath xlink:href="#orbitpath0"/></animateMotion></circle>
+<circle r="4" fill="#8FA888"><animateMotion dur="2.6s" begin="1.3s" repeatCount="indefinite"><mpath xlink:href="#orbitpath0"/></animateMotion></circle>
 </g>
-<path id="orbitpath1" d="M995,334 L794,399" fill="none" stroke="#332E27" stroke-width="1.5"/>
+<path d="M1037.6,380.3 L810.2,380.3 Q794.2,380.3 794.2,396.3 L794.2,459.4" fill="none" stroke="#D97757" stroke-width="2.6" opacity=".4"/>
+<path id="orbitpath1" d="M1037.6,380.3 L810.2,380.3 Q794.2,380.3 794.2,396.3 L794.2,459.4" fill="none" stroke="none"/>
+<circle cx="1038" cy="380" r="3.4" fill="#15130F" stroke="#D97757" stroke-width="2"/>
 <g filter="url(#glow)">
-<circle r="3.5" fill="#D97757"><animateMotion dur="2.6s" begin="0.4s" repeatCount="indefinite"><mpath xlink:href="#orbitpath1"/></animateMotion></circle>
-<circle r="3.5" fill="#D97757"><animateMotion dur="2.6s" begin="1.7s" repeatCount="indefinite"><mpath xlink:href="#orbitpath1"/></animateMotion></circle>
+<circle r="4" fill="#D97757"><animateMotion dur="2.6s" begin="0.4s" repeatCount="indefinite"><mpath xlink:href="#orbitpath1"/></animateMotion></circle>
+<circle r="4" fill="#D97757"><animateMotion dur="2.6s" begin="1.7s" repeatCount="indefinite"><mpath xlink:href="#orbitpath1"/></animateMotion></circle>
 </g>
-<path id="orbitpath2" d="M882,681 L758,510" fill="none" stroke="#332E27" stroke-width="1.5"/>
+<path d="M908.7,777.2 L774.2,777.2 Q758.2,777.2 758.2,761.2 L758.2,570.1" fill="none" stroke="#8FA888" stroke-width="2.6" opacity=".4"/>
+<path id="orbitpath2" d="M908.7,777.2 L774.2,777.2 Q758.2,777.2 758.2,761.2 L758.2,570.1" fill="none" stroke="none"/>
+<circle cx="909" cy="777" r="3.4" fill="#15130F" stroke="#8FA888" stroke-width="2"/>
 <g filter="url(#glow)">
-<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="0.8s" repeatCount="indefinite"><mpath xlink:href="#orbitpath2"/></animateMotion></circle>
-<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="2.1s" repeatCount="indefinite"><mpath xlink:href="#orbitpath2"/></animateMotion></circle>
+<circle r="4" fill="#8FA888"><animateMotion dur="2.6s" begin="0.8s" repeatCount="indefinite"><mpath xlink:href="#orbitpath2"/></animateMotion></circle>
+<circle r="4" fill="#8FA888"><animateMotion dur="2.6s" begin="2.1s" repeatCount="indefinite"><mpath xlink:href="#orbitpath2"/></animateMotion></circle>
 </g>
-<path id="orbitpath3" d="M518,681 L642,510" fill="none" stroke="#332E27" stroke-width="1.5"/>
+<path d="M491.3,777.2 L625.8,777.2 Q641.8,777.2 641.8,761.2 L641.8,570.1" fill="none" stroke="#D97757" stroke-width="2.6" opacity=".4"/>
+<path id="orbitpath3" d="M491.3,777.2 L625.8,777.2 Q641.8,777.2 641.8,761.2 L641.8,570.1" fill="none" stroke="none"/>
+<circle cx="491" cy="777" r="3.4" fill="#15130F" stroke="#D97757" stroke-width="2"/>
 <g filter="url(#glow)">
-<circle r="3.5" fill="#D97757"><animateMotion dur="2.6s" begin="1.2s" repeatCount="indefinite"><mpath xlink:href="#orbitpath3"/></animateMotion></circle>
-<circle r="3.5" fill="#D97757"><animateMotion dur="2.6s" begin="2.5s" repeatCount="indefinite"><mpath xlink:href="#orbitpath3"/></animateMotion></circle>
+<circle r="4" fill="#D97757"><animateMotion dur="2.6s" begin="1.2s" repeatCount="indefinite"><mpath xlink:href="#orbitpath3"/></animateMotion></circle>
+<circle r="4" fill="#D97757"><animateMotion dur="2.6s" begin="2.5s" repeatCount="indefinite"><mpath xlink:href="#orbitpath3"/></animateMotion></circle>
 </g>
-<path id="orbitpath4" d="M405,334 L606,399" fill="none" stroke="#332E27" stroke-width="1.5"/>
+<path d="M362.4,380.3 L589.8,380.3 Q605.8,380.3 605.8,396.3 L605.8,459.4" fill="none" stroke="#8FA888" stroke-width="2.6" opacity=".4"/>
+<path id="orbitpath4" d="M362.4,380.3 L589.8,380.3 Q605.8,380.3 605.8,396.3 L605.8,459.4" fill="none" stroke="none"/>
+<circle cx="362" cy="380" r="3.4" fill="#15130F" stroke="#8FA888" stroke-width="2"/>
 <g filter="url(#glow)">
-<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="1.6s" repeatCount="indefinite"><mpath xlink:href="#orbitpath4"/></animateMotion></circle>
-<circle r="3.5" fill="#8FA888"><animateMotion dur="2.6s" begin="2.9s" repeatCount="indefinite"><mpath xlink:href="#orbitpath4"/></animateMotion></circle>
+<circle r="4" fill="#8FA888"><animateMotion dur="2.6s" begin="1.6s" repeatCount="indefinite"><mpath xlink:href="#orbitpath4"/></animateMotion></circle>
+<circle r="4" fill="#8FA888"><animateMotion dur="2.6s" begin="2.9s" repeatCount="indefinite"><mpath xlink:href="#orbitpath4"/></animateMotion></circle>
 </g>
 <g class="pulse" style="animation-delay:0.00s">
-<rect x="656.4" y="252.0" width="87.19999999999999" height="26" rx="13.0" fill="#211D17" stroke="#D97757" stroke-width="1.2"/>
-<circle cx="672.4" cy="265.0" r="3.2" fill="#D97757"/>
-<text x="683.4" y="269.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">CONTROL</text>
+<rect x="656.4" y="297.0" width="87.19999999999999" height="26" rx="13.0" fill="#211D17" stroke="#D97757" stroke-width="1.2"/>
+<circle cx="672.4" cy="310.0" r="3.2" fill="#D97757"/>
+<text x="683.4" y="314.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">CONTROL</text>
 </g>
 <g class="pulse" style="animation-delay:0.35s">
-<rect x="806.8941916244323" y="334.5" width="72.0" height="26" rx="13.0" fill="#211D17" stroke="#8FA888" stroke-width="1.2"/>
-<circle cx="822.8941916244323" cy="347.5" r="3.2" fill="#8FA888"/>
-<text x="833.8941916244323" y="351.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">STATE</text>
+<rect x="819.884572681199" y="387.0" width="72.0" height="26" rx="13.0" fill="#211D17" stroke="#8FA888" stroke-width="1.2"/>
+<circle cx="835.884572681199" cy="400.0" r="3.2" fill="#8FA888"/>
+<text x="846.884572681199" y="404.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">STATE</text>
 </g>
 <g class="pulse" style="animation-delay:0.70s">
-<rect x="806.8941916244323" y="499.5" width="72.0" height="26" rx="13.0" fill="#211D17" stroke="#D97757" stroke-width="1.2"/>
-<circle cx="822.8941916244323" cy="512.5" r="3.2" fill="#D97757"/>
-<text x="833.8941916244323" y="516.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">MONEY</text>
+<rect x="819.884572681199" y="567.0" width="72.0" height="26" rx="13.0" fill="#211D17" stroke="#D97757" stroke-width="1.2"/>
+<circle cx="835.884572681199" cy="580.0" r="3.2" fill="#D97757"/>
+<text x="846.884572681199" y="584.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">MONEY</text>
 </g>
 <g class="pulse" style="animation-delay:1.05s">
-<rect x="656.4" y="582.0" width="87.19999999999999" height="26" rx="13.0" fill="#211D17" stroke="#8FA888" stroke-width="1.2"/>
-<circle cx="672.4" cy="595.0" r="3.2" fill="#8FA888"/>
-<text x="683.4" y="599.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">LATENCY</text>
+<rect x="656.4" y="657.0" width="87.19999999999999" height="26" rx="13.0" fill="#211D17" stroke="#8FA888" stroke-width="1.2"/>
+<circle cx="672.4" cy="670.0" r="3.2" fill="#8FA888"/>
+<text x="683.4" y="674.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">LATENCY</text>
 </g>
 <g class="pulse" style="animation-delay:1.40s">
-<rect x="509.7058083755677" y="499.5" width="94.8" height="26" rx="13.0" fill="#211D17" stroke="#D97757" stroke-width="1.2"/>
-<circle cx="525.7058083755677" cy="512.5" r="3.2" fill="#D97757"/>
-<text x="536.7058083755677" y="516.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">RECOVERY</text>
+<rect x="496.71542731880106" y="567.0" width="94.8" height="26" rx="13.0" fill="#211D17" stroke="#D97757" stroke-width="1.2"/>
+<circle cx="512.7154273188011" cy="580.0" r="3.2" fill="#D97757"/>
+<text x="523.7154273188011" y="584.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">RECOVERY</text>
 </g>
 <g class="pulse" style="animation-delay:1.75s">
-<rect x="509.7058083755677" y="334.5" width="94.8" height="26" rx="13.0" fill="#211D17" stroke="#8FA888" stroke-width="1.2"/>
-<circle cx="525.7058083755677" cy="347.5" r="3.2" fill="#8FA888"/>
-<text x="536.7058083755677" y="351.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">OPERATOR</text>
+<rect x="496.71542731880106" y="387.0" width="94.8" height="26" rx="13.0" fill="#211D17" stroke="#8FA888" stroke-width="1.2"/>
+<circle cx="512.7154273188011" cy="400.0" r="3.2" fill="#8FA888"/>
+<text x="523.7154273188011" y="404.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">OPERATOR</text>
 </g>
-<circle cx="700" cy="430" r="111" fill="none" stroke="#E8977A" stroke-width="1.4" opacity=".5" class="pulse-ring"/>
-<circle cx="700" cy="430" r="95" fill="url(#panelGradWarm)" stroke="#D97757" stroke-width="2"/>
-<text x="700" y="416" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="800" fill="#D97757" text-anchor="middle" opacity="1.0">THE COMMON</text>
-<text x="700" y="440" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">LAYER</text>
-<text x="700" y="464" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="650" fill="#A8C29F" text-anchor="middle" opacity="1.0">5 domains, 1 discipline</text>
+<circle cx="700" cy="490" r="109" fill="none" stroke="#E8977A" stroke-width="1.4" opacity=".55" class="pulse-ring"/>
+<circle cx="700" cy="490" r="109" fill="none" stroke="#A8C29F" stroke-width="1.2" opacity=".4" class="pulse-ring" style="animation-delay:.9s"/>
+<circle cx="700" cy="490" r="109" fill="none" stroke="#E8977A" stroke-width="1" opacity=".3" class="pulse-ring" style="animation-delay:1.8s"/>
+<circle cx="700" cy="490" r="95" fill="url(#panelGradWarm)" stroke="#D97757" stroke-width="2"/>
+<text x="700" y="476" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="800" fill="#D97757" text-anchor="middle" opacity="1.0">THE COMMON</text>
+<text x="700" y="500" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">LAYER</text>
+<text x="700" y="524" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="650" fill="#A8C29F" text-anchor="middle" opacity="1.0">5 domains, 1 discipline</text>
 <g class="rise" style="animation-delay:0.00s">
-<rect x="605.0" y="76.0" width="190" height="88" rx="16" fill="url(#panelGrad)" stroke="#332E27" stroke-width="1.4"/>
-<rect x="605.0" y="76.0" width="190" height="3" rx="1.5" fill="#8FA888"/>
-<text x="700.0" y="102.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">PRODUCT / AUTOMATION</text>
-<text x="700.0" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">ship from zero</text>
-<text x="700.0" y="144.0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">workflows + integrations</text>
+<rect x="587.0" y="76.0" width="226" height="118" rx="14" fill="url(#panelGrad)" stroke="#8FA888" stroke-width="2.2"/>
+<line x1="643.0" y1="86.0" x2="643.0" y2="184.0" stroke="#332E27" stroke-width="1.2"/>
+<g stroke="#8FA888" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="604.8" cy="142.5" r="3.4" fill="#8FA888"/><circle cx="615.0" cy="127.5" r="3.4" fill="#8FA888"/><circle cx="625.2" cy="142.5" r="3.4" fill="#8FA888"/><path d="M608.0 140.9 L611.4 130.1 M618.6 130.1 L622.0 140.9"/></g>
+<line x1="576.0" y1="100.0" x2="587.0" y2="100.0" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="576.0" cy="100.0" r="2.4" fill="#8FA888"/>
+<line x1="813.0" y1="100.0" x2="824.0" y2="100.0" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="824.0" cy="100.0" r="2.4" fill="#8FA888"/>
+<line x1="576.0" y1="135.0" x2="587.0" y2="135.0" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="576.0" cy="135.0" r="2.4" fill="#8FA888"/>
+<line x1="813.0" y1="135.0" x2="824.0" y2="135.0" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="824.0" cy="135.0" r="2.4" fill="#8FA888"/>
+<line x1="576.0" y1="170.0" x2="587.0" y2="170.0" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="576.0" cy="170.0" r="2.4" fill="#8FA888"/>
+<line x1="813.0" y1="170.0" x2="824.0" y2="170.0" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="824.0" cy="170.0" r="2.4" fill="#8FA888"/>
+<text x="728.0" y="102.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">PRODUCT / AUTOMATION</text>
+<text x="728.0" y="123.0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">ship from zero</text>
+<text x="728.0" y="141.0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">workflows + integrations</text>
+<path d="M666.8,180.0 L666.8,165.7 L687.2,163.4 L707.6,155.6 L728.0,165.4 L748.4,164.5 L768.8,162.8 L789.2,171.4 L789.2,180.0 Z" fill="#8FA888" opacity=".24"><animate attributeName="d" values="M666.8,180.0 L666.8,165.7 L687.2,163.4 L707.6,155.6 L728.0,165.4 L748.4,164.5 L768.8,162.8 L789.2,171.4 L789.2,180.0 Z;M666.8,180.0 L666.8,164.4 L687.2,161.9 L707.6,158.4 L728.0,173.3 L748.4,168.9 L768.8,173.4 L789.2,158.1 L789.2,180.0 Z;M666.8,180.0 L666.8,160.5 L687.2,174.4 L707.6,154.4 L728.0,154.8 L748.4,161.4 L768.8,162.2 L789.2,172.0 L789.2,180.0 Z;M666.8,180.0 L666.8,175.0 L687.2,164.1 L707.6,174.1 L728.0,171.3 L748.4,170.2 L768.8,174.7 L789.2,165.4 L789.2,180.0 Z;M666.8,180.0 L666.8,165.7 L687.2,163.4 L707.6,155.6 L728.0,165.4 L748.4,164.5 L768.8,162.8 L789.2,171.4 L789.2,180.0 Z" dur="3.40s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1 .4 0 .2 1 .4 0 .2 1 .4 0 .2 1"/></path>
+<path d="M666.8,165.7 L687.2,163.4 L707.6,155.6 L728.0,165.4 L748.4,164.5 L768.8,162.8 L789.2,171.4" fill="none" stroke="#8FA888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="d" values="M666.8,165.7 L687.2,163.4 L707.6,155.6 L728.0,165.4 L748.4,164.5 L768.8,162.8 L789.2,171.4;M666.8,164.4 L687.2,161.9 L707.6,158.4 L728.0,173.3 L748.4,168.9 L768.8,173.4 L789.2,158.1;M666.8,160.5 L687.2,174.4 L707.6,154.4 L728.0,154.8 L748.4,161.4 L768.8,162.2 L789.2,172.0;M666.8,175.0 L687.2,164.1 L707.6,174.1 L728.0,171.3 L748.4,170.2 L768.8,174.7 L789.2,165.4;M666.8,165.7 L687.2,163.4 L707.6,155.6 L728.0,165.4 L748.4,164.5 L768.8,162.8 L789.2,171.4" dur="3.40s" begin="0.00s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1 .4 0 .2 1 .4 0 .2 1 .4 0 .2 1"/></path>
 </g>
 <g class="rise" style="animation-delay:0.10s">
-<rect x="899.8275200514976" y="290.2047317437663" width="190" height="88" rx="16" fill="url(#panelGrad)" stroke="#332E27" stroke-width="1.4"/>
-<rect x="899.8275200514976" y="290.2047317437663" width="190" height="3" rx="1.5" fill="#D97757"/>
-<text x="994.8275200514976" y="316.2047317437663" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">BLOCKCHAIN / DEFI</text>
-<text x="994.8275200514976" y="338.2047317437663" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">signing + replay</text>
-<text x="994.8275200514976" y="358.2047317437663" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">irreversible state</text>
+<rect x="924.6250632847796" y="321.2989669968937" width="226" height="118" rx="14" fill="url(#panelGrad)" stroke="#D97757" stroke-width="2.2"/>
+<line x1="980.6250632847796" y1="331.2989669968937" x2="980.6250632847796" y2="429.2989669968937" stroke="#332E27" stroke-width="1.2"/>
+<g stroke="#D97757" stroke-width="2.1" fill="none" stroke-linecap="round"><rect x="941.8250632847796" y="371.6589669968937" width="15.0" height="17.28" rx="8.64"/><rect x="948.4250632847795" y="371.6589669968937" width="15.0" height="17.28" rx="8.64"/></g>
+<line x1="913.6" y1="345.3" x2="924.6" y2="345.3" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="913.6" cy="345.3" r="2.4" fill="#D97757"/>
+<line x1="1150.6" y1="345.3" x2="1161.6" y2="345.3" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1161.6" cy="345.3" r="2.4" fill="#D97757"/>
+<line x1="913.6" y1="380.3" x2="924.6" y2="380.3" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="913.6" cy="380.3" r="2.4" fill="#D97757"/>
+<line x1="1150.6" y1="380.3" x2="1161.6" y2="380.3" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1161.6" cy="380.3" r="2.4" fill="#D97757"/>
+<line x1="913.6" y1="415.3" x2="924.6" y2="415.3" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="913.6" cy="415.3" r="2.4" fill="#D97757"/>
+<line x1="1150.6" y1="415.3" x2="1161.6" y2="415.3" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1161.6" cy="415.3" r="2.4" fill="#D97757"/>
+<text x="1065.6250632847796" y="347.2989669968937" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">BLOCKCHAIN / DEFI</text>
+<text x="1065.6250632847796" y="368.2989669968937" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">signing + replay</text>
+<text x="1065.6250632847796" y="386.2989669968937" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">irreversible state</text>
+<path d="M1004.4,425.3 L1004.4,404.2 L1024.8,414.3 L1045.2,419.0 L1065.6,408.6 L1086.0,401.7 L1106.4,403.5 L1126.8,413.3 L1126.8,425.3 Z" fill="#D97757" opacity=".24"><animate attributeName="d" values="M1004.4,425.3 L1004.4,404.2 L1024.8,414.3 L1045.2,419.0 L1065.6,408.6 L1086.0,401.7 L1106.4,403.5 L1126.8,413.3 L1126.8,425.3 Z;M1004.4,425.3 L1004.4,411.4 L1024.8,400.3 L1045.2,406.1 L1065.6,412.5 L1086.0,402.6 L1106.4,410.4 L1126.8,401.8 L1126.8,425.3 Z;M1004.4,425.3 L1004.4,413.5 L1024.8,402.6 L1045.2,416.9 L1065.6,401.1 L1086.0,405.9 L1106.4,409.9 L1126.8,404.7 L1126.8,425.3 Z;M1004.4,425.3 L1004.4,401.8 L1024.8,410.1 L1045.2,401.5 L1065.6,416.7 L1086.0,404.3 L1106.4,401.7 L1126.8,404.9 L1126.8,425.3 Z;M1004.4,425.3 L1004.4,404.2 L1024.8,414.3 L1045.2,419.0 L1065.6,408.6 L1086.0,401.7 L1106.4,403.5 L1126.8,413.3 L1126.8,425.3 Z" dur="4.52s" begin="0.63s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1 .4 0 .2 1 .4 0 .2 1 .4 0 .2 1"/></path>
+<path d="M1004.4,404.2 L1024.8,414.3 L1045.2,419.0 L1065.6,408.6 L1086.0,401.7 L1106.4,403.5 L1126.8,413.3" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="d" values="M1004.4,404.2 L1024.8,414.3 L1045.2,419.0 L1065.6,408.6 L1086.0,401.7 L1106.4,403.5 L1126.8,413.3;M1004.4,411.4 L1024.8,400.3 L1045.2,406.1 L1065.6,412.5 L1086.0,402.6 L1106.4,410.4 L1126.8,401.8;M1004.4,413.5 L1024.8,402.6 L1045.2,416.9 L1065.6,401.1 L1086.0,405.9 L1106.4,409.9 L1126.8,404.7;M1004.4,401.8 L1024.8,410.1 L1045.2,401.5 L1065.6,416.7 L1086.0,404.3 L1106.4,401.7 L1126.8,404.9;M1004.4,404.2 L1024.8,414.3 L1045.2,419.0 L1065.6,408.6 L1086.0,401.7 L1106.4,403.5 L1126.8,413.3" dur="4.52s" begin="0.63s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1 .4 0 .2 1 .4 0 .2 1 .4 0 .2 1"/></path>
 </g>
 <g class="rise" style="animation-delay:0.20s">
-<rect x="787.2134282106667" y="636.7952682562337" width="190" height="88" rx="16" fill="url(#panelGrad)" stroke="#332E27" stroke-width="1.4"/>
-<rect x="787.2134282106667" y="636.7952682562337" width="190" height="3" rx="1.5" fill="#8FA888"/>
-<text x="882.2134282106667" y="662.7952682562337" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">QUANT / FINANCIAL</text>
-<text x="882.2134282106667" y="684.7952682562337" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">orders + fills</text>
-<text x="882.2134282106667" y="704.7952682562337" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">ledger + reconciliation</text>
+<rect x="795.663764563828" y="718.2010330031063" width="226" height="118" rx="14" fill="url(#panelGrad)" stroke="#8FA888" stroke-width="2.2"/>
+<line x1="851.663764563828" y1="728.2010330031063" x2="851.663764563828" y2="826.2010330031063" stroke="#332E27" stroke-width="1.2"/>
+<g><line x1="808.663764563828" y1="786.5" x2="838.663764563828" y2="786.5" stroke="#8FA888" stroke-width="1.4" opacity=".5"/><rect x="812.2" y="776.3" width="4.4" height="10.2" rx="1.2" fill="#8FA888"/><rect x="819.1" y="767.9" width="4.4" height="18.6" rx="1.2" fill="#8FA888"/><rect x="826.0" y="773.5" width="4.4" height="13.0" rx="1.2" fill="#8FA888"/><rect x="832.9" y="765.1" width="4.4" height="21.4" rx="1.2" fill="#8FA888"/></g>
+<line x1="784.7" y1="742.2" x2="795.7" y2="742.2" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="784.7" cy="742.2" r="2.4" fill="#8FA888"/>
+<line x1="1021.7" y1="742.2" x2="1032.7" y2="742.2" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1032.7" cy="742.2" r="2.4" fill="#8FA888"/>
+<line x1="784.7" y1="777.2" x2="795.7" y2="777.2" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="784.7" cy="777.2" r="2.4" fill="#8FA888"/>
+<line x1="1021.7" y1="777.2" x2="1032.7" y2="777.2" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1032.7" cy="777.2" r="2.4" fill="#8FA888"/>
+<line x1="784.7" y1="812.2" x2="795.7" y2="812.2" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="784.7" cy="812.2" r="2.4" fill="#8FA888"/>
+<line x1="1021.7" y1="812.2" x2="1032.7" y2="812.2" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1032.7" cy="812.2" r="2.4" fill="#8FA888"/>
+<text x="936.663764563828" y="744.2010330031063" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">QUANT / FINANCIAL</text>
+<text x="936.663764563828" y="765.2010330031063" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">orders + fills</text>
+<text x="936.663764563828" y="783.2010330031063" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">ledger + reconciliation</text>
+<path d="M875.5,822.2 L875.5,816.4 L895.9,815.9 L916.3,811.3 L936.7,810.3 L957.1,809.1 L977.5,815.5 L997.9,798.1 L997.9,822.2 Z" fill="#8FA888" opacity=".24"><animate attributeName="d" values="M875.5,822.2 L875.5,816.4 L895.9,815.9 L916.3,811.3 L936.7,810.3 L957.1,809.1 L977.5,815.5 L997.9,798.1 L997.9,822.2 Z;M875.5,822.2 L875.5,807.4 L895.9,814.2 L916.3,802.2 L936.7,798.0 L957.1,809.4 L977.5,814.6 L997.9,813.8 L997.9,822.2 Z;M875.5,822.2 L875.5,806.7 L895.9,814.5 L916.3,814.0 L936.7,796.8 L957.1,807.3 L977.5,796.5 L997.9,809.9 L997.9,822.2 Z;M875.5,822.2 L875.5,796.2 L895.9,800.9 L916.3,803.8 L936.7,805.2 L957.1,801.6 L977.5,814.4 L997.9,815.4 L997.9,822.2 Z;M875.5,822.2 L875.5,816.4 L895.9,815.9 L916.3,811.3 L936.7,810.3 L957.1,809.1 L977.5,815.5 L997.9,798.1 L997.9,822.2 Z" dur="4.04s" begin="1.26s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1 .4 0 .2 1 .4 0 .2 1 .4 0 .2 1"/></path>
+<path d="M875.5,816.4 L895.9,815.9 L916.3,811.3 L936.7,810.3 L957.1,809.1 L977.5,815.5 L997.9,798.1" fill="none" stroke="#8FA888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="d" values="M875.5,816.4 L895.9,815.9 L916.3,811.3 L936.7,810.3 L957.1,809.1 L977.5,815.5 L997.9,798.1;M875.5,807.4 L895.9,814.2 L916.3,802.2 L936.7,798.0 L957.1,809.4 L977.5,814.6 L997.9,813.8;M875.5,806.7 L895.9,814.5 L916.3,814.0 L936.7,796.8 L957.1,807.3 L977.5,796.5 L997.9,809.9;M875.5,796.2 L895.9,800.9 L916.3,803.8 L936.7,805.2 L957.1,801.6 L977.5,814.4 L997.9,815.4;M875.5,816.4 L895.9,815.9 L916.3,811.3 L936.7,810.3 L957.1,809.1 L977.5,815.5 L997.9,798.1" dur="4.04s" begin="1.26s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1 .4 0 .2 1 .4 0 .2 1 .4 0 .2 1"/></path>
 </g>
 <g class="rise" style="animation-delay:0.30s">
-<rect x="422.7865717893334" y="636.7952682562337" width="190" height="88" rx="16" fill="url(#panelGrad)" stroke="#332E27" stroke-width="1.4"/>
-<rect x="422.7865717893334" y="636.7952682562337" width="190" height="3" rx="1.5" fill="#D97757"/>
-<text x="517.7865717893334" y="662.7952682562337" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">LINUX / PLATFORM</text>
-<text x="517.7865717893334" y="684.7952682562337" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">CI + release safety</text>
-<text x="517.7865717893334" y="704.7952682562337" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">diagnostics + images</text>
+<rect x="378.33623543617205" y="718.2010330031063" width="226" height="118" rx="14" fill="url(#panelGrad)" stroke="#D97757" stroke-width="2.2"/>
+<line x1="434.33623543617205" y1="728.2010330031063" x2="434.33623543617205" y2="826.2010330031063" stroke="#332E27" stroke-width="1.2"/>
+<g><rect x="392.5" y="769.0" width="27.6" height="8.4" rx="2.4" fill="none" stroke="#D97757" stroke-width="1.7"/><circle cx="399.5" cy="773.2" r="2" fill="#D97757"/><rect x="392.5" y="778.7" width="27.6" height="8.4" rx="2.4" fill="none" stroke="#D97757" stroke-width="1.7"/><circle cx="399.5" cy="782.9" r="2" fill="#D97757"/><rect x="392.5" y="784.5" width="27.6" height="8.4" rx="2.4" fill="none" stroke="#D97757" stroke-width="1.7"/><circle cx="399.5" cy="788.7" r="2" fill="#D97757"/></g>
+<line x1="367.3" y1="742.2" x2="378.3" y2="742.2" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="367.3" cy="742.2" r="2.4" fill="#D97757"/>
+<line x1="604.3" y1="742.2" x2="615.3" y2="742.2" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="615.3" cy="742.2" r="2.4" fill="#D97757"/>
+<line x1="367.3" y1="777.2" x2="378.3" y2="777.2" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="367.3" cy="777.2" r="2.4" fill="#D97757"/>
+<line x1="604.3" y1="777.2" x2="615.3" y2="777.2" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="615.3" cy="777.2" r="2.4" fill="#D97757"/>
+<line x1="367.3" y1="812.2" x2="378.3" y2="812.2" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="367.3" cy="812.2" r="2.4" fill="#D97757"/>
+<line x1="604.3" y1="812.2" x2="615.3" y2="812.2" stroke="#D97757" stroke-width="3" stroke-linecap="round"/>
+<circle cx="615.3" cy="812.2" r="2.4" fill="#D97757"/>
+<text x="519.336235436172" y="744.2010330031063" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">LINUX / PLATFORM</text>
+<text x="519.336235436172" y="765.2010330031063" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">CI + release safety</text>
+<text x="519.336235436172" y="783.2010330031063" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">diagnostics + images</text>
+<path d="M458.1,822.2 L458.1,814.5 L478.5,816.1 L498.9,813.9 L519.3,798.0 L539.7,807.0 L560.1,797.7 L580.5,812.1 L580.5,822.2 Z" fill="#D97757" opacity=".24"><animate attributeName="d" values="M458.1,822.2 L458.1,814.5 L478.5,816.1 L498.9,813.9 L519.3,798.0 L539.7,807.0 L560.1,797.7 L580.5,812.1 L580.5,822.2 Z;M458.1,822.2 L458.1,807.8 L478.5,798.2 L498.9,798.3 L519.3,811.7 L539.7,800.0 L560.1,816.4 L580.5,810.8 L580.5,822.2 Z;M458.1,822.2 L458.1,801.2 L478.5,805.8 L498.9,817.4 L519.3,797.0 L539.7,814.1 L560.1,800.0 L580.5,814.8 L580.5,822.2 Z;M458.1,822.2 L458.1,804.3 L478.5,817.3 L498.9,802.4 L519.3,812.3 L539.7,806.9 L560.1,815.8 L580.5,816.7 L580.5,822.2 Z;M458.1,822.2 L458.1,814.5 L478.5,816.1 L498.9,813.9 L519.3,798.0 L539.7,807.0 L560.1,797.7 L580.5,812.1 L580.5,822.2 Z" dur="3.56s" begin="0.19s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1 .4 0 .2 1 .4 0 .2 1 .4 0 .2 1"/></path>
+<path d="M458.1,814.5 L478.5,816.1 L498.9,813.9 L519.3,798.0 L539.7,807.0 L560.1,797.7 L580.5,812.1" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="d" values="M458.1,814.5 L478.5,816.1 L498.9,813.9 L519.3,798.0 L539.7,807.0 L560.1,797.7 L580.5,812.1;M458.1,807.8 L478.5,798.2 L498.9,798.3 L519.3,811.7 L539.7,800.0 L560.1,816.4 L580.5,810.8;M458.1,801.2 L478.5,805.8 L498.9,817.4 L519.3,797.0 L539.7,814.1 L560.1,800.0 L580.5,814.8;M458.1,804.3 L478.5,817.3 L498.9,802.4 L519.3,812.3 L539.7,806.9 L560.1,815.8 L580.5,816.7;M458.1,814.5 L478.5,816.1 L498.9,813.9 L519.3,798.0 L539.7,807.0 L560.1,797.7 L580.5,812.1" dur="3.56s" begin="0.19s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1 .4 0 .2 1 .4 0 .2 1 .4 0 .2 1"/></path>
 </g>
 <g class="rise" style="animation-delay:0.40s">
-<rect x="310.17247994850237" y="290.20473174376633" width="190" height="88" rx="16" fill="url(#panelGrad)" stroke="#332E27" stroke-width="1.4"/>
-<rect x="310.17247994850237" y="290.20473174376633" width="190" height="3" rx="1.5" fill="#8FA888"/>
-<text x="405.17247994850237" y="316.20473174376633" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">AI RUNTIME</text>
-<text x="405.17247994850237" y="338.20473174376633" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">gateway + streaming</text>
-<text x="405.17247994850237" y="358.20473174376633" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">policy + economics</text>
+<rect x="249.37493671522043" y="321.2989669968937" width="226" height="118" rx="14" fill="url(#panelGrad)" stroke="#8FA888" stroke-width="2.2"/>
+<line x1="305.37493671522043" y1="331.2989669968937" x2="305.37493671522043" y2="429.2989669968937" stroke="#332E27" stroke-width="1.2"/>
+<g><circle cx="277.37493671522043" cy="380.2989669968937" r="4.2" fill="#8FA888"/><line x1="274.2" y1="377.6" x2="265.9" y2="370.7" stroke="#8FA888" stroke-width="1.8" stroke-linecap="round"/><circle cx="265.9" cy="370.7" r="1.8" fill="#8FA888"/><line x1="278.8" y1="376.4" x2="282.5" y2="366.2" stroke="#8FA888" stroke-width="1.8" stroke-linecap="round"/><circle cx="282.5" cy="366.2" r="1.8" fill="#8FA888"/><line x1="281.6" y1="380.3" x2="292.4" y2="380.3" stroke="#8FA888" stroke-width="1.8" stroke-linecap="round"/><circle cx="292.4" cy="380.3" r="1.8" fill="#8FA888"/><line x1="279.8" y1="383.7" x2="286.0" y2="392.6" stroke="#8FA888" stroke-width="1.8" stroke-linecap="round"/><circle cx="286.0" cy="392.6" r="1.8" fill="#8FA888"/><line x1="274.7" y1="383.5" x2="267.7" y2="391.8" stroke="#8FA888" stroke-width="1.8" stroke-linecap="round"/><circle cx="267.7" cy="391.8" r="1.8" fill="#8FA888"/><line x1="273.4" y1="378.9" x2="263.3" y2="375.2" stroke="#8FA888" stroke-width="1.8" stroke-linecap="round"/><circle cx="263.3" cy="375.2" r="1.8" fill="#8FA888"/></g>
+<line x1="238.4" y1="345.3" x2="249.4" y2="345.3" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="238.4" cy="345.3" r="2.4" fill="#8FA888"/>
+<line x1="475.4" y1="345.3" x2="486.4" y2="345.3" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="486.4" cy="345.3" r="2.4" fill="#8FA888"/>
+<line x1="238.4" y1="380.3" x2="249.4" y2="380.3" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="238.4" cy="380.3" r="2.4" fill="#8FA888"/>
+<line x1="475.4" y1="380.3" x2="486.4" y2="380.3" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="486.4" cy="380.3" r="2.4" fill="#8FA888"/>
+<line x1="238.4" y1="415.3" x2="249.4" y2="415.3" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="238.4" cy="415.3" r="2.4" fill="#8FA888"/>
+<line x1="475.4" y1="415.3" x2="486.4" y2="415.3" stroke="#8FA888" stroke-width="3" stroke-linecap="round"/>
+<circle cx="486.4" cy="415.3" r="2.4" fill="#8FA888"/>
+<text x="390.37493671522043" y="347.2989669968937" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">AI RUNTIME</text>
+<text x="390.37493671522043" y="368.2989669968937" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">gateway + streaming</text>
+<text x="390.37493671522043" y="386.2989669968937" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10.5" font-weight="600" fill="#C9C0B2" text-anchor="middle" opacity="1.0">policy + economics</text>
+<path d="M329.2,425.3 L329.2,417.5 L349.6,419.7 L370.0,417.5 L390.4,413.0 L410.8,416.4 L431.2,407.6 L451.6,413.5 L451.6,425.3 Z" fill="#8FA888" opacity=".24"><animate attributeName="d" values="M329.2,425.3 L329.2,417.5 L349.6,419.7 L370.0,417.5 L390.4,413.0 L410.8,416.4 L431.2,407.6 L451.6,413.5 L451.6,425.3 Z;M329.2,425.3 L329.2,419.4 L349.6,402.2 L370.0,416.7 L390.4,418.5 L410.8,406.5 L431.2,413.1 L451.6,410.0 L451.6,425.3 Z;M329.2,425.3 L329.2,403.0 L349.6,411.8 L370.0,416.5 L390.4,417.6 L410.8,404.0 L431.2,414.3 L451.6,414.1 L451.6,425.3 Z;M329.2,425.3 L329.2,416.7 L349.6,420.1 L370.0,416.0 L390.4,419.0 L410.8,413.3 L431.2,406.5 L451.6,406.7 L451.6,425.3 Z;M329.2,425.3 L329.2,417.5 L349.6,419.7 L370.0,417.5 L390.4,413.0 L410.8,416.4 L431.2,407.6 L451.6,413.5 L451.6,425.3 Z" dur="4.68s" begin="0.82s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1 .4 0 .2 1 .4 0 .2 1 .4 0 .2 1"/></path>
+<path d="M329.2,417.5 L349.6,419.7 L370.0,417.5 L390.4,413.0 L410.8,416.4 L431.2,407.6 L451.6,413.5" fill="none" stroke="#8FA888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="d" values="M329.2,417.5 L349.6,419.7 L370.0,417.5 L390.4,413.0 L410.8,416.4 L431.2,407.6 L451.6,413.5;M329.2,419.4 L349.6,402.2 L370.0,416.7 L390.4,418.5 L410.8,406.5 L431.2,413.1 L451.6,410.0;M329.2,403.0 L349.6,411.8 L370.0,416.5 L390.4,417.6 L410.8,404.0 L431.2,414.3 L451.6,414.1;M329.2,416.7 L349.6,420.1 L370.0,416.0 L390.4,419.0 L410.8,413.3 L431.2,406.5 L451.6,406.7;M329.2,417.5 L349.6,419.7 L370.0,417.5 L390.4,413.0 L410.8,416.4 L431.2,407.6 L451.6,413.5" dur="4.68s" begin="0.82s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1 .4 0 .2 1 .4 0 .2 1 .4 0 .2 1"/></path>
 </g>
 </svg>

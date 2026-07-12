@@ -4,11 +4,12 @@ from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 import json
+import math
 import os
 import urllib.request
 
 from build_assets import (
-    INK_PANEL, LINE, LINE_SOFT, CREAM, PARCHMENT, MUTED, CLAY, CLAY_BRIGHT, CLAY_DIM,
+    INK, INK_PANEL, LINE, LINE_SOFT, CREAM, CREAM_BRIGHT, PARCHMENT, MUTED, CLAY, CLAY_BRIGHT, CLAY_DIM,
     SAGE, SAGE_BRIGHT, SANS, esc, txt, shell, frame_brackets,
 )
 
@@ -36,6 +37,7 @@ def load_profile(owner: str, token: str) -> dict:
     query($login: String!) {
       user(login: $login) {
         login
+        createdAt
         followers { totalCount }
         repositories(first: 100, ownerAffiliations: OWNER, privacy: PUBLIC, orderBy: {field: UPDATED_AT, direction: DESC}) {
           totalCount
@@ -89,14 +91,94 @@ def streaks(days: list[dict]) -> tuple[int, int]:
     return current, longest
 
 
-def kpi_tile(x: float, y: float, w: float, value: str, label: str, delay: float = 0.0) -> list[str]:
-    return [
+def kpi_tile(x: float, y: float, w: float, value: str, label: str, accent: str = CLAY,
+             delay: float = 0.0, click_at: float | None = None, cycle: float = 1.0) -> list[str]:
+    """A KPI tile. If `click_at` is set (a 0..1 fraction of `cycle`, the total
+    tour duration in seconds this tile shares with cursor_tour below), the
+    tile's border flashes in sync with the moment the animated cursor lands
+    on it -- a real GitHub README can't do :hover, so this fakes the same
+    "look, it's interactive" read with a scripted, looping click instead.
+    """
+    out = [
         f'<g class="rise" style="animation-delay:{delay:.2f}s">',
         f'<rect x="{x}" y="{y}" width="{w}" height="88" rx="8" fill="url(#panelGrad)" stroke="{LINE}"/>',
+    ]
+    if click_at is not None:
+        t = click_at * cycle
+        out.append(
+            f'<rect x="{x}" y="{y}" width="{w}" height="88" rx="8" fill="none" stroke="{accent}" stroke-width="2">'
+            f'<animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;{max(0,click_at-0.008):.4f};{click_at:.4f};{min(1,click_at+0.09):.4f};1" dur="{cycle:.1f}s" begin="0s" repeatCount="indefinite"/>'
+            '</rect>'
+        )
+    out += [
         txt(x + 16, y + 42, value, 27, CREAM, 800, family=SANS),
         txt(x + 16, y + 68, label, 10.5, MUTED, 650, family=SANS),
         '</g>',
     ]
+    return out
+
+
+def cursor_tour(stops: list[tuple[float, float]], accent_seq: list[str],
+                 travel_s: float = 0.8, dwell_s: float = 3.2) -> tuple[list[str], float, list[float]]:
+    """An animated pointer that visits each (x, y) in `stops` in order and
+    "clicks" there -- a small expanding ring synced to arrival, plus a
+    scripted move/pause rhythm (calcMode="linear" with explicit
+    keyTimes/keyPoints: fast travel, then a long hold at each stop). This is
+    the closest a static, JS-less GitHub README can get to looking used
+    rather than just looked at.
+
+    Returns (svg_fragments, total_duration, per_stop_click_fraction) so the
+    caller can sync each KPI tile's own highlight to the same timeline.
+    """
+    n = len(stops)
+    per_stop = travel_s + dwell_s
+    total = per_stop * n
+
+    seg_len = [math.hypot(stops[(i + 1) % n][0] - stops[i][0], stops[(i + 1) % n][1] - stops[i][1]) for i in range(n)]
+    cum = [0.0]
+    for L in seg_len:
+        cum.append(cum[-1] + L)
+    frac = [c / cum[-1] for c in cum]  # frac[i] = path-fraction at stop i; frac[n] == 1.0 (back to stop 0)
+
+    key_times: list[float] = []
+    key_points: list[float] = []
+    click_frac: list[float] = []
+    t = 0.0
+    for i in range(n):
+        arrive_t, leave_t, next_t = t, t + dwell_s, t + per_stop
+        key_times += [arrive_t, leave_t, next_t]
+        key_points += [frac[i], frac[i], frac[i + 1]]
+        click_frac.append((arrive_t + 0.15) / total)
+        t = next_t
+    kt = [v / total for v in key_times]
+    kp = key_points
+
+    path_d = "M " + " L ".join(f"{x:.1f},{y:.1f}" for x, y in stops) + " Z"
+    cursor_svg = """M0 0 L0 15.5 L4.3 11.9 L6.8 17.6 L9.6 16.4 L7.1 10.7 L11.8 10.4 Z"""
+
+    frags = [
+        f'<path id="cursorPath" d="{path_d}" fill="none" stroke="none"/>',
+    ]
+    for i, (x, y) in enumerate(stops):
+        accent = accent_seq[i % len(accent_seq)]
+        c = click_frac[i]
+        frags.append(
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="3" fill="none" stroke="{accent}" stroke-width="2">'
+            f'<animate attributeName="r" values="3;3;22;3" keyTimes="0;{c:.4f};{min(1,c+0.16):.4f};1" dur="{total:.1f}s" begin="0s" repeatCount="indefinite"/>'
+            f'<animate attributeName="opacity" values="0;.8;0;0" keyTimes="0;{c:.4f};{min(1,c+0.16):.4f};1" dur="{total:.1f}s" begin="0s" repeatCount="indefinite"/>'
+            '</circle>'
+        )
+    frags += [
+        f'<g filter="url(#glow)">',
+        f'<g transform="translate(-3,-2)">',
+        f'<path d="{cursor_svg}" fill="{CREAM_BRIGHT}" stroke="{INK}" stroke-width="1.2" stroke-linejoin="round">',
+        f'<animateMotion dur="{total:.1f}s" begin="0s" repeatCount="indefinite" rotate="0" calcMode="linear" '
+        f'keyTimes="{";".join(f"{v:.4f}" for v in kt)}" keyPoints="{";".join(f"{v:.4f}" for v in kp)}">'
+        f'<mpath xlink:href="#cursorPath"/></animateMotion>',
+        '</path>',
+        '</g></g>',
+    ]
+    return frags, total, click_frac
 
 
 def sparkline(x: float, y: float, w: float, h: float, weekly: list[int]) -> list[str]:
@@ -147,13 +229,16 @@ def build_signal_panel(user: dict) -> None:
     days = [d for week in weeks_raw for d in week["contributionDays"]]
     current, longest = streaks(days)
     repos = [r for r in user["repositories"]["nodes"] if not r["isFork"] and r["name"] != user["login"]]
-    stars = sum(int(r["stargazerCount"]) for r in repos)
     languages = Counter(r["primaryLanguage"]["name"] for r in repos if r.get("primaryLanguage"))
     updated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
+    active_days = sum(1 for d in days if int(d["contributionCount"]) > 0)
+    per_week = round(int(calendar["totalContributions"]) / 52)
+    building_since = user.get("createdAt", "")[:4] or "--"
+
     weekly = [sum(int(d["contributionCount"]) for d in wk["contributionDays"]) for wk in weeks_raw[-14:]]
 
-    w, h = 1400, 390
+    w, h = 1400, 510
     body = [
         txt(28, 34, f"github://signal/@{user['login']}", 13, CLAY, 700),
         txt(1370, 34, updated, 10, MUTED, 600, "end"),
@@ -162,32 +247,46 @@ def build_signal_panel(user: dict) -> None:
     ]
 
     tiles = [
-        (f"{calendar['totalContributions']:,}", "CONTRIBUTIONS / YR"),
-        (f"{current}d", "CURRENT STREAK"),
-        (f"{longest}d", "LONGEST STREAK"),
-        (f"{user['repositories']['totalCount']}", "PUBLIC REPOS"),
-        (f"{stars}", "STARS EARNED"),
-        (f"{user['followers']['totalCount']}", "FOLLOWERS"),
+        (f"{calendar['totalContributions']:,}", "CONTRIBUTIONS / YR", CLAY),
+        (f"{current}d", "CURRENT STREAK", SAGE),
+        (f"{longest}d", "LONGEST STREAK", CLAY),
+        (f"{user['repositories']['totalCount']}", "PUBLIC REPOS", SAGE),
+        (f"{user['followers']['totalCount']}", "FOLLOWERS", CLAY),
+        (building_since, "BUILDING SINCE", SAGE),
+        (f"{active_days}", "ACTIVE DAYS / YR", CLAY),
+        (f"{per_week}", "AVG / WEEK", SAGE),
     ]
-    tile_w, gap, sx, sy = 206, 16, 42, 68
-    for i, (value, label) in enumerate(tiles):
-        body += kpi_tile(sx + i * (tile_w + gap), sy, tile_w, value, label, delay=0.06 * i)
+    cols, tile_w, gap, sx, sy, row_gap = 4, 317, 16, 42, 64, 16
+    row_h = 88
 
+    stops = [(sx + (i % cols) * (tile_w + gap) + 50, sy + (i // cols) * (row_h + row_gap) + 35) for i in range(len(tiles))]
+    accents = [a for *_, a in tiles]
+    cursor_frags, tour_dur, click_frac = cursor_tour(stops, accents)
+
+    for i, (value, label, accent) in enumerate(tiles):
+        x = sx + (i % cols) * (tile_w + gap)
+        y = sy + (i // cols) * (row_h + row_gap)
+        body += kpi_tile(x, y, tile_w, value, label, accent=accent, delay=0.06 * i,
+                          click_at=click_frac[i], cycle=tour_dur)
+    body += cursor_frags
+
+    y_spark = sy + 2 * row_h + row_gap + 40
     body += [
-        txt(42, 196, f"$ momentum --weeks {len(weekly)}", 13, SAGE, 800),
-        *sparkline(44, 210, 1312, 76, weekly),
+        txt(42, y_spark, f"$ momentum --weeks {len(weekly)}", 13, SAGE, 800),
+        *sparkline(44, y_spark + 14, 1312, 76, weekly),
     ]
 
+    y_lang = y_spark + 132
     top_langs = languages.most_common(5)
-    body += [txt(42, 328, "$ languages --top 5", 13, SAGE, 800)]
+    body += [txt(42, y_lang, "$ languages --top 5", 13, SAGE, 800)]
     if top_langs:
-        body += language_bar(44, 340, 1312, 14, top_langs)
+        body += language_bar(44, y_lang + 12, 1312, 14, top_langs)
     else:
-        body += [txt(44, 355, "no public repositories with a detected primary language yet", 12, MUTED, 600)]
+        body += [txt(44, y_lang + 27, "no public repositories with a detected primary language yet", 12, MUTED, 600)]
 
     (ASSETS / "github-contributions.svg").write_text(
         shell(w, h, "GitHub KPI signal",
-              "Real GitHub KPI tiles, a 14-week momentum sparkline and a language mix, generated by GitHub Actions.", body),
+              "Real GitHub KPI tiles with an animated cursor clicking through them, a 14-week momentum sparkline, and a language mix, generated by GitHub Actions.", body),
         encoding="utf-8",
     )
 

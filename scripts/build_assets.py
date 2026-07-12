@@ -403,6 +403,47 @@ def icon_glyph(kind: str, x: float, y: float, size: float, color: str) -> str:
             f'<path d="M{x-half} {y-half*0.7} L{x} {y+size*0.03} L{x+half} {y-half*0.7}"/>'
             f'</g>'
         )
+    if kind == "workflow":
+        d = size * 0.34
+        return (
+            f'<g stroke="{color}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">'
+            f'<circle cx="{x-d}" cy="{y+half*0.5}" r="3.4" fill="{color}"/>'
+            f'<circle cx="{x}" cy="{y-half*0.5}" r="3.4" fill="{color}"/>'
+            f'<circle cx="{x+d}" cy="{y+half*0.5}" r="3.4" fill="{color}"/>'
+            f'<path d="M{x-d+3.2} {y+half*0.5-1.6} L{x-3.6} {y-half*0.5+2.6} M{x+3.6} {y-half*0.5+2.6} L{x+d-3.2} {y+half*0.5-1.6}"/>'
+            f'</g>'
+        )
+    if kind == "chain":
+        rw, rh = size * 0.5, size * 0.32
+        return (
+            f'<g stroke="{color}" stroke-width="2.1" fill="none" stroke-linecap="round">'
+            f'<rect x="{x-rw*0.72}" y="{y-rh*0.9}" width="{rw}" height="{rh*1.8}" rx="{rh*0.9}"/>'
+            f'<rect x="{x-rw*0.28}" y="{y-rh*0.9}" width="{rw}" height="{rh*1.8}" rx="{rh*0.9}"/>'
+            f'</g>'
+        )
+    if kind == "ledger":
+        base = y + half * 0.62
+        bars = [(-half*0.62, 0.55), (-half*0.16, 1.0), (half*0.3, 0.7), (half*0.76, 1.15)]
+        out = [f'<line x1="{x-half}" y1="{base:.1f}" x2="{x+half}" y2="{base:.1f}" stroke="{color}" stroke-width="1.4" opacity=".5"/>']
+        for bx, f in bars:
+            bh = size * 0.62 * f
+            out.append(f'<rect x="{x+bx-2.2:.1f}" y="{base-bh:.1f}" width="4.4" height="{bh:.1f}" rx="1.2" fill="{color}"/>')
+        return f'<g>{"".join(out)}</g>'
+    if kind == "server":
+        rw = size * 0.92
+        out = []
+        for i, ry in enumerate((y - half*0.55, y + half*0.1, y + half*0.75 - 4)):
+            out.append(f'<rect x="{x-rw/2:.1f}" y="{ry:.1f}" width="{rw:.1f}" height="{size*0.28:.1f}" rx="2.4" fill="none" stroke="{color}" stroke-width="1.7"/>')
+            out.append(f'<circle cx="{x-rw/2+7:.1f}" cy="{ry+size*0.14:.1f}" r="2" fill="{color}"/>')
+        return f'<g>{"".join(out)}</g>'
+    if kind == "gateway":
+        out = [f'<circle cx="{x}" cy="{y}" r="4.2" fill="{color}"/>']
+        for ang in (-140, -70, 0, 55, 130, 200):
+            rad = math.radians(ang)
+            ex, ey = x + half * math.cos(rad), y + half * math.sin(rad)
+            out.append(f'<line x1="{x+4.2*math.cos(rad):.1f}" y1="{y+4.2*math.sin(rad):.1f}" x2="{ex:.1f}" y2="{ey:.1f}" stroke="{color}" stroke-width="1.8" stroke-linecap="round"/>')
+            out.append(f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="1.8" fill="{color}"/>')
+        return f'<g>{"".join(out)}</g>'
     if kind.startswith("brand:"):
         label, d = BRAND_ICONS[kind.split(":", 1)[1]]
         scale = size / 24
@@ -671,23 +712,84 @@ def _orbit_xy(cx: float, cy: float, r: float, deg: float) -> tuple[float, float]
     return cx + r * math.cos(rad), cy + r * math.sin(rad)
 
 
-def bubble(x: float, y: float, w: float, h: float, title: str, lines: list[str], accent: str) -> list[str]:
-    out = [
-        f'<rect x="{x-w/2}" y="{y-h/2}" width="{w}" height="{h}" rx="16" fill="url(#panelGrad)" stroke="{LINE}" stroke-width="1.4"/>',
-        f'<rect x="{x-w/2}" y="{y-h/2}" width="{w}" height="3" rx="1.5" fill="{accent}"/>',
-        txt(x, y - h/2 + 26, title, 12.5, CREAM, 800, "middle", family=SANS),
+def elbow_path(x1: float, y1: float, x2: float, y2: float, radius: float = 12) -> str:
+    """Right-angle circuit-trace route from (x1,y1) to (x2,y2) with one rounded corner."""
+    cx, cy = x2, y1
+    dx = 1 if cx > x1 else -1
+    dy = 1 if y2 > cy else -1
+    r = min(radius, abs(x2 - x1) / 2, abs(y2 - cy) / 2) if abs(x2 - x1) > 1 and abs(y2 - cy) > 1 else 0
+    if r <= 0:
+        return f"M{x1:.1f},{y1:.1f} L{x2:.1f},{y2:.1f}"
+    p1x, p1y = cx - dx * r, cy
+    p2x, p2y = cx, cy + dy * r
+    return (f"M{x1:.1f},{y1:.1f} L{p1x:.1f},{p1y:.1f} "
+            f"Q{cx:.1f},{cy:.1f} {p2x:.1f},{p2y:.1f} L{x2:.1f},{y2:.1f}")
+
+
+def _spark_area(cx: float, y_base: float, w: float, max_h: float, color: str, seed: float) -> list[str]:
+    """A bold filled sparkline -- market-chart shorthand for 'real flow moving
+    through this node', not a decorative bar row. The path morphs between
+    random keyframes via SMIL, looping seamlessly (last frame == first)."""
+    rnd = random.Random(int(seed * 1000) + 11)
+    n = 7
+    xs = [cx - w / 2 + w * i / (n - 1) for i in range(n)]
+    frames = [[rnd.uniform(max_h * 0.18, max_h) for _ in range(n)] for _ in range(4)]
+    frames.append(frames[0])
+
+    def area_d(hs: list[float]) -> str:
+        top = " L".join(f"{xs[i]:.1f},{y_base-hs[i]:.1f}" for i in range(n))
+        return f"M{xs[0]:.1f},{y_base:.1f} L{top} L{xs[-1]:.1f},{y_base:.1f} Z"
+
+    def line_d(hs: list[float]) -> str:
+        return "M" + " L".join(f"{xs[i]:.1f},{y_base-hs[i]:.1f}" for i in range(n))
+
+    dur = 3.4 + (seed % 1.0) * 1.6
+    begin = (seed * 0.37) % 1.7
+    splines = " ".join([".4 0 .2 1"] * (len(frames) - 1))
+    area_vals = ";".join(area_d(f) for f in frames)
+    line_vals = ";".join(line_d(f) for f in frames)
+    # the path needs a real d= up front -- an animate that hasn't begun yet
+    # leaves an attribute-less (invisible) path, so a staggered begin= would
+    # otherwise render as a blank card until its delay elapses
+    return [
+        f'<path d="{area_d(frames[0])}" fill="{color}" opacity=".24">'
+        f'<animate attributeName="d" values="{area_vals}" dur="{dur:.2f}s" begin="{begin:.2f}s" '
+        f'repeatCount="indefinite" calcMode="spline" keySplines="{splines}"/></path>',
+        f'<path d="{line_d(frames[0])}" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+        f'<animate attributeName="d" values="{line_vals}" dur="{dur:.2f}s" begin="{begin:.2f}s" '
+        f'repeatCount="indefinite" calcMode="spline" keySplines="{splines}"/></path>',
     ]
-    yy = y - h/2 + 48
+
+
+def bubble(x: float, y: float, w: float, h: float, title: str, lines: list[str], accent: str,
+           icon_kind: str = "terminal", seed: float = 0.0) -> list[str]:
+    rail_w = 56
+    left, right, top, bottom = x - w/2, x + w/2, y - h/2, y + h/2
+    content_cx = left + rail_w + (w - rail_w) / 2
+    out = [
+        f'<rect x="{left}" y="{top}" width="{w}" height="{h}" rx="14" fill="url(#panelGrad)" stroke="{accent}" stroke-width="2.2"/>',
+        f'<line x1="{left+rail_w}" y1="{top+10}" x2="{left+rail_w}" y2="{bottom-10}" stroke="{LINE}" stroke-width="1.2"/>',
+        icon_glyph(icon_kind, left + rail_w/2, y, 30, accent),
+    ]
+    # bold IC-style pins, capped with a pad -- a mounted component, not a rounded box
+    for py in (top + 24, y, bottom - 24):
+        out.append(f'<line x1="{left-11:.1f}" y1="{py:.1f}" x2="{left:.1f}" y2="{py:.1f}" stroke="{accent}" stroke-width="3" stroke-linecap="round"/>')
+        out.append(f'<circle cx="{left-11:.1f}" cy="{py:.1f}" r="2.4" fill="{accent}"/>')
+        out.append(f'<line x1="{right:.1f}" y1="{py:.1f}" x2="{right+11:.1f}" y2="{py:.1f}" stroke="{accent}" stroke-width="3" stroke-linecap="round"/>')
+        out.append(f'<circle cx="{right+11:.1f}" cy="{py:.1f}" r="2.4" fill="{accent}"/>')
+    out.append(txt(content_cx, top + 26, title, 12.5, CREAM, 800, "middle", family=SANS))
+    yy = top + 47
     for line in lines:
-        out.append(txt(x, yy, line, 10.5, PARCHMENT, 600, "middle"))
-        yy += 20
+        out.append(txt(content_cx, yy, line, 10.5, PARCHMENT, 600, "middle"))
+        yy += 18
+    out += _spark_area(content_cx, bottom - 14, (w - rail_w) * 0.72, 26, accent, seed)
     return out
 
 
 def write_systems_overview() -> None:
-    w, h = 1400, 820
-    hub_x, hub_y = 700, 430
-    hub_r, tag_r, bubble_r = 95, 165, 310
+    w, h = 1400, 960
+    hub_x, hub_y = 700, 490
+    hub_r, tag_r, bubble_r = 95, 180, 355
 
     body: list[str] = [
         txt(28, 34, "yuvraj@runtime:~$ ./map --career --orbit-view", 13, CLAY, 700),
@@ -706,26 +808,46 @@ def write_systems_overview() -> None:
         '</g>',
     ]
 
-    domains = [
-        ("PRODUCT / AUTOMATION", ["ship from zero", "workflows + integrations"], SAGE),
-        ("BLOCKCHAIN / DEFI", ["signing + replay", "irreversible state"], CLAY),
-        ("QUANT / FINANCIAL", ["orders + fills", "ledger + reconciliation"], SAGE),
-        ("LINUX / PLATFORM", ["CI + release safety", "diagnostics + images"], CLAY),
-        ("AI RUNTIME", ["gateway + streaming", "policy + economics"], SAGE),
-    ]
-    bw, bh = 190, 88
+    # slow satellite dots drifting the full outer ring -- keeps the empty
+    # stretches of the orbit (there's always at least one, geometrically)
+    # from reading as dead space instead of part of the system
+    for k in range(3):
+        ang0 = k * 120
+        sx0, sy0 = _orbit_xy(hub_x, hub_y, bubble_r, ang0)
+        sxh, syh = _orbit_xy(hub_x, hub_y, bubble_r, ang0 + 180)
+        rid = f"satring{k}"
+        body += [
+            f'<path id="{rid}" d="M{sx0:.1f},{sy0:.1f} A{bubble_r},{bubble_r} 0 1,1 {sxh:.1f},{syh:.1f} '
+            f'A{bubble_r},{bubble_r} 0 1,1 {sx0:.1f},{sy0:.1f}" fill="none" stroke="none"/>',
+            f'<circle r="2.4" fill="{MUTED}" opacity=".6"><animateMotion dur="{44+k*5}s" begin="0s" '
+            f'repeatCount="indefinite"><mpath xlink:href="#{rid}"/></animateMotion></circle>',
+        ]
 
-    # connecting lines + traveling particles, drawn under the bubbles/hub
-    for i, (title, lines, accent) in enumerate(domains):
+    domains = [
+        ("PRODUCT / AUTOMATION", ["ship from zero", "workflows + integrations"], SAGE, "workflow"),
+        ("BLOCKCHAIN / DEFI", ["signing + replay", "irreversible state"], CLAY, "chain"),
+        ("QUANT / FINANCIAL", ["orders + fills", "ledger + reconciliation"], SAGE, "ledger"),
+        ("LINUX / PLATFORM", ["CI + release safety", "diagnostics + images"], CLAY, "server"),
+        ("AI RUNTIME", ["gateway + streaming", "policy + economics"], SAGE, "gateway"),
+    ]
+    bw, bh = 226, 118
+
+    # connecting traces + traveling particles, drawn under the bubbles/hub --
+    # right-angle circuit routing in the domain's own accent, bold enough to
+    # read as wiring rather than a faint mind-map line
+    for i, (title, lines, accent, icon_kind) in enumerate(domains):
         deg = -90 + i * (360 / len(domains))
         bx, by = _orbit_xy(hub_x, hub_y, bubble_r, deg)
         hx, hy = _orbit_xy(hub_x, hub_y, hub_r + 4, deg)
         pid = f"orbitpath{i}"
+        d = elbow_path(bx, by, hx, hy, radius=16)
         body += [
-            f'<path id="{pid}" d="M{bx:.0f},{by:.0f} L{hx:.0f},{hy:.0f}" fill="none" stroke="{LINE}" stroke-width="1.5"/>',
+            f'<path d="{d}" fill="none" stroke="{accent}" stroke-width="2.6" opacity=".4"/>',
+            f'<path id="{pid}" d="{d}" fill="none" stroke="none"/>',
+            f'<circle cx="{bx:.0f}" cy="{by:.0f}" r="3.4" fill="{INK}" stroke="{accent}" stroke-width="2"/>',
             f'<g filter="url(#glow)">',
-            f'<circle r="3.5" fill="{accent}"><animateMotion dur="2.6s" begin="{i*0.4:.1f}s" repeatCount="indefinite"><mpath xlink:href="#{pid}"/></animateMotion></circle>',
-            f'<circle r="3.5" fill="{accent}"><animateMotion dur="2.6s" begin="{i*0.4+1.3:.1f}s" repeatCount="indefinite"><mpath xlink:href="#{pid}"/></animateMotion></circle>',
+            f'<circle r="4" fill="{accent}"><animateMotion dur="2.6s" begin="{i*0.4:.1f}s" repeatCount="indefinite"><mpath xlink:href="#{pid}"/></animateMotion></circle>',
+            f'<circle r="4" fill="{accent}"><animateMotion dur="2.6s" begin="{i*0.4+1.3:.1f}s" repeatCount="indefinite"><mpath xlink:href="#{pid}"/></animateMotion></circle>',
             '</g>',
         ]
 
@@ -740,9 +862,11 @@ def write_systems_overview() -> None:
         body += pill(tx - tw/2, ty - 13, tw, 26, label, accent)
         body.append('</g>')
 
-    # hub, drawn last so it sits above the connecting lines
+    # hub -- layered radar sweep so the "core" reads as live, not decorative
     body += [
-        f'<circle cx="{hub_x}" cy="{hub_y}" r="{hub_r+16}" fill="none" stroke="{CLAY_BRIGHT}" stroke-width="1.4" opacity=".5" class="pulse-ring"/>',
+        f'<circle cx="{hub_x}" cy="{hub_y}" r="{hub_r+14}" fill="none" stroke="{CLAY_BRIGHT}" stroke-width="1.4" opacity=".55" class="pulse-ring"/>',
+        f'<circle cx="{hub_x}" cy="{hub_y}" r="{hub_r+14}" fill="none" stroke="{SAGE_BRIGHT}" stroke-width="1.2" opacity=".4" class="pulse-ring" style="animation-delay:.9s"/>',
+        f'<circle cx="{hub_x}" cy="{hub_y}" r="{hub_r+14}" fill="none" stroke="{CLAY_BRIGHT}" stroke-width="1" opacity=".3" class="pulse-ring" style="animation-delay:1.8s"/>',
         f'<circle cx="{hub_x}" cy="{hub_y}" r="{hub_r}" fill="url(#panelGradWarm)" stroke="{CLAY}" stroke-width="2"/>',
         txt(hub_x, hub_y - 14, "THE COMMON", 15, CLAY, 800, "middle", family=SANS),
         txt(hub_x, hub_y + 10, "LAYER", 22, CREAM, 800, "middle", family=SANS),
@@ -750,16 +874,16 @@ def write_systems_overview() -> None:
     ]
 
     # domain bubbles, staggered reveal, drawn on top of everything
-    for i, (title, lines, accent) in enumerate(domains):
+    for i, (title, lines, accent, icon_kind) in enumerate(domains):
         deg = -90 + i * (360 / len(domains))
         bx, by = _orbit_xy(hub_x, hub_y, bubble_r, deg)
         body.append(f'<g class="rise" style="animation-delay:{0.1*i:.2f}s">')
-        body += bubble(bx, by, bw, bh, title, lines, accent)
+        body += bubble(bx, by, bw, bh, title, lines, accent, icon_kind=icon_kind, seed=i * 1.7)
         body.append('</g>')
 
     (ASSETS / "systems-overview.svg").write_text(
         shell(w, h, "Systems overview",
-              "An orbit diagram: product, blockchain, quantitative finance, Linux platform engineering and AI runtime work, converging on one shared control discipline.", body),
+              "An orbit diagram with live per-node sparkline meters and bold circuit-routed data links: product, blockchain, quantitative finance, Linux platform engineering and AI runtime work, converging on one shared control discipline.", body),
         encoding="utf-8",
     )
 

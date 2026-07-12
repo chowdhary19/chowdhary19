@@ -1,12 +1,16 @@
 from __future__ import annotations
 
 from pathlib import Path
-from PIL import Image, ImageEnhance, ImageFilter, ImageOps
 import base64
 import html
 import io
 
 from tech_icons import ICONS, BRAND_ICONS
+
+# Pillow is only needed by prepare_portrait() below. Kept out of the module-level
+# imports so callers that just want the shared palette/txt()/shell() helpers
+# (e.g. update_github_signal.py, which runs in a workflow that never installs
+# Pillow) don't need it installed at all.
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "assets"
@@ -63,6 +67,8 @@ def data_uri(img: Image.Image, fmt: str = "JPEG", quality: int = 82) -> str:
 
 def prepare_portrait() -> str:
     """Preserve the actual portrait; treat the frame around it, not the face."""
+    from PIL import Image, ImageEnhance, ImageFilter, ImageOps
+
     source = Image.open(SOURCE).convert("RGB")
     crop = ImageOps.fit(source, (560, 660), method=Image.Resampling.LANCZOS, centering=(0.5, 0.45))
     crop = ImageEnhance.Contrast(crop).enhance(1.06)

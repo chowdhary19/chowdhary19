@@ -5,6 +5,7 @@ import base64
 import html
 import io
 import math
+import random
 
 from tech_icons import ICONS, BRAND_ICONS
 
@@ -443,68 +444,155 @@ def write_buttons() -> None:
     button("linkedin", "LINKEDIN", "brand:linkedin", 152, accent=SAGE)
 
 
-def write_tech_stack() -> None:
-    """Not a flat icon grid -- an actual stack. Layers drawn foundation-first
-    (platform/cloud at the base) up to the product surface at top, with a
-    glowing marker climbing the spine from bottom to top: the same "a request
-    moves through layers, and I know what happens at each one" idea the rest
-    of the profile is built around, not just a wall of logos.
+def _simulate_bubbles(n: int, radii: list[float], bounds: tuple[float, float, float, float],
+                       seed: int, steps: int = 180, dt: float = 0.1) -> list[list[tuple[float, float]]]:
+    """A real 2D physics simulation -- wall bounces plus pairwise elastic
+    collisions (equal-mass, so each collision exchanges the two bubbles'
+    velocity components along the collision normal; this is a genuine
+    "strike and change direction" response, not an approximation).
+
+    No damping, so speed never decays: a fixed dt means positions are
+    equally spaced in arc-length between bounces, which matters because it
+    means SVG's default (paced) animateMotion timing replays the simulation
+    at the correct relative speed without needing explicit keyTimes.
+
+    The returned trail is mirrored (forward then reversed) so the path
+    returns exactly to its start with zero discontinuity -- physics is
+    time-reversible, so playing it backward is itself a valid trajectory,
+    not a visual trick. That's what makes repeatCount="indefinite" loop
+    seamlessly with 30+ independently-phased bubbles without a synchronized
+    "snap" every cycle.
     """
-    layers = [
-        ("PRODUCT SURFACE", "the interface", ["react", "nextdotjs"], CLAY),
-        ("OBSERVABILITY", "the visibility", ["grafana", "prometheus"], SAGE),
-        ("RUNTIME LANGUAGES", "the execution", ["go", "python", "rust", "typescript"], CLAY),
-        ("DATA + MESSAGING", "the state", ["postgresql", "redis", "apachekafka", "rabbitmq"], SAGE),
-        ("PLATFORM + CLOUD", "the foundation", ["docker", "kubernetes", "amazonaws", "terraform", "linux", "githubactions"], CLAY),
-    ]
-    w = 1400
-    band_h = 104
-    top = 64
-    h = top + band_h * len(layers) + 26
+    rnd = random.Random(seed)
+    x0, y0, x1, y1 = bounds
+    pos: list[list[float]] = []
+    vel: list[list[float]] = []
+    for i in range(n):
+        r = radii[i]
+        px = py = 0.0
+        for _ in range(400):
+            px = rnd.uniform(x0 + r, x1 - r)
+            py = rnd.uniform(y0 + r, y1 - r)
+            if all(math.hypot(px - pos[j][0], py - pos[j][1]) >= r + radii[j] + 6 for j in range(len(pos))):
+                break
+        pos.append([px, py])
+        speed = rnd.uniform(45, 95)
+        ang = rnd.uniform(0, 2 * math.pi)
+        vel.append([speed * math.cos(ang), speed * math.sin(ang)])
+
+    trails: list[list[tuple[float, float]]] = [[tuple(pos[i])] for i in range(n)]
+    for _ in range(steps):
+        for i in range(n):
+            pos[i][0] += vel[i][0] * dt
+            pos[i][1] += vel[i][1] * dt
+        for i in range(n):
+            r = radii[i]
+            if pos[i][0] - r < x0:
+                pos[i][0], vel[i][0] = x0 + r, abs(vel[i][0])
+            elif pos[i][0] + r > x1:
+                pos[i][0], vel[i][0] = x1 - r, -abs(vel[i][0])
+            if pos[i][1] - r < y0:
+                pos[i][1], vel[i][1] = y0 + r, abs(vel[i][1])
+            elif pos[i][1] + r > y1:
+                pos[i][1], vel[i][1] = y1 - r, -abs(vel[i][1])
+        for i in range(n):
+            for j in range(i + 1, n):
+                dx, dy = pos[j][0] - pos[i][0], pos[j][1] - pos[i][1]
+                dist = math.hypot(dx, dy)
+                min_dist = radii[i] + radii[j]
+                if 0 < dist < min_dist:
+                    nx, ny = dx / dist, dy / dist
+                    overlap = min_dist - dist
+                    pos[i][0] -= nx * overlap / 2
+                    pos[i][1] -= ny * overlap / 2
+                    pos[j][0] += nx * overlap / 2
+                    pos[j][1] += ny * overlap / 2
+                    vi_n = vel[i][0] * nx + vel[i][1] * ny
+                    vj_n = vel[j][0] * nx + vel[j][1] * ny
+                    vel[i][0] += (vj_n - vi_n) * nx
+                    vel[i][1] += (vj_n - vi_n) * ny
+                    vel[j][0] += (vi_n - vj_n) * nx
+                    vel[j][1] += (vi_n - vj_n) * ny
+        for i in range(n):
+            trails[i].append(tuple(pos[i]))
+
+    return [trail + trail[-2::-1] for trail in trails]
+
+
+def write_tech_bubbles() -> None:
+    """33 tools -- everything the layered-stack version showed plus the
+    breadth this one is meant to communicate -- as bubbles in a tank, each
+    following a real simulated physics path (see _simulate_bubbles). GitHub
+    READMEs can't run JS, so this is computed once at build time and baked
+    into a looping SVG path per bubble; the bounces are genuine collision
+    response, not decoration.
+    """
+    order = ["go", "python", "rust", "typescript", "fastapi", "django", "nodedotjs",
+             "graphql", "postgresql", "redis", "apachekafka", "rabbitmq", "celery", "clickhouse",
+             "docker", "kubernetes", "amazonaws", "terraform", "linux", "githubactions", "nginx",
+             "vercel", "supabase", "cloudflare", "grafana", "prometheus", "opentelemetry",
+             "react", "nextdotjs", "tailwindcss",
+             "openai", "anthropic", "langchain"]
+    w, h = 1400, 560
+    box_x0, box_y0, box_x1, box_y1 = 40, 68, 1360, 520
 
     body = [
-        txt(28, 34, "yuvraj@runtime:~$ ./stack --trace-request --bottom-up", 13, CLAY, 700),
-        txt(w - 28, 34, "the tools; not the identity", 11, MUTED, 650, anchor="end"),
+        txt(28, 34, "yuvraj@runtime:~$ ./stack --shake", 13, CLAY, 700),
+        txt(w - 28, 34, f"{len(order)} tools, none of them my identity", 11, MUTED, 650, anchor="end"),
         f'<line x1="28" y1="49" x2="{w-28}" y2="49" stroke="{LINE}"/>',
-        frame_brackets(14, 60, w - 28, band_h * len(layers) + 8, CLAY_DIM, corner=16),
+        f'<rect x="{box_x0}" y="{box_y0}" width="{box_x1-box_x0}" height="{box_y1-box_y0}" rx="22" fill="url(#panelGrad)" stroke="{LINE}" stroke-width="1.5"/>',
+        frame_brackets(box_x0, box_y0, box_x1 - box_x0, box_y1 - box_y0, CLAY_DIM, corner=20),
     ]
 
-    spine_x = 258
-    spine_top, spine_bottom = top + 10, top + band_h * len(layers) - 10
-    body += [
-        f'<line x1="{spine_x}" y1="{spine_top}" x2="{spine_x}" y2="{spine_bottom}" stroke="{LINE}" stroke-width="1.5"/>',
-        f'<path id="stackSpine" d="M{spine_x},{spine_bottom} L{spine_x},{spine_top}" fill="none" stroke="none"/>',
-        f'<g filter="url(#glow)"><circle r="5" fill="{CLAY_BRIGHT}"><animateMotion dur="5s" repeatCount="indefinite"><mpath xlink:href="#stackSpine"/></animateMotion></circle></g>',
-        txt(spine_x, spine_top - 18, "request", 9.5, MUTED, 650, "middle"),
-    ]
+    # ambient rising bubbles (no icon) for tank atmosphere, drawn first so
+    # the tool bubbles float above them
+    rnd_amb = random.Random(7)
+    for i in range(8):
+        bx = rnd_amb.uniform(box_x0 + 50, box_x1 - 50)
+        r = rnd_amb.uniform(3, 7)
+        dur = rnd_amb.uniform(7, 13)
+        delay = rnd_amb.uniform(-dur, 0)
+        accent = SAGE if i % 2 else CLAY
+        body.append(
+            f'<circle cx="{bx:.0f}" cy="{box_y1-14}" r="{r:.1f}" fill="none" stroke="{accent}" stroke-width="1">'
+            f'<animate attributeName="cy" values="{box_y1-14};{box_y0+14}" dur="{dur:.1f}s" begin="{delay:.1f}s" repeatCount="indefinite"/>'
+            f'<animate attributeName="opacity" values="0;.5;.5;0" keyTimes="0;0.15;0.8;1" dur="{dur:.1f}s" begin="{delay:.1f}s" repeatCount="indefinite"/>'
+            '</circle>'
+        )
 
-    n_layers = len(layers)
-    for i, (title, subtitle, icons, accent) in enumerate(layers):
-        y0 = top + i * band_h
-        cy = y0 + band_h / 2
-        body.append(f'<g class="rise" style="animation-delay:{0.08*i:.2f}s">')
-        body += [
-            f'<rect x="14" y="{y0+2}" width="{w-28}" height="{band_h-4}" fill="url(#panelGrad)"/>',
-            txt(46, y0 + 28, f"L{n_layers-i:02d}", 10, accent, 700),
-            txt(46, y0 + 52, title, 13.5, CREAM, 800, family=SANS),
-            txt(46, y0 + 72, subtitle, 10.5, MUTED, 600),
-            f'<circle cx="{spine_x}" cy="{cy}" r="4.5" fill="{accent}"/>',
-        ]
-        for j, slug in enumerate(icons):
-            label, d = ICONS[slug]
-            cx = 340 + j * 150
-            scale = 30 / 24
-            body += [
-                f'<g transform="translate({cx-15},{cy-24}) scale({scale:.4f})"><path d="{d}" fill="{CREAM if (i+j) % 2 == 0 else PARCHMENT}"/></g>',
-                txt(cx, cy + 22, label, 10, MUTED, 600, "middle", family=SANS),
-            ]
-        body.append('</g>')
-        if i < n_layers - 1:
-            body.append(f'<line x1="14" y1="{y0+band_h}" x2="{w-14}" y2="{y0+band_h}" stroke="{LINE_SOFT}"/>')
+    rnd = random.Random(101)
+    radii = [rnd.uniform(20, 29) for _ in order]
+    bounds = (box_x0 + 34, box_y0 + 34, box_x1 - 34, box_y1 - 34)
+    steps, dt = 120, 0.15
+    trails = _simulate_bubbles(len(order), radii, bounds, seed=2024, steps=steps, dt=dt)
+    dur = 2 * steps * dt  # forward + mirrored return
 
-    (ASSETS / "tech-stack.svg").write_text(
-        shell(w, h, "Tech stack",
-              "A layered stack diagram from platform and cloud at the foundation up to the product surface, with an animated request climbing through it.", body),
+    paths: list[str] = []
+    bubbles: list[str] = []
+    for idx, (slug, trail) in enumerate(zip(order, trails)):
+        label, d = ICONS[slug]
+        radius = radii[idx]
+        accent = CLAY if idx % 2 == 0 else SAGE
+        path_d = "M " + " L ".join(f"{px:.1f},{py:.1f}" for px, py in trail)
+        pid = f"bubblepath{idx}"
+        paths.append(f'<path id="{pid}" d="{path_d}" fill="none" stroke="none"/>')
+
+        isz = radius * 1.3
+        scale = isz / 24
+        bubbles.append(
+            f'<g>'
+            f'<animateMotion dur="{dur:.1f}s" begin="0s" repeatCount="indefinite" rotate="0"><mpath xlink:href="#{pid}"/></animateMotion>'
+            f'<circle r="{radius:.1f}" fill="{INK_PANEL_2}" fill-opacity="0.92" stroke="{accent}" stroke-width="1.5"/>'
+            f'<g transform="translate({-isz/2:.1f},{-isz/2:.1f}) scale({scale:.4f})"><path d="{d}" fill="{CREAM}"/></g>'
+            '</g>'
+        )
+
+    body += paths
+    body += bubbles
+
+    (ASSETS / "tech-bubbles.svg").write_text(
+        shell(w, h, "Tech stack, adrift",
+              f"{len(order)} tools as bubbles in a tank, each following a simulated physics path with real wall bounces and elastic collisions.", body),
         encoding="utf-8",
     )
 
@@ -779,7 +867,7 @@ def main() -> None:
     write_systems_overview()
     write_builder_mode()
     write_buttons()
-    write_tech_stack()
+    write_tech_bubbles()
     # Placeholders exist only to give a brand-new checkout something to show
     # before the "Refresh profile signal" Action has ever run. Once real data
     # is in place, running this script again for unrelated asset changes must
@@ -789,7 +877,7 @@ def main() -> None:
     if not (ASSETS / "github-activity.svg").exists():
         write_placeholder_activity()
     write_social_preview(portrait_uri)
-    for name in ["hero-terminal", "systems-overview", "builder-mode", "tech-stack", "github-contributions", "github-activity", "social-preview"]:
+    for name in ["hero-terminal", "systems-overview", "builder-mode", "tech-bubbles", "github-contributions", "github-activity", "social-preview"]:
         render(f"{name}.svg", f"{name}.png")
     for slug in ["synvolv", "call", "email", "linkedin"]:
         render(f"button-{slug}.svg", f"button-{slug}.png")

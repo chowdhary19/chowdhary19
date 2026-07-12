@@ -158,7 +158,7 @@ GROUP  BY account_id;                          -- and reconciliation is how we m
 `Go` when the service must stay simple and fast. `Rust` when the boundary genuinely earns it. `Python` when the problem is data-heavy or operational. `TypeScript` when the operator surface and the backend have to evolve together. `PostgreSQL · ClickHouse · Redis · Kafka · RabbitMQ · Docker · Kubernetes · AWS · OpenTelemetry` are tools I know cold — none of them are my identity. **Keeping the whole path in view is.**
 
 <div align="center">
-  <img src="./assets/tech-stack.svg" width="100%" alt="Logo grid: Go, Python, Rust, TypeScript, PostgreSQL, Redis, Kafka, RabbitMQ, Docker, Kubernetes, AWS, GitHub Actions, Linux, React, Next.js, Terraform, Grafana, Prometheus">
+  <img src="./assets/tech-bubbles.svg" width="100%" alt="33 tools as bubbles in a tank, each following a simulated physics path with real wall bounces and elastic collisions">
 </div>
 
 <br>

@@ -35,6 +35,7 @@ required = [
     ASSETS / "hero-terminal.svg",
     ASSETS / "systems-overview.svg",
     ASSETS / "builder-mode.svg",
+    ASSETS / "tech-bubbles.svg",
     ASSETS / "github-contributions.svg",
     ASSETS / "github-activity.svg",
     ASSETS / "social-preview.png",

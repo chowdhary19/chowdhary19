@@ -3,49 +3,19 @@ from __future__ import annotations
 from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
-import html
 import json
 import os
 import urllib.request
 
+from build_assets import (
+    INK_PANEL, LINE, LINE_SOFT, CREAM, PARCHMENT, MUTED, CLAY, CLAY_BRIGHT,
+    SAGE, SAGE_BRIGHT, SANS, esc, txt, shell,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "assets"
-BG = "#010401"
-GREEN = "#39ff6a"
-GREEN_SOFT = "#b8ffc5"
-GREEN_MID = "#22b94a"
-GREEN_DIM = "#126329"
-GREEN_FAINT = "#082f15"
-MONO = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace"
 
-
-def esc(value: object) -> str:
-    return html.escape(str(value), quote=True)
-
-
-def text(x: float, y: float, value: object, size: float = 16, fill: str = GREEN_SOFT,
-         weight: int = 400, anchor: str = "start") -> str:
-    return (
-        f'<text x="{x}" y="{y}" font-family="{MONO}" font-size="{size}" '
-        f'font-weight="{weight}" fill="{fill}" text-anchor="{anchor}">{esc(value)}</text>'
-    )
-
-
-def shell(width: int, height: int, title: str, desc: str, body: list[str]) -> str:
-    return "\n".join([
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
-        f'<title id="title">{esc(title)}</title>',
-        f'<desc id="desc">{esc(desc)}</desc>',
-        '<defs>',
-        f'<pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="{GREEN}" opacity=".022"/></pattern>',
-        '<style>.blink{animation:blink 1s steps(1,end) infinite}.sweep{animation:sweep 8.5s linear infinite}@keyframes blink{50%{opacity:0}}@keyframes sweep{from{transform:translateX(-200px)}to{transform:translateX(1600px)}}@media(prefers-reduced-motion:reduce){.blink,.sweep{animation:none!important}}</style>',
-        '</defs>',
-        f'<rect width="{width}" height="{height}" fill="{BG}"/>',
-        f'<rect width="{width}" height="{height}" fill="url(#scanlines)"/>',
-        f'<rect x="1" y="1" width="{width-2}" height="{height-2}" fill="none" stroke="{GREEN_DIM}"/>',
-        *body,
-        '</svg>',
-    ])
+LANG_COLORS = [CLAY, SAGE, CLAY_BRIGHT, SAGE_BRIGHT, "#B0A695"]
 
 
 def api(url: str, token: str, payload: dict | None = None):
@@ -94,7 +64,7 @@ def load_profile(owner: str, token: str) -> dict:
 
 
 def load_events(owner: str, token: str) -> list[dict]:
-    return api(f"https://api.github.com/users/{owner}/events/public?per_page=50", token)
+    return api(f"https://api.github.com/users/{owner}/events/public?per_page=100", token)
 
 
 def streaks(days: list[dict]) -> tuple[int, int]:
@@ -119,85 +89,115 @@ def streaks(days: list[dict]) -> tuple[int, int]:
     return current, longest
 
 
-def color(count: int, maximum: int) -> str:
-    if count <= 0:
-        return GREEN_FAINT
-    ratio = count / max(1, maximum)
-    if ratio < .20:
-        return "#0d4520"
-    if ratio < .45:
-        return GREEN_DIM
-    if ratio < .72:
-        return GREEN_MID
-    return GREEN
+def kpi_tile(x: float, y: float, w: float, value: str, label: str) -> list[str]:
+    return [
+        f'<rect x="{x}" y="{y}" width="{w}" height="88" rx="8" fill="{INK_PANEL}" stroke="{LINE}"/>',
+        txt(x + 16, y + 42, value, 27, CREAM, 800, family=SANS),
+        txt(x + 16, y + 68, label, 10.5, MUTED, 650, family=SANS),
+    ]
 
 
-def build_contributions(user: dict) -> None:
+def sparkline(x: float, y: float, w: float, h: float, weekly: list[int]) -> list[str]:
+    if not weekly:
+        return [txt(x, y + h / 2, "no recent activity window", 12, MUTED, 600)]
+    top = max(weekly) or 1
+    n = len(weekly)
+    step = w / max(1, n - 1)
+    pts = [(x + i * step, y + h - (v / top) * h) for i, v in enumerate(weekly)]
+    line = " ".join(f"{px:.1f},{py:.1f}" for px, py in pts)
+    area = f"{x:.1f},{y+h:.1f} " + line + f" {x+w:.1f},{y+h:.1f}"
+    last_x, last_y = pts[-1]
+    out = [
+        f'<polyline points="{area}" fill="{CLAY}" opacity=".12"/>',
+        f'<polyline points="{line}" fill="none" stroke="{CLAY_BRIGHT}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>',
+        f'<line x1="{x}" y1="{y+h}" x2="{x+w}" y2="{y+h}" stroke="{LINE_SOFT}"/>',
+        f'<circle cx="{last_x:.1f}" cy="{last_y:.1f}" r="4.5" fill="{CLAY_BRIGHT}"/>',
+        f'<circle cx="{last_x:.1f}" cy="{last_y:.1f}" r="4.5" fill="none" stroke="{CLAY_BRIGHT}" stroke-width="1.4" class="pulse-ring"/>',
+    ]
+    return out
+
+
+def language_bar(x: float, y: float, w: float, h: float, languages: list[tuple[str, int]]) -> list[str]:
+    total = sum(c for _, c in languages) or 1
+    out = []
+    cx = x
+    legend = []
+    for i, (name, count) in enumerate(languages):
+        seg_w = w * count / total
+        color = LANG_COLORS[i % len(LANG_COLORS)]
+        out.append(f'<rect x="{cx:.1f}" y="{y}" width="{max(seg_w,2):.1f}" height="{h}" fill="{color}"/>')
+        legend.append((name, count, color))
+        cx += seg_w
+    ly = y + h + 24
+    lx = x
+    for name, count, color in legend:
+        out.append(f'<circle cx="{lx+5}" cy="{ly-4}" r="4" fill="{color}"/>')
+        label = f"{name} ({count})"
+        out.append(txt(lx + 16, ly, label, 11.5, PARCHMENT, 600, family=SANS))
+        lx += 20 + len(label) * 7.2
+    return out
+
+
+def build_signal_panel(user: dict) -> None:
     collection = user["contributionsCollection"]
     calendar = collection["contributionCalendar"]
-    weeks = calendar["weeks"][-53:]
-    days = [d for week in weeks for d in week["contributionDays"]]
-    maximum = max([int(d["contributionCount"]) for d in days] or [1])
+    weeks_raw = calendar["weeks"]
+    days = [d for week in weeks_raw for d in week["contributionDays"]]
     current, longest = streaks(days)
-    repos = [r for r in user["repositories"]["nodes"] if not r["isFork"]]
+    repos = [r for r in user["repositories"]["nodes"] if not r["isFork"] and r["name"] != user["login"]]
     stars = sum(int(r["stargazerCount"]) for r in repos)
     languages = Counter(r["primaryLanguage"]["name"] for r in repos if r.get("primaryLanguage"))
-    language_line = " / ".join(name for name, _ in languages.most_common(5)) or "public work in progress"
     updated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+
+    weekly = [sum(int(d["contributionCount"]) for d in wk["contributionDays"]) for wk in weeks_raw[-14:]]
 
     w, h = 1400, 390
     body = [
-        text(28, 34, f"github://contributions/@{user['login']}", 13, GREEN, 700),
-        text(1370, 34, updated, 10, GREEN_DIM, 600, "end"),
-        f'<line x1="28" y1="48" x2="1372" y2="48" stroke="{GREEN_DIM}"/>',
-        text(42, 82, f"$ {calendar['totalContributions']:,} contributions in the last year", 15, GREEN, 800),
+        txt(28, 34, f"github://signal/@{user['login']}", 13, CLAY, 700),
+        txt(1370, 34, updated, 10, MUTED, 600, "end"),
+        f'<line x1="28" y1="48" x2="1372" y2="48" stroke="{LINE}"/>',
     ]
-    sx, sy, cell, gap = 44, 116, 15, 5
-    for column, week in enumerate(weeks):
-        for item in week["contributionDays"]:
-            row = int(item["weekday"])
-            count = int(item["contributionCount"])
-            x, y = sx + column * (cell + gap), sy + row * (cell + gap)
-            body.append(
-                f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="2" fill="{color(count, maximum)}">'
-                f'<title>{count} contributions on {esc(item["date"])}</title></rect>'
-            )
-    commits = int(collection["totalCommitContributions"])
-    prs = int(collection["totalPullRequestContributions"])
-    reviews = int(collection["totalPullRequestReviewContributions"])
-    issues = int(collection["totalIssueContributions"])
-    if commits + prs + reviews + issues > 0:
-        # Full breakdown is available (a user-scoped token is in play).
-        summary_line = f"commits={commits}  pull_requests={prs}  reviews={reviews}  issues={issues}"
-    else:
-        # The default Actions GITHUB_TOKEN can read the public calendar but not the
-        # per-type breakdown, which returns zeros. Fall back to always-true stats
-        # derived straight from the calendar so the panel never contradicts itself.
-        active_days = sum(1 for d in days if int(d["contributionCount"]) > 0)
-        busiest = max((int(d["contributionCount"]) for d in days), default=0)
-        per_week = round(int(calendar["totalContributions"]) / 52)
-        summary_line = f"active_days={active_days}  busiest_day={busiest}  avg={per_week}/week"
+
+    tiles = [
+        (f"{calendar['totalContributions']:,}", "CONTRIBUTIONS / YR"),
+        (f"{current}d", "CURRENT STREAK"),
+        (f"{longest}d", "LONGEST STREAK"),
+        (f"{user['repositories']['totalCount']}", "PUBLIC REPOS"),
+        (f"{stars}", "STARS EARNED"),
+        (f"{user['followers']['totalCount']}", "FOLLOWERS"),
+    ]
+    tile_w, gap, sx, sy = 206, 16, 42, 68
+    for i, (value, label) in enumerate(tiles):
+        body += kpi_tile(sx + i * (tile_w + gap), sy, tile_w, value, label)
 
     body += [
-        f'<g class="sweep"><rect x="0" y="112" width="3" height="158" fill="{GREEN}" opacity=".28"/></g>',
-        text(44, 306, summary_line, 12, GREEN_SOFT, 650),
-        text(44, 332, f"streak={current}d  longest={longest}d  public_repos={user['repositories']['totalCount']}  stars={stars}  followers={user['followers']['totalCount']}", 12, GREEN_SOFT, 650),
-        text(44, 358, f"languages={language_line}", 11, GREEN_DIM, 600),
-        text(1356, 358, "generated in-repo", 10, GREEN_DIM, 600, "end"),
+        txt(42, 196, f"$ momentum --weeks {len(weekly)}", 13, SAGE, 800),
+        *sparkline(44, 210, 1312, 76, weekly),
     ]
+
+    top_langs = languages.most_common(5)
+    body += [txt(42, 328, "$ languages --top 5", 13, SAGE, 800)]
+    if top_langs:
+        body += language_bar(44, 340, 1312, 14, top_langs)
+    else:
+        body += [txt(44, 355, "no public repositories with a detected primary language yet", 12, MUTED, 600)]
+
     (ASSETS / "github-contributions.svg").write_text(
-        shell(w, h, "GitHub contribution history", "Real GitHub contribution history generated by GitHub Actions.", body),
+        shell(w, h, "GitHub KPI signal",
+              "Real GitHub KPI tiles, a 14-week momentum sparkline and a language mix, generated by GitHub Actions.", body),
         encoding="utf-8",
     )
 
 
-def event_line(event: dict) -> tuple[str, str]:
+def event_line(event: dict) -> tuple[str, str] | None:
     typ = event.get("type", "Event")
     repo = event.get("repo", {}).get("name", "unknown")
     payload = event.get("payload", {})
     when = event.get("created_at", "")[:10]
     if typ == "PushEvent":
         count = len(payload.get("commits", []))
+        if count == 0:
+            return None
         branch = str(payload.get("ref", "")).split("/")[-1]
         return when, f"push {count} commit{'s' if count != 1 else ''} -> {repo}:{branch}"
     if typ == "PullRequestEvent":
@@ -213,14 +213,23 @@ def event_line(event: dict) -> tuple[str, str]:
         return when, f"released {tag} -> {repo}"
     if typ == "WatchEvent":
         return when, f"starred -> {repo}"
+    if typ in ("DeleteEvent", "ForkEvent", "MemberEvent"):
+        return None  # housekeeping noise, not engineering signal
     return when, f"{typ.removesuffix('Event').lower()} -> {repo}"
 
 
 def build_activity(user: dict, events: list[dict]) -> None:
+    owner = user["login"]
+    profile_repo = f"{owner}/{owner}"
     lines: list[tuple[str, str]] = []
     seen: set[str] = set()
     for event in events:
-        when, message = event_line(event)
+        if event.get("repo", {}).get("name") == profile_repo:
+            continue  # editing this profile repo isn't the engineering signal we're showing
+        parsed = event_line(event)
+        if parsed is None:
+            continue
+        when, message = parsed
         key = f"{when}:{message}"
         if key in seen:
             continue
@@ -229,39 +238,37 @@ def build_activity(user: dict, events: list[dict]) -> None:
         if len(lines) == 6:
             break
     if not lines:
-        lines = [("--", "no recent public events returned by GitHub")]
+        lines = [("--", "no recent public events outside the profile repo")]
 
-    repos = [r for r in user["repositories"]["nodes"] if not r["isFork"]][:4]
+    repos = [r for r in user["repositories"]["nodes"] if not r["isFork"] and r["name"] != owner][:4]
     w, h = 1400, 360
     body = [
-        text(28, 34, f"github://events/@{user['login']}?tail=6", 13, GREEN, 700),
-        f'<line x1="28" y1="48" x2="1372" y2="48" stroke="{GREEN_DIM}"/>',
-        text(42, 80, "$ tail -f public-engineering.log", 13, GREEN, 800),
+        txt(28, 34, f"github://events/@{owner}?tail=6", 13, CLAY, 700),
+        f'<line x1="28" y1="48" x2="1372" y2="48" stroke="{LINE}"/>',
+        txt(42, 80, "$ tail -f public-engineering.log", 13, CLAY, 800),
     ]
     y = 118
     for when, message in lines:
-        body += [text(44, y, when, 11, GREEN_DIM, 650), text(160, y, "|", 11, GREEN_DIM), text(186, y, message[:118], 12, GREEN_SOFT, 600)]
+        body += [txt(44, y, when, 11, MUTED, 650), txt(160, y, "|", 11, MUTED), txt(186, y, message[:118], 12, PARCHMENT, 600)]
         y += 34
     if repos:
-        body += [text(44, 326, "recent_repositories=" + "  ".join(r["name"] for r in repos), 10, GREEN_DIM, 600)]
-    body += [f'<rect x="44" y="338" width="9" height="15" fill="{GREEN}" class="blink"/>']
+        body += [txt(44, 326, "recent_repositories=" + "  ".join(r["name"] for r in repos), 10, MUTED, 600)]
+    body += [txt(44, 338, "yuvraj@runtime:~$", 11, CLAY, 700), f'<rect x="180" y="325" width="9" height="15" fill="{CLAY_BRIGHT}" class="blink"/>']
     (ASSETS / "github-activity.svg").write_text(
-        shell(w, h, "Recent GitHub activity", "Recent public GitHub events and repository movement generated by GitHub Actions.", body),
+        shell(w, h, "Recent GitHub activity",
+              "Recent public GitHub events (excluding this profile repository and no-op pushes), generated by GitHub Actions.", body),
         encoding="utf-8",
     )
 
 
 def main() -> None:
-    # PROFILE_TOKEN (an optional classic PAT with read:user) unlocks the full
-    # commits/PRs/reviews/issues breakdown. Without it the built-in GITHUB_TOKEN
-    # still produces the calendar, streaks and repo stats.
     token = (os.environ.get("PROFILE_TOKEN") or os.environ.get("GITHUB_TOKEN") or "").strip()
     owner = os.environ.get("GITHUB_REPOSITORY_OWNER", "").strip()
     if not token or not owner:
         raise SystemExit("GITHUB_TOKEN and GITHUB_REPOSITORY_OWNER are required")
     user = load_profile(owner, token)
     events = load_events(owner, token)
-    build_contributions(user)
+    build_signal_panel(user)
     build_activity(user, events)
     print(f"updated GitHub signal for @{owner}")
 

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="52" viewBox="0 0 128 52" role="img" aria-label="EMAIL">
+<rect width="128" height="52" fill="none"/>
+<style>@media(prefers-reduced-motion:reduce){.pulse{animation:none!important}}.pulse{animation:btnpulse 2.6s ease-in-out infinite}@keyframes btnpulse{0%,100%{opacity:.15}50%{opacity:.6}}</style>
+<rect x="1" y="1" width="126" height="50" rx="12" fill="#1C1914" stroke="#332E27" stroke-width="1.3"/>
+<g stroke="#D97757" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="20.0" y="18.5" width="20" height="15.0" rx="2"/><path d="M20.0 19.0 L30 26.6 L40.0 19.0"/></g>
+<text x="50" y="31.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#F3EEE4" text-anchor="start" opacity="1.0">EMAIL</text>
+</svg>

@@ -1,48 +1,50 @@
 <div align="center">
-  <img src="./assets/hero-terminal.svg" width="100%" alt="Yuvraj Singh Chowdhary — founder and infrastructure engineer — in an animated terminal scanner">
+  <img src="./assets/hero-terminal.svg" width="100%" alt="Yuvraj Singh Chowdhary — builder and infrastructure engineer — in an animated terminal scanner">
 </div>
 
 <p align="center">
   <a href="https://synvolv.com/"><code>synvolv</code></a>
-  &nbsp;&nbsp;·&nbsp;&nbsp;
+  &nbsp;·&nbsp;
   <a href="https://cal.com/heyyuvraj/chat"><code>schedule a call</code></a>
-  &nbsp;&nbsp;·&nbsp;&nbsp;
+  &nbsp;·&nbsp;
   <a href="mailto:chowdharyyuvrajsingh@gmail.com"><code>email</code></a>
-  &nbsp;&nbsp;·&nbsp;&nbsp;
+  &nbsp;·&nbsp;
   <a href="https://www.linkedin.com/in/connectyuvraj/"><code>linkedin</code></a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/chowdhary19"><code>github</code></a>
 </p>
+
+<div align="center">
+
+**I build the layer that decides what happens to money and model calls while the request is still alive.**
+
+`builder of the fastest AI gateway control path I have ever put into production` — sub-millisecond authority in the hot path, before a token or a dollar is committed.
+
+</div>
 
 <br>
 
-## `$ cat /home/yuvraj/about`
+## `$ whoami --deep`
 
-Most people try to place me in one box.
+I am a **builder**. Not a founder-architect who draws the boxes and leaves, not an engineer who needs the problem pre-cut into tickets — the person who takes an empty repository and a business that can still fail, and comes back with a system that holds.
 
-Backend. Infrastructure. AI. Quant. Blockchain. Founder.
+People try to put me in one box: backend, infrastructure, AI, quant, blockchain, platform. The honest answer is simpler. **I keep following a system until I reach the layer that can actually fail the business — and then I own that layer.**
 
-The honest answer is that I keep following a system until I reach the layer that can actually fail the business.
+I have shipped web products and automations, DeFi and signing flows, exchange and broker integrations, order and fill state machines, portfolio and cash reconciliation, risk monitors, Linux release tooling, distributed backends, AI gateways, policy engines, usage ledgers, and the operator control planes that sit on top of all of it.
 
-I have built web products and automations, DeFi and signing flows, exchange and broker integrations, order and fill state machines, portfolio and cash reconciliation, risk monitors, Linux release tooling, distributed backends, AI gateways, policy engines, usage ledgers, internal terminals and operator control planes.
-
-Not because I collect stacks. I do not.
-
-Each problem simply pulled me one layer deeper.
-
-A feature became a service. The service became a queue. The queue became a state machine. The state machine touched money. Money required a ledger. The ledger disagreed with an exchange. The exchange required reconciliation. Reconciliation required an operator. The operator needed a control plane. The control plane sat in the hot path. The hot path had to become fast enough to disappear.
-
-From the outside that looks like breadth. From inside my head it is one obsession:
+That is not stack collecting. It is one instinct, applied over and over:
 
 ```text
-make the important state explicit
-keep the system honest under pressure
-own the path after the endpoint returns 200 OK
+a feature became a service            a service became a queue
+the queue became a state machine      the state machine touched money
+money required a ledger               the ledger disagreed with an exchange
+the disagreement required an operator   the operator needed a control plane
+the control plane sat in the hot path   the hot path had to disappear
 ```
 
-I like starting from zero. Empty repository, ugly first diagram, incomplete requirements, a customer describing the problem with the wrong nouns — that is usually where my best work begins.
+> *"A complex system that works is invariably found to have evolved from a simple system that worked."* — **John Gall**
 
-I am not the engineer who needs the problem to arrive pre-cut into tickets. I would rather understand the business, find the real invariant, build the first working system, operate it, watch where reality disagrees with the design and then rebuild the part that was pretending.
-
-That is also why I became a founder. Sometimes the missing layer is too important to remain a side project.
+That is exactly how I build. Understand the business. Find the real invariant. Ship the smallest thing that is genuinely correct. Operate it. Watch where reality disagrees with the design — and then rebuild the part that was only pretending to work.
 
 <br>
 
@@ -52,126 +54,125 @@ That is also why I became a founder. Sometimes the missing layer is too importan
 
 <br>
 
-## `$ less /var/log/the-long-way-here.log`
+## `$ cat /srv/synvolv/WHY`
 
-I started by building whatever I could get my hands on.
+[**Synvolv**](https://synvolv.com/) is what happened when that systems instinct met production AI.
 
-Small products taught me speed. You learn quickly when there is nobody else to blame for the database, the deployment, the broken onboarding and the page that looked perfect on your machine. Automation taught me the first serious lesson: a boring five-minute task becomes infrastructure the moment a team quietly depends on it.
+AI teams had SDKs, gateways, dashboards and a monthly invoice — but almost **no authority during the only moment that matters: while the request is still in flight and the outcome can still be changed.** Spend is discovered after it is committed. Policy is a wiki page, not a runtime control. A runaway agent loop is a postmortem, not a blocked request.
 
-Blockchain and DeFi changed the cost of being careless.
+So I built the control plane I wanted to exist, from an empty repository.
 
-A bad retry is not merely noisy. A signing boundary is not an implementation detail. A stale nonce, loose replay protection or confused chain state can turn a small software mistake into irreversible truth. That work made me respect state transitions, ownership and the difference between an action being accepted and an action being correct.
+```text
+INGRESS      OpenAI-compatible, drop-in — adopt it with a config change, not a rewrite
+NORMALIZE    one contract over 200+ models across OpenAI, Anthropic, Gemini + custom endpoints
+DECIDE       tenant identity -> policy snapshot -> budget counters -> route -> health-aware fallback
+               evaluated in the request path, not after it
+METER        token accounting, cost attribution, per-feature / per-tenant unit economics
+ENFORCE      downgrade, cap, cache, reroute or block under margin pressure — before provider spend
+PROVE        full request lineage: latency, tokens, cost, routing reason, applied policy, outcome
+```
 
-Then I moved closer to markets and financial operations.
+The engineering claim I care about most is **restraint under load**: I put one of the fastest AI gateway control paths I know of into production — **sub-millisecond average overhead in the hot path while still making real policy and routing decisions.** Infrastructure should never become the tax you pay for using infrastructure. The control layer has to be *fast enough to disappear, explicit enough to dispute, and complete enough to operate.*
 
-Exchanges do not agree with one another. Broker APIs lag. Orders are accepted before they are settled. Fills arrive out of order. Balances drift. Rate limits become architecture. Funding, collateral, margin and liquidation risk continue moving while your worker is restarting.
+> *"Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away."* — **Antoine de Saint-Exupéry**
 
-So I built the layer around the APIs: normalized account state, order and fill pipelines, exchange-specific recovery, cash checks, reconciliation, portfolio views, execution monitoring, market-event surveillance, risk alerts, investor reporting and the internal control room people could actually use when the data stopped being polite.
+This is where systems engineering stops being a craft and becomes a business: latency is capacity, routing is gross margin, and a single policy decision is the difference between a healthy unit economic and a runaway one. I build for the reader who carries both a pager and a P&L.
 
-That period made one thing permanent in the way I think:
+<details>
+<summary><strong>production receipts</strong> — numbers exist so systems can be disputed, not admired</summary>
+<br>
 
-> If two systems can disagree about money, reconciliation is not an afterthought. It is part of the product.
+```text
+17M+       LLM requests / month across scaled design partners
+~456 us    average measured gateway overhead — decisions made, not skipped
+200+       models normalized across major providers and custom endpoints
+< 5 min    OpenAI-compatible integration path
 
-Linux and platform work taught me a different kind of discipline. A fix that lives in one engineer's shell history is not a fix. A test that passes only in the environment where it was written is not a test. Cloud images, boot failures, package behavior, CI, diagnostics, release validation and regression triage made me less impressed by clever code and much more impressed by systems that can reproduce and explain themselves.
+$65M       AUM supported by quant operating infrastructure I built with the team
+12         investor clients supported through the operating build-out
+20+        exchanges under market-event and delisting surveillance
+```
 
-Then AI infrastructure brought almost every earlier lesson into the same request path.
-
-Provider differences. Streaming. Rate limits. Tenant isolation. Fallbacks. Variable cost. Usage attribution. Policy. Retry semantics. Tail latency. Audit. Operators. The bill arriving long after the engineering decision that created it.
-
-It felt familiar.
-
-So I built the control layer I wanted to exist.
+</details>
 
 <br>
 
 ## `$ ./inspect --builder --all-layers`
 
-I am an infrastructure engineer in the broad, old-fashioned meaning of the word.
+I am an infrastructure engineer in the broad, old-fashioned sense: I care about what runs **underneath** a product, **between** its components, and **immediately after** it fails.
 
-I care about the things underneath a product, between its components and immediately after it fails.
-
-I can work at the request edge where every allocation matters, then move into the ledger where every mutation needs a reason, then into the operator surface where the system must explain what happened without asking somebody to grep six services at 3 AM.
-
-I have designed and shipped:
+I can sit at the request edge where every allocation and every microsecond matters, move into the ledger where every mutation needs a reason it can defend, and land on the operator surface where the system has to explain what it just did without anyone grepping six services at 3 AM.
 
 ```text
-request paths        gateways, middleware, streaming, routing, rate control
-financial state      ledgers, reconciliation, cash, PnL, margin, exposure
-market connectivity  CEX / DEX / broker adapters, orders, fills, account state
-control systems      policy engines, budgets, permissions, audit, operator actions
-data systems         transactional models, event pipelines, analytical read paths
-reliability          retries, idempotency, backpressure, recovery, observability
-platform work        Linux tooling, CI, release validation, containers, deployment
-product surfaces     terminals, control rooms, dashboards, onboarding, internal tools
+request paths        gateways · middleware · streaming · routing · rate control · hedged calls
+financial state      double-entry ledgers · reconciliation · cash · PnL · margin · exposure
+market connectivity  CEX / DEX / broker adapters · orders · fills · account & subaccount state
+control systems      policy engines · budgets · RBAC / ABAC · audit · operator actions
+data systems         transactional models · event pipelines · CDC · materialized read paths
+reliability          idempotency · retries · backpressure · circuit breaking · recovery · SLOs
+distributed systems  at-least-once vs exactly-once · consistency boundaries · replay · idempotency keys
+platform work        Linux tooling · CI · release validation · containers · reproducible builds
 ```
 
-The languages change. The shape of the work does not.
+> *"A distributed system is one in which the failure of a computer you didn't even know existed can render your own computer unusable."* — **Leslie Lamport**
 
-I use Go when the service needs to stay simple and fast. Python when the problem is data-heavy, operational or moving quickly. TypeScript when the operator surface and the backend need to evolve together. Rust when the boundary genuinely earns the extra strictness. PostgreSQL, Redis, ClickHouse, Kafka, RabbitMQ, containers, Linux, cloud services, traces and metrics are tools I know well, but none of them are my identity.
-
-My actual skill is keeping the whole path in view.
-
-```text
-user intent
-  -> identity and authorization
-  -> current state
-  -> policy
-  -> money / risk
-  -> execution
-  -> side effects
-  -> evidence
-  -> recovery
-  -> operator decision
-```
-
-A lot of software is locally correct and globally wrong. Every service returns success. Every dashboard is green. The customer still lost money, the balance still drifted, the retry still duplicated the action or the provider bill still destroyed the margin.
-
-I build against that class of failure.
+A lot of software is **locally correct and globally wrong**. Every service returns `200`. Every dashboard is green. The customer still lost money, the balance still drifted, the retry still duplicated the charge, or the provider bill still ate the margin. I build against *that* class of failure — the one that only surfaces when two honest systems disagree.
 
 <br>
 
-## `$ cat /srv/synvolv/WHY`
+## `$ ./languages --why-not-just-one`
 
-[**Synvolv**](https://synvolv.com/) is what happened when that systems instinct met production AI.
+The languages change; the shape of the work does not. I reach for a tool because of what the boundary demands, not because of what is trending.
 
-I founded it because AI teams had model SDKs, gateways, logs and monthly spend reports, but very little authority during the only moment that matters: while the request is still alive and the outcome can still be changed.
-
-I architected the gateway and control plane from an empty repository.
-
-The path handles OpenAI-compatible ingress, provider normalization, streaming, tenant identity, budgets, policy snapshots, model access, routing, health-aware fallback, metering, cost attribution, audit evidence and the operator controls around all of it.
-
-I built one of the fastest AI gateway control paths I know of in production: about **456 microseconds of average measured gateway overhead** on our path while still making real policy and routing decisions.
-
-That speed matters because infrastructure should not become the tax for using infrastructure. The control layer has to be fast enough to disappear, explicit enough to dispute and complete enough to operate.
-
-Synvolv is one thing I am building. It is not the only thing I know how to build. It is the clearest current expression of how I work:
-
-```text
-understand the whole system
-put authority before the irreversible action
-leave evidence after it
-make the operator stronger
-remove latency until the layer feels inevitable
+```go
+// Go — the hot path. boring, explicit, allocation-aware, fast.
+func (g *Gateway) Route(ctx context.Context, req *Request) (*Decision, error) {
+    if d, ok := g.cache.Get(req.Key()); ok {
+        return d, nil                    // serve the p99 first
+    }
+    return g.policy.Evaluate(ctx, req)   // then spend authority, not before
+}
 ```
 
-<details>
-<summary><strong>production receipts</strong></summary>
+```rust
+// Rust — where a boundary earns the extra strictness.
+enum Spend { Pending(Cents), Committed(Cents) }   // you cannot confuse the two by accident
+// invalid states are unrepresentable; the compiler carries the invariant, not the reviewer.
+```
+
+```python
+# Python — where the data, the operators and the money live.
+def reconcile(ledger: Ledger, venue: Venue) -> list[Break]:
+    return [b for b in diff(ledger, venue) if b.is_material]   # only real breaks page a human
+```
+
+```sql
+-- SQL — where the truth is kept, and defended.
+SELECT account_id, SUM(delta) AS balance      -- the ledger is the source of truth;
+FROM   ledger_entries                         -- the exchange is required to agree with it,
+GROUP  BY account_id;                          -- and reconciliation is how we make it prove that.
+```
+
+`Go` when the service must stay simple and fast. `Rust` when the boundary genuinely earns it. `Python` when the problem is data-heavy or operational. `TypeScript` when the operator surface and the backend have to evolve together. `PostgreSQL · ClickHouse · Redis · Kafka · RabbitMQ · Docker · Kubernetes · AWS · OpenTelemetry` are tools I know cold — none of them are my identity. **Keeping the whole path in view is.**
+
 <br>
 
-```text
-17M+        LLM requests / month across scaled design partners
-~456 us     average measured gateway overhead
-200+        models across major providers and custom endpoints
-< 5 min     OpenAI-compatible integration path
+## `$ ./ready --seed-repo-to-large-firm`
 
-$65M        AUM supported by quant operating infrastructure I built with the team
-12          investor clients supported during the operating build-out
-20+         exchanges covered by market-event and delisting surveillance
+I do my best work at 0→1, but I hold myself to the standard a large, review-heavy organization would demand — because the failures I care about do not respect company size.
+
+```text
+correctness      idempotency, reconciliation and recovery paths — not just green tests
+reliability      SLOs and error budgets, blast-radius thinking, graceful degradation, runbooks
+security         scoped keys, IP allowlisting, secrets hygiene, SSO / SAML / OIDC + SOC 2 readiness
+observability    structured logs, metrics, traces, actionable alerts — systems that explain themselves
+delivery         CI/CD, migrations, backfills, feature flags, reproducible builds, honest rollbacks
+review           written design first, small diffs, and code the next engineer can trust
 ```
 
-The numbers are useful because real systems should leave evidence. They are not the biography.
+> *"The most dangerous phrase in the language is: we've always done it this way."* — **Grace Hopper**
 
-</details>
+I have shipped for three very different rooms — **AI teams running real production traffic, allocators moving real capital, and upstream Linux maintainers on a globally distributed open-source team at Canonical.** Different stakes, one standard of correctness. I can drop into an empty seed repo or a large platform team without changing how I think about the parts that fail.
 
 <br>
 
@@ -179,49 +180,30 @@ The numbers are useful because real systems should leave evidence. They are not 
 
 ```text
 01  The happy path proves the demo. The recovery path proves the product.
-
 02  A retry is a new state transition, not a second chance to forget the first one.
-
 03  "Real-time" is a promise about freshness, ordering and recovery — not a WebSocket.
-
 04  A ledger is the answer you can still defend after two systems disagree.
-
 05  Tail latency is where a clean architecture stops being polite.
-
 06  If a control cannot change the outcome, it is a report.
-
 07  An automatic decision without evidence is tomorrow's argument.
-
 08  The operator is part of the system. Design for the person carrying the pager.
-
 09  Fast code with slow recovery is not a fast system.
-
-10  A provider saying accepted does not mean the business state is correct.
-
+10  A provider saying "accepted" does not mean the business state is correct.
 11  Hidden state becomes visible during the worst possible incident.
-
-12  The best infrastructure is boring only because somebody did the hard thinking early.
+12  The best infrastructure is boring only because someone did the hard thinking early.
 ```
 
-I care about performance, but not benchmark theatre. I care about speed when it changes capacity, tail behavior, unit economics or the way a product feels.
+> *"Everything fails, all the time."* — **Werner Vogels**, CTO, Amazon
 
-I care about correctness, but not the kind that ends when the tests turn green. Correct means the retry is safe, the ledger reconciles, the failure is visible, the decision can be explained and the next operator has a clean move.
+I care about performance — but not benchmark theatre; I care about speed when it changes capacity, tail behavior or unit economics. I care about correctness — but not the kind that ends when the tests turn green; correct means the retry is safe, the ledger reconciles, the failure is visible, and the next operator has a clean move. And I care about taste: sharp names, fewer knobs, explicit ownership, small hot paths, honest metrics, no magic state, no ritual only one engineer remembers.
 
-I care about architecture, but I am suspicious of diagrams that do not include deployment, backfill, migration, alerting and recovery.
-
-And I care about taste. Sharp names. Fewer knobs. Explicit ownership. Small hot paths. Useful logs. Honest metrics. No magic state. No ritual that only one engineer remembers.
-
-The best compliment somebody can give my work is not that it looks clever.
-
-It is that the system is real, understandable and hard to accidentally betray.
+The best compliment my work can get is not that it looks clever. It is that the system is **real, understandable, and hard to accidentally betray.**
 
 <br>
 
 ## `$ git log --all --author=yuvraj --stat`
 
-These panels are generated inside this repository from the profile owner's real public GitHub history.
-
-No visitor-counter theatre. No trophy wall. No third-party statistics service waiting to disappear. A scheduled GitHub Action queries the account, builds the contribution and activity SVGs, then commits them back into the repository.
+These panels are generated **inside this repository** from real public GitHub history — a scheduled Action queries the account, renders the SVGs, and commits them back. No visitor-counter theatre. No trophy wall. No third-party statistics service waiting to disappear.
 
 <div align="center">
   <img src="./assets/github-contributions.svg" width="100%" alt="Live terminal-styled GitHub contribution history generated by this repository">
@@ -237,15 +219,16 @@ No visitor-counter theatre. No trophy wall. No third-party statistics service wa
 
 I am most useful when the prototype worked and reality has started asking better questions.
 
-Bring me the gateway that must disappear under load. The financial workflow that technically works but nobody trusts. The exchange integration with six definitions of account state. The AI product whose usage is growing faster than its unit economics. The queue that is fine until the same message arrives twice. The internal operation held together by a spreadsheet, a Slack channel and one person's memory.
+Bring me the gateway that must disappear under load. The financial workflow that technically works but nobody trusts. The exchange integration with six definitions of "account state." The AI product whose usage is outrunning its unit economics. The queue that is fine until the same message arrives twice. The internal operation held together by a spreadsheet, a Slack channel and one person's memory.
 
-I will trace the whole path, find the real invariant and build the missing layer.
+I will trace the whole path, find the real invariant, and build the missing layer.
 
 ```text
-call      https://cal.com/heyyuvraj/chat
-email     chowdharyyuvrajsingh@gmail.com
-linkedin  https://www.linkedin.com/in/connectyuvraj/
-company   https://synvolv.com/
+company    https://synvolv.com/
+call       https://cal.com/heyyuvraj/chat
+email      chowdharyyuvrajsingh@gmail.com
+linkedin   https://www.linkedin.com/in/connectyuvraj/
+based      India · fluent across US / UK working hours
 ```
 
 ```text

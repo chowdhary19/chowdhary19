@@ -166,7 +166,7 @@ def write_hero(portrait_uri: str, glyphs: list[tuple[int, int, str, float]]) -> 
         txt(600, 102, "$ identity", 15, GREEN, 800),
         txt(600, 166, "YUVRAJ SINGH", 48, GREEN_SOFT, 850),
         txt(600, 222, "CHOWDHARY", 48, GREEN_SOFT, 850),
-        txt(603, 261, "FOUNDER / INFRASTRUCTURE ENGINEER / 0-TO-1 BUILDER", 14, GREEN, 800),
+        txt(603, 261, "BUILDER · INFRASTRUCTURE ENGINEER · 0-TO-1 SYSTEMS", 14, GREEN, 800),
         f'<line x1="600" y1="286" x2="1350" y2="286" stroke="{GREEN_DIM}"/>',
 
         txt(600, 335, "I follow systems past the point", 23, GREEN_SOFT, 650),
@@ -180,8 +180,8 @@ def write_hero(portrait_uri: str, glyphs: list[tuple[int, int, str, float]]) -> 
 
         txt(600, 636, "$ current_build", 14, GREEN, 800),
         txt(600, 676, "SYNVOLV", 24, GREEN_SOFT, 850),
-        txt(740, 676, "one of the fastest AI gateway control paths", 13, GREEN_MID, 650),
-        txt(600, 711, "runtime authority before provider spend", 12, GREEN_DIM, 650),
+        txt(740, 676, "builder of the fastest gateway control path I have shipped", 13, GREEN_MID, 650),
+        txt(600, 711, "sub-millisecond authority before a token or a dollar is spent", 12, GREEN_DIM, 650),
         txt(600, 742, "yuvraj@runtime:~$", 12, GREEN, 700),
         f'<rect x="781" y="728" width="9" height="16" fill="{GREEN}" class="blink"/>',
 

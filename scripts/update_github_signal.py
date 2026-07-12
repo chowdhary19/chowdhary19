@@ -8,8 +8,8 @@ import os
 import urllib.request
 
 from build_assets import (
-    INK_PANEL, LINE, LINE_SOFT, CREAM, PARCHMENT, MUTED, CLAY, CLAY_BRIGHT,
-    SAGE, SAGE_BRIGHT, SANS, esc, txt, shell,
+    INK_PANEL, LINE, LINE_SOFT, CREAM, PARCHMENT, MUTED, CLAY, CLAY_BRIGHT, CLAY_DIM,
+    SAGE, SAGE_BRIGHT, SANS, esc, txt, shell, frame_brackets,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -89,11 +89,13 @@ def streaks(days: list[dict]) -> tuple[int, int]:
     return current, longest
 
 
-def kpi_tile(x: float, y: float, w: float, value: str, label: str) -> list[str]:
+def kpi_tile(x: float, y: float, w: float, value: str, label: str, delay: float = 0.0) -> list[str]:
     return [
-        f'<rect x="{x}" y="{y}" width="{w}" height="88" rx="8" fill="{INK_PANEL}" stroke="{LINE}"/>',
+        f'<g class="rise" style="animation-delay:{delay:.2f}s">',
+        f'<rect x="{x}" y="{y}" width="{w}" height="88" rx="8" fill="url(#panelGrad)" stroke="{LINE}"/>',
         txt(x + 16, y + 42, value, 27, CREAM, 800, family=SANS),
         txt(x + 16, y + 68, label, 10.5, MUTED, 650, family=SANS),
+        '</g>',
     ]
 
 
@@ -156,6 +158,7 @@ def build_signal_panel(user: dict) -> None:
         txt(28, 34, f"github://signal/@{user['login']}", 13, CLAY, 700),
         txt(1370, 34, updated, 10, MUTED, 600, "end"),
         f'<line x1="28" y1="48" x2="1372" y2="48" stroke="{LINE}"/>',
+        frame_brackets(14, 14, w - 28, h - 28, CLAY_DIM, corner=20),
     ]
 
     tiles = [
@@ -168,7 +171,7 @@ def build_signal_panel(user: dict) -> None:
     ]
     tile_w, gap, sx, sy = 206, 16, 42, 68
     for i, (value, label) in enumerate(tiles):
-        body += kpi_tile(sx + i * (tile_w + gap), sy, tile_w, value, label)
+        body += kpi_tile(sx + i * (tile_w + gap), sy, tile_w, value, label, delay=0.06 * i)
 
     body += [
         txt(42, 196, f"$ momentum --weeks {len(weekly)}", 13, SAGE, 800),
@@ -218,6 +221,22 @@ def event_line(event: dict) -> tuple[str, str] | None:
     return when, f"{typ.removesuffix('Event').lower()} -> {repo}"
 
 
+def repo_card(x: float, y: float, w: float, repo: dict, accent: str) -> list[str]:
+    h = 64
+    lang = (repo.get("primaryLanguage") or {}).get("name") or "—"
+    stars = int(repo.get("stargazerCount") or 0)
+    out = [
+        f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8" fill="url(#panelGrad)" stroke="{LINE}"/>',
+        f'<rect x="{x}" y="{y}" width="4" height="{h}" rx="2" fill="{accent}"/>',
+        txt(x + 16, y + 26, repo["name"][:24], 12.5, CREAM, 700, family=SANS),
+        f'<circle cx="{x+18}" cy="{y+43}" r="3.5" fill="{accent}"/>',
+        txt(x + 28, y + 47, lang, 10.5, MUTED, 600, family=SANS),
+    ]
+    if stars:
+        out.append(txt(x + w - 14, y + 47, f"★ {stars}", 10.5, MUTED, 600, family=SANS, anchor="end"))
+    return out
+
+
 def build_activity(user: dict, events: list[dict]) -> None:
     owner = user["login"]
     profile_repo = f"{owner}/{owner}"
@@ -237,26 +256,42 @@ def build_activity(user: dict, events: list[dict]) -> None:
         lines.append((when, message))
         if len(lines) == 6:
             break
-    if not lines:
-        lines = [("--", "no recent public events outside the profile repo")]
+    quiet = not lines
+    if quiet:
+        lines = [("--", "quiet on public channels right now -- most current work is in private repos / on Synvolv")]
 
-    repos = [r for r in user["repositories"]["nodes"] if not r["isFork"] and r["name"] != owner][:4]
-    w, h = 1400, 360
+    repos = [r for r in user["repositories"]["nodes"] if not r["isFork"] and r["name"] != owner]
+    repos = sorted(repos, key=lambda r: r["updatedAt"], reverse=True)[:5]
+
+    w, h = 1400, 420
     body = [
         txt(28, 34, f"github://events/@{owner}?tail=6", 13, CLAY, 700),
         f'<line x1="28" y1="48" x2="1372" y2="48" stroke="{LINE}"/>',
         txt(42, 80, "$ tail -f public-engineering.log", 13, CLAY, 800),
     ]
-    y = 118
+    y = 112
     for when, message in lines:
         body += [txt(44, y, when, 11, MUTED, 650), txt(160, y, "|", 11, MUTED), txt(186, y, message[:118], 12, PARCHMENT, 600)]
-        y += 34
+        y += 30
+    if quiet:
+        body.append(txt(186, y + 4, "the repositories below are where it's actually happening", 11, SAGE_BRIGHT, 600))
+
+    body += [
+        txt(42, 296, "$ ls -la ~/repos --recent --updated", 13, SAGE, 800),
+        frame_brackets(42, 306, 1316, 90, CLAY_DIM, corner=14),
+    ]
     if repos:
-        body += [txt(44, 326, "recent_repositories=" + "  ".join(r["name"] for r in repos), 10, MUTED, 600)]
-    body += [txt(44, 338, "yuvraj@runtime:~$", 11, CLAY, 700), f'<rect x="180" y="325" width="9" height="15" fill="{CLAY_BRIGHT}" class="blink"/>']
+        card_w, gap, sx = 246, 17, 42
+        accents = [CLAY, SAGE, CLAY_BRIGHT, SAGE_BRIGHT, PARCHMENT]
+        for i, repo in enumerate(repos):
+            body += repo_card(sx + i * (card_w + gap), 312, card_w, repo, accents[i % len(accents)])
+    else:
+        body.append(txt(58, 355, "no public repositories yet", 12, MUTED, 600))
+
+    body += [txt(44, 404, "yuvraj@runtime:~$", 11, CLAY, 700), f'<rect x="180" y="391" width="9" height="15" fill="{CLAY_BRIGHT}" class="blink"/>']
     (ASSETS / "github-activity.svg").write_text(
         shell(w, h, "Recent GitHub activity",
-              "Recent public GitHub events (excluding this profile repository and no-op pushes), generated by GitHub Actions.", body),
+              "Recent public GitHub events plus recently updated repositories, generated by GitHub Actions.", body),
         encoding="utf-8",
     )
 

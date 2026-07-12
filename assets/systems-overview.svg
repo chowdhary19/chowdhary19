@@ -10,6 +10,14 @@
     <stop stop-color="#D97757" stop-opacity="0"/>
     <stop offset="1" stop-color="#D97757" stop-opacity=".07"/>
   </linearGradient>
+  <linearGradient id="panelGrad" x1="0" y1="0" x2="0.6" y2="1">
+    <stop stop-color="#211D17"/>
+    <stop offset="1" stop-color="#1C1914"/>
+  </linearGradient>
+  <linearGradient id="panelGradWarm" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#211D17"/>
+    <stop offset="1" stop-color="#5A3626" stop-opacity=".35"/>
+  </linearGradient>
   <linearGradient id="scanFadeY" x1="0" y1="0" x2="0" y2="1">
     <stop stop-color="#E8977A" stop-opacity=".45"/>
     <stop offset="1" stop-color="#E8977A" stop-opacity="0"/>
@@ -29,7 +37,13 @@
     .packet2{animation:packet2 9.5s linear infinite}
     .rise{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
     .sheen{animation:sheen 6s ease-in-out infinite}
+    .type{width:0;animation-name:typeIn;animation-timing-function:steps(1,end);animation-fill-mode:both}
+    .blink-in{animation-name:blinkIn;animation-timing-function:steps(1,end);animation-iteration-count:infinite;animation-fill-mode:backwards}
+    .zoom{animation:zoom 16s ease-in-out infinite}
     @keyframes blink{50%{opacity:0}}
+    @keyframes typeIn{from{width:0}to{width:var(--tw)}}
+    @keyframes blinkIn{0%{opacity:0}0.01%,50%{opacity:1}50.01%,100%{opacity:0}}
+    @keyframes zoom{0%,100%{transform:scale(1) translate(0,0)}50%{transform:scale(1.045) translate(-0.6%,-0.4%)}}
     @keyframes scanY{from{transform:translateY(-90px)}to{transform:translateY(740px)}}
     @keyframes globalScan{from{transform:translateY(-120px)}to{transform:translateY(770px)}}
     @keyframes dash{to{stroke-dashoffset:-180}}
@@ -39,7 +53,7 @@
     @keyframes packet2{0%{transform:translateX(0)}100%{transform:translateX(-1030px)}}
     @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
     @keyframes sheen{0%,35%{transform:translateX(-120%)}65%,100%{transform:translateX(120%)}}
-    @media(prefers-reduced-motion:reduce){.blink,.scan-y,.global-scan,.dash,.pulse,.pulse-ring,.packet1,.packet2,.rise,.sheen{animation:none!important}}
+    @media(prefers-reduced-motion:reduce){.blink,.scan-y,.global-scan,.dash,.pulse,.pulse-ring,.packet1,.packet2,.rise,.sheen,.zoom{animation:none!important}.type{animation:none!important;width:var(--tw)!important}.blink-in{animation:none!important;opacity:1!important}}
   </style>
 </defs>
 
@@ -50,47 +64,59 @@
 <text x="1370" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="650" fill="#8A8175" text-anchor="end" opacity="1.0">one builder / many layers</text>
 <line x1="28" y1="49" x2="1372" y2="49" stroke="#332E27"/>
 <text x="42" y="83" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="650" fill="#8A8175" text-anchor="start" opacity="1.0"># different domains; the same engineering instinct</text>
-<rect x="46" y="112" width="228" height="142" rx="6" fill="#1C1914" stroke="#332E27"/>
+<path d="M14 34V14H34 M1366 14H1386V34 M14 616V636H34 M1366 636H1386V616" fill="none" stroke="#5A3626" stroke-width="2"/>
+<g class="rise" style="animation-delay:0.00s">
+<rect x="46" y="112" width="228" height="142" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
 <rect x="46" y="112" width="4" height="142" rx="2" fill="#8FA888"/>
 <text x="64" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">PRODUCT / AUTOMATION</text>
 <line x1="64" y1="152" x2="256" y2="152" stroke="#28241E"/>
 <text x="64" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">ship from zero</text>
 <text x="64" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">workflows + integrations</text>
 <text x="64" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">operator-facing products</text>
-<rect x="316" y="112" width="228" height="142" rx="6" fill="#1C1914" stroke="#332E27"/>
+</g>
+<g class="rise" style="animation-delay:0.08s">
+<rect x="316" y="112" width="228" height="142" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
 <rect x="316" y="112" width="4" height="142" rx="2" fill="#D97757"/>
 <text x="334" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">BLOCKCHAIN / DEFI</text>
 <line x1="334" y1="152" x2="526" y2="152" stroke="#28241E"/>
 <text x="334" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">signing + replay</text>
 <text x="334" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">irreversible state</text>
 <text x="334" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">on-chain correctness</text>
-<rect x="586" y="112" width="228" height="142" rx="6" fill="#1C1914" stroke="#332E27"/>
+</g>
+<g class="rise" style="animation-delay:0.16s">
+<rect x="586" y="112" width="228" height="142" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
 <rect x="586" y="112" width="4" height="142" rx="2" fill="#8FA888"/>
 <text x="604" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">QUANT / FINANCIAL</text>
 <line x1="604" y1="152" x2="796" y2="152" stroke="#28241E"/>
 <text x="604" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">orders + fills</text>
 <text x="604" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">ledger + reconciliation</text>
 <text x="604" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">risk + control rooms</text>
-<rect x="856" y="112" width="228" height="142" rx="6" fill="#1C1914" stroke="#332E27"/>
+</g>
+<g class="rise" style="animation-delay:0.24s">
+<rect x="856" y="112" width="228" height="142" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
 <rect x="856" y="112" width="4" height="142" rx="2" fill="#D97757"/>
 <text x="874" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">LINUX / PLATFORM</text>
 <line x1="874" y1="152" x2="1066" y2="152" stroke="#28241E"/>
 <text x="874" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">CI + release safety</text>
 <text x="874" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">diagnostics + images</text>
 <text x="874" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">reproducible systems</text>
-<rect x="1126" y="112" width="228" height="142" rx="6" fill="#1C1914" stroke="#332E27"/>
+</g>
+<g class="rise" style="animation-delay:0.32s">
+<rect x="1126" y="112" width="228" height="142" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
 <rect x="1126" y="112" width="4" height="142" rx="2" fill="#8FA888"/>
 <text x="1144" y="140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">AI RUNTIME</text>
 <line x1="1144" y1="152" x2="1336" y2="152" stroke="#28241E"/>
 <text x="1144" y="179" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">gateway + streaming</text>
 <text x="1144" y="202" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">policy + economics</text>
 <text x="1144" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="600" fill="#C9C0B2" text-anchor="start" opacity="1.0">routing + evidence</text>
+</g>
 <path d="M160 254 V324" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
 <path d="M430 254 V324" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
 <path d="M700 254 V324" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
 <path d="M970 254 V324" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
 <path d="M1240 254 V324" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
-<rect x="120" y="324" width="1160" height="124" rx="6" fill="#211D17" stroke="#D97757"/>
+<rect x="120" y="324" width="1160" height="124" rx="6" fill="url(#panelGradWarm)" stroke="#D97757"/>
+<path d="M120 342V324H138 M1262 324H1280V342 M120 430V448H138 M1262 448H1280V430" fill="none" stroke="#E8977A" stroke-width="2"/>
 <text x="700" y="360" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="800" fill="#D97757" text-anchor="middle" opacity="1.0">THE COMMON LAYER</text>
 <text x="700" y="400" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="800" fill="#F3EEE4" text-anchor="middle" opacity="1.0">CONTROL  ·  STATE  ·  MONEY  ·  LATENCY  ·  RECOVERY  ·  OPERATOR</text>
 <text x="700" y="430" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="650" fill="#A8C29F" text-anchor="middle" opacity="1.0">the system is only finished when the consequence is owned</text>
@@ -98,7 +124,7 @@
 <circle cx="170" cy="386" r="5" fill="#E8977A" filter="url(#glow)" class="packet1"/>
 <circle cx="1230" cy="386" r="4" fill="#A8C29F" class="packet2"/>
 <path d="M700 448 V505" fill="none" stroke="#332E27" stroke-width="2" class="dash"/>
-<rect x="255" y="505" width="890" height="92" rx="6" fill="#1C1914" stroke="#332E27"/>
+<rect x="255" y="505" width="890" height="92" rx="6" fill="url(#panelGrad)" stroke="#332E27"/>
 <text x="282" y="540" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="800" fill="#8FA888" text-anchor="start" opacity="1.0">$ builder_mode</text>
 <text x="282" y="575" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#F3EEE4" text-anchor="start" opacity="1.0">understand the business -&gt; find the invariant -&gt; build -&gt; operate -&gt; rewrite what reality disproves</text>
 <text x="42" y="625" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="650" fill="#8A8175" text-anchor="start" opacity="1.0">breadth is not the point; end-to-end ownership is</text>

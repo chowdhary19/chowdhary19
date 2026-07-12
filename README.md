@@ -10,8 +10,6 @@
   <a href="mailto:chowdharyyuvrajsingh@gmail.com"><img src="./assets/button-email.svg" height="52" alt="Email"></a>
   &nbsp;
   <a href="https://www.linkedin.com/in/connectyuvraj/"><img src="./assets/button-linkedin.svg" height="52" alt="LinkedIn"></a>
-  &nbsp;
-  <a href="https://github.com/chowdhary19"><img src="./assets/button-github.svg" height="52" alt="GitHub"></a>
 </p>
 
 <div align="center">

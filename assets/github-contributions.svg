@@ -10,6 +10,14 @@
     <stop stop-color="#D97757" stop-opacity="0"/>
     <stop offset="1" stop-color="#D97757" stop-opacity=".07"/>
   </linearGradient>
+  <linearGradient id="panelGrad" x1="0" y1="0" x2="0.6" y2="1">
+    <stop stop-color="#211D17"/>
+    <stop offset="1" stop-color="#1C1914"/>
+  </linearGradient>
+  <linearGradient id="panelGradWarm" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#211D17"/>
+    <stop offset="1" stop-color="#5A3626" stop-opacity=".35"/>
+  </linearGradient>
   <linearGradient id="scanFadeY" x1="0" y1="0" x2="0" y2="1">
     <stop stop-color="#E8977A" stop-opacity=".45"/>
     <stop offset="1" stop-color="#E8977A" stop-opacity="0"/>
@@ -29,7 +37,13 @@
     .packet2{animation:packet2 9.5s linear infinite}
     .rise{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
     .sheen{animation:sheen 6s ease-in-out infinite}
+    .type{width:0;animation-name:typeIn;animation-timing-function:steps(1,end);animation-fill-mode:both}
+    .blink-in{animation-name:blinkIn;animation-timing-function:steps(1,end);animation-iteration-count:infinite;animation-fill-mode:backwards}
+    .zoom{animation:zoom 16s ease-in-out infinite}
     @keyframes blink{50%{opacity:0}}
+    @keyframes typeIn{from{width:0}to{width:var(--tw)}}
+    @keyframes blinkIn{0%{opacity:0}0.01%,50%{opacity:1}50.01%,100%{opacity:0}}
+    @keyframes zoom{0%,100%{transform:scale(1) translate(0,0)}50%{transform:scale(1.045) translate(-0.6%,-0.4%)}}
     @keyframes scanY{from{transform:translateY(-90px)}to{transform:translateY(480px)}}
     @keyframes globalScan{from{transform:translateY(-120px)}to{transform:translateY(510px)}}
     @keyframes dash{to{stroke-dashoffset:-180}}
@@ -39,7 +53,7 @@
     @keyframes packet2{0%{transform:translateX(0)}100%{transform:translateX(-1030px)}}
     @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
     @keyframes sheen{0%,35%{transform:translateX(-120%)}65%,100%{transform:translateX(120%)}}
-    @media(prefers-reduced-motion:reduce){.blink,.scan-y,.global-scan,.dash,.pulse,.pulse-ring,.packet1,.packet2,.rise,.sheen{animation:none!important}}
+    @media(prefers-reduced-motion:reduce){.blink,.scan-y,.global-scan,.dash,.pulse,.pulse-ring,.packet1,.packet2,.rise,.sheen,.zoom{animation:none!important}.type{animation:none!important;width:var(--tw)!important}.blink-in{animation:none!important;opacity:1!important}}
   </style>
 </defs>
 
@@ -47,26 +61,39 @@
 <rect width="1400" height="390" fill="url(#grid)"/>
 <rect x="1" y="1" width="1398" height="388" fill="none" stroke="#332E27"/>
 <text x="28" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="700" fill="#D97757" text-anchor="start" opacity="1.0">github://signal/@chowdhary19</text>
-<text x="1370" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10" font-weight="600" fill="#8A8175" text-anchor="end" opacity="1.0">2026-07-12 08:32 UTC</text>
+<text x="1370" y="34" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="10" font-weight="600" fill="#8A8175" text-anchor="end" opacity="1.0">2026-07-12 10:16 UTC</text>
 <line x1="28" y1="48" x2="1372" y2="48" stroke="#332E27"/>
-<rect x="42" y="68" width="206" height="88" rx="8" fill="#1C1914" stroke="#332E27"/>
+<path d="M14 34V14H34 M1366 14H1386V34 M14 356V376H34 M1366 376H1386V356" fill="none" stroke="#5A3626" stroke-width="2"/>
+<g class="rise" style="animation-delay:0.00s">
+<rect x="42" y="68" width="206" height="88" rx="8" fill="url(#panelGrad)" stroke="#332E27"/>
 <text x="58" y="110" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="27" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">673</text>
 <text x="58" y="136" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="650" fill="#8A8175" text-anchor="start" opacity="1.0">CONTRIBUTIONS / YR</text>
-<rect x="264" y="68" width="206" height="88" rx="8" fill="#1C1914" stroke="#332E27"/>
+</g>
+<g class="rise" style="animation-delay:0.06s">
+<rect x="264" y="68" width="206" height="88" rx="8" fill="url(#panelGrad)" stroke="#332E27"/>
 <text x="280" y="110" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="27" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">17d</text>
 <text x="280" y="136" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="650" fill="#8A8175" text-anchor="start" opacity="1.0">CURRENT STREAK</text>
-<rect x="486" y="68" width="206" height="88" rx="8" fill="#1C1914" stroke="#332E27"/>
+</g>
+<g class="rise" style="animation-delay:0.12s">
+<rect x="486" y="68" width="206" height="88" rx="8" fill="url(#panelGrad)" stroke="#332E27"/>
 <text x="502" y="110" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="27" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">91d</text>
 <text x="502" y="136" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="650" fill="#8A8175" text-anchor="start" opacity="1.0">LONGEST STREAK</text>
-<rect x="708" y="68" width="206" height="88" rx="8" fill="#1C1914" stroke="#332E27"/>
+</g>
+<g class="rise" style="animation-delay:0.18s">
+<rect x="708" y="68" width="206" height="88" rx="8" fill="url(#panelGrad)" stroke="#332E27"/>
 <text x="724" y="110" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="27" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">41</text>
 <text x="724" y="136" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="650" fill="#8A8175" text-anchor="start" opacity="1.0">PUBLIC REPOS</text>
-<rect x="930" y="68" width="206" height="88" rx="8" fill="#1C1914" stroke="#332E27"/>
+</g>
+<g class="rise" style="animation-delay:0.24s">
+<rect x="930" y="68" width="206" height="88" rx="8" fill="url(#panelGrad)" stroke="#332E27"/>
 <text x="946" y="110" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="27" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">3</text>
 <text x="946" y="136" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="650" fill="#8A8175" text-anchor="start" opacity="1.0">STARS EARNED</text>
-<rect x="1152" y="68" width="206" height="88" rx="8" fill="#1C1914" stroke="#332E27"/>
+</g>
+<g class="rise" style="animation-delay:0.30s">
+<rect x="1152" y="68" width="206" height="88" rx="8" fill="url(#panelGrad)" stroke="#332E27"/>
 <text x="1168" y="110" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="27" font-weight="800" fill="#F3EEE4" text-anchor="start" opacity="1.0">7</text>
 <text x="1168" y="136" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="650" fill="#8A8175" text-anchor="start" opacity="1.0">FOLLOWERS</text>
+</g>
 <text x="42" y="196" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="800" fill="#8FA888" text-anchor="start" opacity="1.0">$ momentum --weeks 14</text>
 <polyline points="44.0,286.0 44.0,256.9 144.9,256.9 245.8,254.7 346.8,261.4 447.7,254.7 548.6,256.9 649.5,265.9 750.5,252.5 851.4,252.5 952.3,259.2 1053.2,259.2 1154.2,256.9 1255.1,259.2 1356.0,210.0 1356.0,286.0" fill="#D97757" opacity=".12"/>
 <polyline points="44.0,256.9 144.9,256.9 245.8,254.7 346.8,261.4 447.7,254.7 548.6,256.9 649.5,265.9 750.5,252.5 851.4,252.5 952.3,259.2 1053.2,259.2 1154.2,256.9 1255.1,259.2 1356.0,210.0" fill="none" stroke="#E8977A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>

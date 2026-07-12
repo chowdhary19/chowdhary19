@@ -1,3 +1,9 @@
+<p align="center">
+  <sub><strong>SPOILER</strong></sub>
+  <br>
+  <strong>He said he'd build the fastest AI gateway in production. Then he did. It's called Synvolv.</strong>
+</p>
+
 <div align="center">
   <img src="./assets/hero-terminal.svg" width="100%" alt="Yuvraj Singh Chowdhary, builder and infrastructure engineer, in an animated terminal scanner">
 </div>

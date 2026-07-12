@@ -651,14 +651,38 @@ def write_hero(portrait_uri: str) -> None:
     w, h = 1400, 720
     x0, y0, pw, ph = 70, 64, 470, 580
     cx_mid, cy_mid = x0 + pw / 2, y0 + ph / 2
+    # The portrait itself flickers: cut into narrow vertical strips, each an
+    # independently-timed brightness pulse on a filter-boosted <use> copy of
+    # the same image (not an overlay). Staggering each strip's begin= left to
+    # right makes the peaks travel like a wave, while per-strip randomized
+    # duration/peak keeps several strips dark and several bright at any given
+    # instant, rather than one clean band passing through empty space.
+    n_strips = 10
+    strip_w = pw / n_strips
+    rnd = random.Random(77)
+    flicker: list[str] = []
+    for i in range(n_strips):
+        sx = x0 + i * strip_w
+        cid = f"flickClip{i}"
+        dur = round(1.5 + rnd.uniform(-0.35, 0.65), 2)
+        begin = round(i * 0.17 + rnd.uniform(-0.04, 0.04), 2)
+        peak = round(rnd.uniform(0.6, 1.0), 2)
+        flicker.append(f'<clipPath id="{cid}"><rect x="{sx:.1f}" y="{y0}" width="{strip_w+0.5:.1f}" height="{ph}"/></clipPath>')
+        flicker.append(
+            f'<g clip-path="url(#{cid})">'
+            f'<use href="#portraitImg" opacity="0" style="filter:brightness(1.9) saturate(1.35) contrast(1.05);">'
+            f'<animate attributeName="opacity" values="0;0;{peak};0;0" dur="{dur}s" begin="{begin}s" repeatCount="indefinite"/>'
+            f'</use></g>'
+        )
+
     body: list[str] = [
         f'<rect x="600" y="40" width="770" height="650" fill="url(#rightGlow)"/>',
         f'<clipPath id="portrait"><rect x="{x0}" y="{y0}" width="{pw}" height="{ph}" rx="3"/></clipPath>',
         f'<g clip-path="url(#portrait)">',
         f'<g class="zoom" style="transform-origin:{cx_mid}px {cy_mid}px">',
-        f'<image x="{x0}" y="{y0}" width="{pw}" height="{ph}" preserveAspectRatio="xMidYMid slice" href="{portrait_uri}"/>',
+        f'<image id="portraitImg" x="{x0}" y="{y0}" width="{pw}" height="{ph}" preserveAspectRatio="xMidYMid slice" href="{portrait_uri}"/>',
+        *flicker,
         '</g>',
-        f'<g class="scan-y"><rect x="{x0}" y="{y0}" width="{pw}" height="2" fill="{CLAY_BRIGHT}" filter="url(#glow)"/><rect x="{x0}" y="{y0+2}" width="{pw}" height="72" fill="url(#scanFadeY)"/></g>',
         '</g>',
         f'<rect x="{x0}" y="{y0}" width="{pw}" height="{ph}" fill="none" stroke="{LINE}" stroke-width="1.5"/>',
     ]

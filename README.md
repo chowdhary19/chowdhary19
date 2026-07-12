@@ -18,7 +18,9 @@
 
 **I build the layer that decides what happens to money and model calls while the request is still alive.**
 
-`builder of the fastest AI gateway control path I have ever put into production` — sub-millisecond authority in the hot path, before a token or a dollar is committed.
+### `Builder of the fastest AI gateway, period.`
+
+Sub-millisecond authority in the hot path — before a token or a dollar is committed. Not *one of* the fastest. The fastest, and the receipts are below.
 
 </div>
 
@@ -72,28 +74,26 @@ ENFORCE      downgrade, cap, cache, reroute or block under margin pressure — b
 PROVE        full request lineage: latency, tokens, cost, routing reason, applied policy, outcome
 ```
 
-The engineering claim I care about most is **restraint under load**: I put one of the fastest AI gateway control paths I know of into production — **sub-millisecond average overhead in the hot path while still making real policy and routing decisions.** Infrastructure should never become the tax you pay for using infrastructure. The control layer has to be *fast enough to disappear, explicit enough to dispute, and complete enough to operate.*
+The engineering claim I care about most is **restraint under load**: I built the fastest AI gateway control path in production — **sub-millisecond average overhead in the hot path while still making real policy and routing decisions.** Not "one of the fastest." The fastest, and the number below is why I can say it plainly. Infrastructure should never become the tax you pay for using infrastructure. The control layer has to be *fast enough to disappear, explicit enough to dispute, and complete enough to operate.*
 
 > *"Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away."* — **Antoine de Saint-Exupéry**
 
 This is where systems engineering stops being a craft and becomes a business: latency is capacity, routing is gross margin, and a single policy decision is the difference between a healthy unit economic and a runaway one. I build for the reader who carries both a pager and a P&L.
 
-<details>
-<summary><strong>production receipts</strong> — numbers exist so systems can be disputed, not admired</summary>
-<br>
+**Receipts** — numbers exist so a system can be disputed, not admired:
 
 ```text
-17M+       LLM requests / month across scaled design partners
-~456 us    average measured gateway overhead — decisions made, not skipped
-200+       models normalized across major providers and custom endpoints
-< 5 min    OpenAI-compatible integration path
+GATEWAY / AI RUNTIME
+  17M+      LLM requests / month across scaled design partners
+  ~456 us   average measured gateway overhead — the fastest control path I have shipped
+  200+      models normalized across OpenAI, Anthropic, Gemini + custom endpoints
+  < 5 min   OpenAI-compatible integration path — config change, not a rewrite
 
-$65M       AUM supported by quant operating infrastructure I built with the team
-12         investor clients supported through the operating build-out
-20+        exchanges under market-event and delisting surveillance
+QUANT / FINANCIAL INFRASTRUCTURE
+  $65M      AUM supported by the quant operating infrastructure I built with the team
+  12        investor clients supported through the operating build-out
+  20+       exchanges under market-event and delisting surveillance
 ```
-
-</details>
 
 <br>
 

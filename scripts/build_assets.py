@@ -180,7 +180,7 @@ def write_hero(portrait_uri: str, glyphs: list[tuple[int, int, str, float]]) -> 
 
         txt(600, 636, "$ current_build", 14, GREEN, 800),
         txt(600, 676, "SYNVOLV", 24, GREEN_SOFT, 850),
-        txt(740, 676, "builder of the fastest gateway control path I have shipped", 13, GREEN_MID, 650),
+        txt(740, 676, "builder of the fastest AI gateway, period", 13, GREEN_MID, 650),
         txt(600, 711, "sub-millisecond authority before a token or a dollar is spent", 12, GREEN_DIM, 650),
         txt(600, 742, "yuvraj@runtime:~$", 12, GREEN, 700),
         f'<rect x="781" y="728" width="9" height="16" fill="{GREEN}" class="blink"/>',
